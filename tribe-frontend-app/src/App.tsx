@@ -1,5 +1,5 @@
 import React from 'react';
-import TaskCard from './TaskCard/TaskCard'
+import TaskCard from './TaskCard';
 import './App.css';
 
 function App() {
