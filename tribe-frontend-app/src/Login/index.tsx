@@ -4,12 +4,12 @@ import SignUp from '../Signup';
 import './Login.css';
 
 function Login() {
-    return(
+    return (
         <div className="Login">
             Login
-            <LoginForm/><br/>
+            <LoginForm /><br />
             Signup
-            <SignUp/>
+            <SignUp />
         </div>
     )
 }

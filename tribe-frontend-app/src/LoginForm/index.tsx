@@ -23,8 +23,8 @@ function LoginForm() {
         "Content-type": "application/json;"
       }
     })
-    .then(res => res.json())
-    .then(json => console.log(json))
+      .then(res => res.json())
+      .then(json => console.log(json))
   }
 
   return (

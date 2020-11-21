@@ -1,7 +1,7 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react';
 
 
-function SignUp() {
+function SignUpForm() {
     const INITIAL_VALUES = { username: "", password: "" }
     const [formData, setFormData] = useState(INITIAL_VALUES);
 
@@ -12,24 +12,24 @@ function SignUp() {
 
     const handleSubmit = (evt: React.FormEvent) => {
         evt.preventDefault();
-        console.log("submitting", formData);
         fetch('http://ec2-52-53-238-185.us-west-1.compute.amazonaws.com:5000/sign-up', {
             method: 'POST',
             body: JSON.stringify(formData),
             headers: {
-            "Content-type": "application/json;"
-        }})
-        .then(res => res.json())
-        .then(json => console.log(json))
+                "Content-type": "application/json;"
+            }
+        })
+            .then(res => res.json())
+            .then(json => console.log(json))
     }
 
     return (
-    <form className="LoginForm" onSubmit={handleSubmit}>
-        <input placeholder="Username" name="username" value={formData.username} onChange={handleChange} />
-        <input placeholder="Password" name="password" value={formData.password} type="Password" onChange={handleChange} />
-        <button type="submit">SignUp</button>
-    </form>
+        <form className="LoginForm" onSubmit={handleSubmit}>
+            <input placeholder="Username" name="username" value={formData.username} onChange={handleChange} />
+            <input placeholder="Password" name="password" value={formData.password} type="Password" onChange={handleChange} />
+            <button type="submit">Sign Up</button>
+        </form>
     )
 }
 
-export default SignUp
+export default SignUpForm
