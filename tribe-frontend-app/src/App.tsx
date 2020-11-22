@@ -1,12 +1,13 @@
 import React from 'react';
 import TaskCard from './TaskCard/TaskCard'
+import SearchBar from './SearchBar'
 import './App.css';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <TaskCard/>
+        <SearchBar/>
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
