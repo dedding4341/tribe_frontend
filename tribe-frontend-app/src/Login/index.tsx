@@ -12,7 +12,7 @@ function Login() {
         <div className="Login container-fluid align-items-center d-flex">
             <div className="Login-bg row shadow-lg bg-white rounded">
                 <section className="Login-img-container col-7 px-0">
-                    <img className="img-responsive" src="https://cdn.wallpapersafari.com/53/20/s80f32.jpg" alt="stock.jpg"></img>
+                    {/* <img className="img-responsive" src="" alt=""></img> */}
                 </section>
                 <section className="Login-forms-container col-5">
                     <header>
