@@ -8,33 +8,38 @@ const EC2_SIGNUP_URL = 'http://ec2-52-53-238-185.us-west-1.compute.amazonaws.com
 const LOCALHOST_SIGNUP_URL = 'http://127.0.0.1:8000/sign-up';
 
 function SignUpForm() {
-    const INITIAL_VALUES = { username: "", password: "", email: "" }
-    const [formData, setFormData] = useState(INITIAL_VALUES);
+    const INITIAL_FORM_VALUES = { username: "", password: "", email: "", repeatPassword: "" }
+    const [formData, setFormData] = useState(INITIAL_FORM_VALUES);
 
     const handleChange = (evt: React.FormEvent<HTMLInputElement>) => {
         const { name, value } = evt.currentTarget;
         setFormData(currData => ({ ...currData, [name]: value }));
+
     }
 
 
     const handleSubmit = (evt: React.FormEvent) => {
         evt.preventDefault();
-        fetch(LOCALHOST_SIGNUP_URL, {
-            method: 'POST',
-            body: JSON.stringify(formData),
-            headers: {
-                "Content-type": "application/json;"
-            }
-        })
-            .then(res => res.json())
-            .then(json => console.log(json))
+        if (formData.password === formData.repeatPassword) {
+            fetch(LOCALHOST_SIGNUP_URL, {
+                method: 'POST',
+                body: JSON.stringify(formData),
+                headers: {
+                    "Content-type": "application/json;"
+                }
+            })
+                .then(res => res.json())
+                .then(json => console.log(json))
+        } else {
+            alert("Passwords do not match!")
+        }
     }
 
     return (
         <Form className="SignUpForm" onSubmit={handleSubmit}>
             <Form.Group controlId="formGroupUsername">
                 <Form.Label>Username</Form.Label>
-                <Form.Control size="lg" placeholder="Username" name="username" value={formData.username} onChange={(evt) => handleChange(evt as any)} />
+                <Form.Control size="lg" autoComplete="username" placeholder="Username" name="username" value={formData.username} onChange={(evt) => handleChange(evt as any)} />
             </Form.Group>
             <Form.Group controlId="formGroupEmail">
                 <Form.Label>Email address</Form.Label>
@@ -43,7 +48,10 @@ function SignUpForm() {
             </Form.Group>
             <Form.Group controlId="formGroupPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control size="lg" placeholder="Password" name="password" value={formData.password} type="password" onChange={(evt) => handleChange(evt as any)} />
+                <Form.Control size="lg" autoComplete="current-password" placeholder="Password" name="password" value={formData.password} type="password" onChange={(evt) => handleChange(evt as any)} />
+            </Form.Group>
+            <Form.Group controlId="formGroupRePassword">
+                <Form.Control size="lg" autoComplete="current-password" placeholder="Re-type password" name="repeatPassword" value={formData.repeatPassword} type="password" onChange={(evt) => handleChange(evt as any)} />
             </Form.Group>
             <Button type="submit">Register</Button>
         </Form>

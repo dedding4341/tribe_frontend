@@ -20,7 +20,7 @@
 }
 
 .Login-forms-container {
-  padding: 3rem 4rem;
+  padding: 3rem 10rem;
 }
 
 .Login-forms-container h1 {
@@ -39,9 +39,11 @@
 
 
 /* https://stackoverflow.com/questions/55593229/increasing-the-size-of-a-bootstrap-checkbox */
+
 .custom-switch.custom-switch-lg .custom-control-label {
   padding-left: 3rem;
   padding-bottom: 2rem;
+  font-size: 1rem;
 }
 
 .custom-switch.custom-switch-lg .custom-control-label::before {
@@ -59,6 +61,4 @@
 .custom-switch.custom-switch-lg .custom-control-input:checked ~ .custom-control-label::after {
   transform: translateX(calc(2rem - 0.25rem));
 }
-
-
 
