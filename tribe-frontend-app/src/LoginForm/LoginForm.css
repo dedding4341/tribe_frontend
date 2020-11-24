@@ -1,0 +1,15 @@
+.LoginForm {
+  text-align: left;
+}
+
+
+.LoginForm label {
+  font-size: 1.6rem; 
+}
+
+.LoginForm button {
+  padding: 1rem 2rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  width: 100%;
+}

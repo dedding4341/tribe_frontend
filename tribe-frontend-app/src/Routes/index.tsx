@@ -1,11 +1,15 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import Login from '../Login';
 
+/**
+ * Routing logic for components
+ */
 function Routes() {
   return (
     <Switch>
       <Route exact path="/users/auth">
-        <div>Hello</div>
+        <Login/>
       </Route>
       <Route exact path="/test-component">
         <div>Test your components in this routes</div>

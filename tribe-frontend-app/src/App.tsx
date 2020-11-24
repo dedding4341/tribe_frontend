@@ -1,8 +1,8 @@
 import React from 'react';
-import TaskCard from './TaskCard/TaskCard'
 import './App.css';
 import { BrowserRouter } from 'react-router-dom';
 import Routes from './Routes';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (

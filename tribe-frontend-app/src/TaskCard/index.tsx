@@ -1,5 +1,5 @@
-import React from 'react'
-import './TaskCard.css'
+import React from 'react';
+import './TaskCard.css';
 
 function TaskCard() {
     return(
@@ -20,4 +20,4 @@ function TaskCard() {
     )
 }
 
-export default TaskCard
+export default TaskCard;
