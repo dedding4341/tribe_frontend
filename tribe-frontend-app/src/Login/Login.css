@@ -9,8 +9,11 @@
 }
 
 .Login-img-container {
-  background-image: url("https://mdbootstrap.com/img/Photos/Others/img%20%2848%29.jpg");
+  background-image: url("https://wallpaperaccess.com/full/149370.jpg");
   height: 75rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
 }
 
 .Login-img-container > img {
@@ -19,7 +22,7 @@
 }
 
 .Login-forms-container {
-  padding: 3rem 10rem;
+  padding: 3rem;
 }
 
 .Login-forms-container h1 {

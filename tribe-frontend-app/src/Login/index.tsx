@@ -10,7 +10,7 @@ function Login() {
     return (
         <div className="Login container-fluid align-items-center justify-content-center d-flex">
             <div className="Login-bg row shadow-lg bg-white rounded">
-                <section className="Login-img-container col-7 px-0">
+                <section className="Login-img-container col-7">
                     {/* <img className="img-responsive" src="" alt=""></img> */}
                 </section>
                 <section className="Login-forms-container col-5">
@@ -18,7 +18,7 @@ function Login() {
                         <img src="https://i.imgur.com/UCP0fq6.jpg" alt="tribe"></img>
                         <h1>{showSignUp ? "Let's Get Started!" : "Welcome back!"}</h1>
                         <div className="d-flex align-items-center justify-content-center">
-                            <p className="Login-toggle-label mb-4">{showSignUp ? "Already have an account" : "Not registered"}?</p>
+                            <p className="Login-toggle-label mt-4">{showSignUp ? "Already have an account" : "Not registered"}?</p>
                             <Form.Check
                                 id="switchEnabled"
                                 type="switch"
