@@ -1,8 +1,18 @@
 .NavBar {
-  font-size: 1.4rem;
-  padding: 1rem 5rem;
+  font-size: 1.5rem;
+  width: 90%;
+  min-width: 500px;
 }
 
-.navbar-brand {
-  font-size: 2rem;
+.NavBar a {
+  margin-left: 2rem;
+  font-weight: thin;
+}
+
+.NavBar-container {
+  padding: 1rem 2rem;
+}
+
+.brand {
+  font-size: 2rem !important;
 }

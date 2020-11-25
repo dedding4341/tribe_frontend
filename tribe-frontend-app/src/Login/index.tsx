@@ -9,7 +9,7 @@ function Login() {
     const [showSignUp, setShowSignUp] = useState(false);
     return (
         <div className="Login container-fluid align-items-center justify-content-center d-flex">
-            <div className="Login-bg row shadow-sm bg-white rounded">
+            <div className="Login-bg row shadow-lg bg-white rounded">
                 <section className="Login-img-container col-7 px-0">
                     {/* <img className="img-responsive" src="" alt=""></img> */}
                 </section>

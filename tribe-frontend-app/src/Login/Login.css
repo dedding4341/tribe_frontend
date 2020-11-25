@@ -1,7 +1,6 @@
 .Login {
   width: 100vw;
   height: 100vh;
-  color: rgb(87, 85, 85);
 }
 
 .Login-bg {
@@ -10,7 +9,7 @@
 }
 
 .Login-img-container {
-  background: rgb(175, 216, 219);
+  background-image: url("https://mdbootstrap.com/img/Photos/Others/img%20%2848%29.jpg");
   height: 75rem;
 }
 

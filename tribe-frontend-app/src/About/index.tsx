@@ -1,5 +1,6 @@
 import React from 'react';
 
+// TODO: THIS NEEDS TO BE REFACTORED INTO SMALLER COMPONENTS
 function About() {
   return (
     <section id="about container">
@@ -111,46 +112,45 @@ function About() {
       </div>
 
       <div className="row about-how">
-          
-          <h1 className="intro-header col-7" data-aos="fade-up">How The App Work?</h1>           
 
-          <div className="about-how-content" data-aos="fade-up">
-              <div className="about-how-steps block-1-2 block-tab-full group row">
+        <h1 className="intro-header col-7">How The App Work?</h1>
+        <div className="about-how-content">
+          <div className="about-how-steps row">
 
-                  <div className="bgrid step col-6" data-item="1">
-                      <h3>Sign-Up</h3>
-                      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
-                      </p> 
-                  </div>
+            <div className="col-6" >
+              <h3>Sign-Up</h3>
+              <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+                      </p>
+            </div>
 
-                  <div className="bgrid step col-6" data-item="2">
-                      <h3>Upload</h3>
-                      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
-                      </p> 
-                  </div>               
-             
-                  <div className="bgrid step col-6" data-item="3">
-                      <h3>Create</h3>
-                      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
-                      </p> 
-                  </div>
+            <div className="col-6">
+              <h3>Upload</h3>
+              <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+                      </p>
+            </div>
 
-                  <div className="bgrid step col-6" data-item="4">
-                      <h3>Publish</h3>
-                      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. 
-                      </p> 
-                  </div>  
+            <div className="col-6" >
+              <h3>Create</h3>
+              <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+                      </p>
+            </div>
 
-              </div>           
-         </div>
+            <div className="col-6" >
+              <h3>Publish</h3>
+              <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+                      </p>
+            </div>
 
-      </div> 
+          </div>
+        </div>
+
+      </div>
 
       <div className="row about-bottom-image">
 
-       <img src="" alt=""/>
+        <img src="" alt="" />
 
-      </div> 
+      </div>
     </section>
   )
 }

@@ -47,12 +47,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100%;
 }
 
 .button {
   display: block;
   width: fit-content;
-  background: #8fcea9;
+  background: #3dd17a;
   padding: 0.7rem 1rem;
   text-align: center;
   border-radius: 5px;

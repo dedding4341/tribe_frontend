@@ -7,9 +7,8 @@ import NavBar from '../NavBar';
 function Landing() {
   return (
     <div className="Landing">
-      <NavBar/>
       <LandingContent/>
-      <About/>
+      {/* <About/> */}
       <Footer/>
     </div>
   )
