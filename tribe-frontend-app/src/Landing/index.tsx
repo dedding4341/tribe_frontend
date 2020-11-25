@@ -7,7 +7,7 @@ function Landing() {
   return (
     <div className="Landing">
       <LandingContent/>
-      {/* <About/> */}
+      <About/>
       <Footer/>
     </div>
   )

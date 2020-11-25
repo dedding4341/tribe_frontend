@@ -145,12 +145,6 @@ function About() {
         </div>
 
       </div>
-
-      <div className="row about-bottom-image">
-
-        <img src="" alt="" />
-
-      </div>
     </section>
   )
 }

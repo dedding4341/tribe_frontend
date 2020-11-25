@@ -8,7 +8,7 @@ function LandingContent() {
   return (
     <section className="LandingContent">
       <div className="LandingContent-bg">
-        <div className="home-content row">
+        <div className="home-content row no-gutters">
           <div className="row contents col-11"> {/**start contents */}
             <div className="home-content-left col-9 mr-auto ml-auto" >
               <div className="home-welcome text-left">
