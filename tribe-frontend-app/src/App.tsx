@@ -1,25 +1,17 @@
 import React from 'react';
-import TaskCard from './TaskCard/TaskCard'
-import SearchBar from './SearchBar'
 import './App.css';
+import { BrowserRouter } from 'react-router-dom';
+import Routes from './Routes';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import NavBar from './NavBar';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <SearchBar/>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NavBar/>
+      <BrowserRouter>
+        <Routes />
+      </BrowserRouter>
     </div>
   );
 }

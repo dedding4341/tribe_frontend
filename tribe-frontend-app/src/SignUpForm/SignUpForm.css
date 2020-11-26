@@ -1,0 +1,19 @@
+.SignUpForm label {
+  font-size: 1.6rem;
+}
+
+.SignUpForm {
+  text-align: left;
+  padding: 0 5rem;
+}
+
+.SignUpForm small {
+  font-size: 1.3rem;
+}
+
+.SignUpForm button {
+  padding: 1rem 2rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  width: 100%;
+}

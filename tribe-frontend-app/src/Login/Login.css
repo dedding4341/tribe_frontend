@@ -1,0 +1,66 @@
+.Login {
+  width: 100vw;
+  height: 100vh;
+}
+
+.Login-bg {
+  margin: auto;
+  width: 95%;
+}
+
+.Login-img-container {
+  background-image: url("https://wallpaperaccess.com/full/149370.jpg");
+  height: 75rem;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+.Login-img-container > img {
+  width:100%;
+  height:100%;
+}
+
+.Login-forms-container {
+  padding: 3rem;
+}
+
+.Login-forms-container h1 {
+  font-size: 3rem;
+}
+
+
+.Login-toggle-label {
+  font-size: 1.2rem;
+  margin-right: 1rem;
+}
+
+.Login-forms-container > header > img {
+  width: 18rem;
+}
+
+
+/* https://stackoverflow.com/questions/55593229/increasing-the-size-of-a-bootstrap-checkbox */
+
+.custom-switch.custom-switch-lg .custom-control-label {
+  padding-left: 3rem;
+  padding-bottom: 2rem;
+  font-size: 1rem;
+}
+
+.custom-switch.custom-switch-lg .custom-control-label::before {
+  height: 2rem;
+  width: calc(3rem + 0.75rem);
+  border-radius: 4rem;
+}
+
+.custom-switch.custom-switch-lg .custom-control-label::after {
+  width: calc(2rem - 4px);
+  height: calc(2rem - 4px);
+  border-radius: calc(3rem - (2rem / 2));
+}
+
+.custom-switch.custom-switch-lg .custom-control-input:checked ~ .custom-control-label::after {
+  transform: translateX(calc(2rem - 0.25rem));
+}
+
