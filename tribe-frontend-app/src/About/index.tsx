@@ -3,22 +3,20 @@ import React from 'react';
 // TODO: THIS NEEDS TO BE REFACTORED INTO SMALLER COMPONENTS
 function About() {
   return (
-    <section id="about container">
+    <section id="about">
 
-      <div className="row about-intro">
+      <div className="container about-intro">
 
-        <div className="col-4">
-          <h1 className="intro-header" data-aos="fade-up">About Our App</h1>
-        </div>
-        <div className="col-8">
-          <p className="lead" data-aos="fade-up">
+        <div className="row mb-5">
+          <h1 className="intro-header col-5" data-aos="fade-up">About Our App</h1>
+          <p className="lead col-7" data-aos="fade-up">
             Excepteur enim magna veniam labore veniam sint. Ex aliqua esse proident ullamco voluptate. Nisi nisi nisi aliqua eiusmod dolor dolor proident deserunt occaecat elit Lorem reprehenderit. Id culpa veniam ex aliqua magna elit pariatur do nulla. Excepteur enim magna veniam labore veniam sint.
-                </p>
+          </p>
         </div>
 
       </div>
 
-      <div className="row about-features">
+      <div className="container about-features">
 
         <div className="features-list row group">
 
@@ -111,37 +109,38 @@ function About() {
 
       </div>
 
-      <div className="row about-how">
+      <div className="container about-how mb-5">
 
-        <h1 className="intro-header col-7">How The App Work?</h1>
-        <div className="about-how-content">
-          <div className="about-how-steps row">
+        <div className="row">
+          <h1 className="intro-header col-12 mt-5 mb-5">How The App Work?</h1>
+        </div>
+        <div className="about-how-steps row">
 
-            <div className="col-6" >
-              <h3>Sign-Up</h3>
-              <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-                      </p>
-            </div>
-
-            <div className="col-6">
-              <h3>Upload</h3>
-              <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-                      </p>
-            </div>
-
-            <div className="col-6" >
-              <h3>Create</h3>
-              <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-                      </p>
-            </div>
-
-            <div className="col-6" >
-              <h3>Publish</h3>
-              <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
-                      </p>
-            </div>
-
+          <div className="col-6" >
+            <h3>Sign-Up</h3>
+            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+            </p>
           </div>
+
+          <div className="col-6">
+            <h3>Upload</h3>
+            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+            </p>
+          </div>
+
+          <div className="col-6" >
+            <h3>Create</h3>
+            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+            </p>
+          </div>
+
+          <div className="col-6" >
+            <h3>Publish</h3>
+            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+            </p>
+          </div>
+
+
         </div>
 
       </div>

@@ -15,7 +15,7 @@
 }
 
 .home-social-list {
-  padding-top: 30rem;
+  padding-top: 20vh;
 }
 
 
@@ -33,7 +33,7 @@
 }
 
 .home-content-left {
-  padding-top: 30rem;
+  padding-top: 30vh;
 }
 
 .home-content-left a {
@@ -41,7 +41,7 @@
 }
 
 .home-scrolldown {
-  margin-top: 15rem;
+  margin-top: 20vh;
   font-size: 1.3rem;
   letter-spacing: 2px;
 }
