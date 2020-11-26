@@ -1,22 +1,39 @@
 import React from 'react';
-import { Form } from 'react-bootstrap';
+import { Card, Form } from 'react-bootstrap';
 
 interface IProps {
-  handleChange: Function;
-  handleSubmit: Function;
+  setHasFamilyId: any;
   next: Function;
-  prev: Function;
   currentStep: Number;
 }
 
-function UserSetupStep4({ handleChange, handleSubmit, next, prev, currentStep }: IProps) {
+function UserSetupStep4({setHasFamilyId, next, currentStep }: IProps) {
+  const handleClick = (value: boolean) => {
+    setHasFamilyId(value);
+    next();
+  }
+
   return (
     <div>
       {currentStep === 4 &&
-        <Form>
+        <Form onSubmit={(evt) => { 
+          evt.preventDefault();
+          next();
+        }}>
           <Form.Group>
-            <Form.Label>What's your first name?</Form.Label>
-            <Form.Control/>
+            <Form.Label>Do you have a Tribe code?</Form.Label>
+            <div className="row">
+              <Card style={{cursor: "pointer"}} onClick={() => handleClick(true)} className="col-3">
+                <Card.Body>
+                  Yes
+                </Card.Body>
+              </Card>
+              <Card style={{cursor: "pointer"}} onClick={() => handleClick(false)} className="col-3">
+                <Card.Body>
+                  Nope
+                </Card.Body>
+              </Card>
+            </div>
           </Form.Group>
         </Form>
       }

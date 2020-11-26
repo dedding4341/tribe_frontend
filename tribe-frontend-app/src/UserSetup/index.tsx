@@ -4,10 +4,9 @@ import './UserSetup.css';
 
 function UserSetup() {
   return (
-    <div className="UserSetup container">
-      This is the user's first time logging in!
-      <section className="row ">
-        <div className="col-12">
+    <div className="UserSetup container bg-light">
+      <section className="row">
+        <div className="UserSetup-form-container col-12">
           <UserSetupForm />
         </div>
       </section>

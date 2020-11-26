@@ -8,7 +8,7 @@ interface IProps {
 function UserSetupStep6({ currentStep }: IProps) {
   return (
     <div>
-      {currentStep === 7 &&
+      {currentStep === 6 &&
         <div>
           Ok! You're all set to go.
           <br/>
