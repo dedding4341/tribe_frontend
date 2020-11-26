@@ -6,14 +6,37 @@ import './SignUpForm.css';
 
 const EC2_SIGNUP_URL = 'http://ec2-52-53-238-185.us-west-1.compute.amazonaws.com:5000/sign-up';
 const LOCALHOST_SIGNUP_URL = 'http://127.0.0.1:8000/sign-up';
+const validEmailRegex = RegExp(/^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i);
+
 
 function SignUpForm() {
-    const INITIAL_FORM_VALUES = { username: "", password: "", email: "", repeatPassword: "" }
+    const INITIAL_FORM_VALUES = { username: "", password: "", email: "", repeatPassword: ""}
+    const [errors, setErrors] = useState({username: "", password: "", email: "", repeatPassword: ""})
     const [formData, setFormData] = useState(INITIAL_FORM_VALUES);
 
     const handleChange = (evt: React.FormEvent<HTMLInputElement>) => {
         const { name, value } = evt.currentTarget;
         setFormData(currData => ({ ...currData, [name]: value }));
+        let signUpErrors = errors;
+
+        switch (name) {
+            case 'username':
+                signUpErrors.username = value.length < 5 ? 'Full Name must be 5 characters long!' : '';
+                break;
+            case 'password':
+                signUpErrors.password = value.length < 8 ? 'Password must be 8 characters long!' : '';
+                break;
+            case 'email': 
+                signUpErrors.email = validEmailRegex.test(value) ? '' : 'Email is not valid!';
+                break;
+            case 'repeatPassword':
+                signUpErrors.repeatPassword = value == INITIAL_FORM_VALUES.password ? '' : 'Does not match password';
+                break;
+            default:
+                break;
+        }
+
+        setErrors(signUpErrors, )
 
     }
 
