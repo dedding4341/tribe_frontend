@@ -36,7 +36,9 @@ function SignUpForm() {
                 break;
         }
 
-        setErrors(signUpErrors, )
+        setErrors(signUpErrors => ({ ...signUpErrors, [name]: value}));
+        console.log(errors)
+        
 
     }
 
