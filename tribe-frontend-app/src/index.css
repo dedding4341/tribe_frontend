@@ -47,4 +47,22 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+}
+
+.button {
+  display: block;
+  width: fit-content;
+  background: #3dd17a;
+  padding: 0.7rem 1rem;
+  text-align: center;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+}
+
+/* !important used because bootstrap 3 `row` makes them -15px each lol */
+.no-gutters {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
 }

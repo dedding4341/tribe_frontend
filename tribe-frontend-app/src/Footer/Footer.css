@@ -1,0 +1,10 @@
+.Footer {
+  background-color: rgb(28, 29, 29);
+}
+
+.footer-main {
+  color: white;
+  padding: 3rem 0;
+  font-size: 1.2rem;
+  text-align: center;
+}

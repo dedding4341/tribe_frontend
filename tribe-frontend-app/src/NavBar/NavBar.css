@@ -1,0 +1,18 @@
+.NavBar {
+  font-size: 1.5rem;
+  width: 90%;
+  min-width: 500px;
+}
+
+.NavBar a {
+  margin-left: 2rem;
+  font-weight: thin;
+}
+
+.NavBar-container {
+  padding: 1rem 2rem;
+}
+
+.brand {
+  font-size: 2rem !important;
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import Landing from '../Landing';
 import Login from '../Login';
 
 /**
@@ -15,7 +16,7 @@ function Routes() {
         <div>Test your components in this routes</div>
       </Route>
       <Route exact path="/">
-        <div>Home path</div>
+        <Landing/>
       </Route>
       <Route>
         <div>404! Seems like the page you are accessing doesn't exist yet.</div>
