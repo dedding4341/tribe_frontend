@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Landing from '../Landing';
 import Login from '../Login';
+import UserSetup from '../UserSetup';
 
 /**
  * Routing logic for components
@@ -9,6 +10,9 @@ import Login from '../Login';
 function Routes() {
   return (
     <Switch>
+      <Route exact path="/users/welcome">
+        <UserSetup/>
+      </Route>
       <Route exact path="/users/auth">
         <Login/>
       </Route>
