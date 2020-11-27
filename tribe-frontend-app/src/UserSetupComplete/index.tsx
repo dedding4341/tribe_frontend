@@ -9,7 +9,7 @@ function UserSetupStep6({ currentStep }: IProps) {
   return (
     <div>
       {currentStep === 6 &&
-        <div>
+        <div className="slide-in-bottom">
           Ok! You're all set to go.
           <br/>
           Let's get tribing!

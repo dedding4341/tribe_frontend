@@ -14,7 +14,7 @@ function UserSetupStep3({ value, handleSubmit, handleIsParentChange, next, prev,
   return (
     <div>
       {currentStep === 3 &&
-        <Form onSubmit={(evt) => { 
+        <Form className="slide-in-bottom" onSubmit={(evt) => { 
           evt.preventDefault();
           next();
         }}>

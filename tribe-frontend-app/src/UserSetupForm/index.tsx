@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import UserSetupStep1 from '../UserSetupStep1';
 import UserSetupStep2 from '../UserSetupStep2';
 import UserSetupStep3 from '../UserSetupStep3';
 import UserSetupStep4 from '../UserSetupStep4';
 import UserSetupStep5 from '../UserSetupStep5';
 import UserSetupComplete from '../UserSetupComplete';
+import './UserSetupForm.css';
 
 function UserSetupForm() {
   const INITIAL_USER_VALUES = { firstName: "", lastName: "", isParent: true };

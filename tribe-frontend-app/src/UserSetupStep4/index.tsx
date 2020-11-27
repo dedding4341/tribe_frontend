@@ -14,9 +14,9 @@ function UserSetupStep4({setHasFamilyId, next, currentStep }: IProps) {
   }
 
   return (
-    <div>
+    <div className="col-12 ml-5 text-left">
       {currentStep === 4 &&
-        <Form onSubmit={(evt) => { 
+        <Form className="slide-in-bottom" onSubmit={(evt) => { 
           evt.preventDefault();
           next();
         }}>

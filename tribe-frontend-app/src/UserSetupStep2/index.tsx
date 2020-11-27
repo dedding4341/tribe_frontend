@@ -11,15 +11,15 @@ interface IProps {
 
 function UserSetupStep2({ value, handleChange, next, prev, currentStep}: IProps) {
   return (
-    <div>
+    <div className="col-12 ml-5 text-left">
       {currentStep === 2 &&
-        <Form onSubmit={(evt) => { 
+        <Form className="slide-in-bottom" onSubmit={(evt) => { 
           evt.preventDefault();
           next();
         }}>
           <Form.Group>
             <Form.Label>What's your last name?</Form.Label>
-            <Form.Control id="input-box" name="lastName" value={value} onChange={(evt) => handleChange(evt as any)}/>
+            <Form.Control autoFocus={true} id="input-box" name="lastName" value={value} onChange={(evt) => handleChange(evt as any)}/>
           </Form.Group>
           <Button id="enter-btn" onClick={() => next()}>Enter</Button>
         </Form>

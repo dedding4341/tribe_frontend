@@ -4,7 +4,7 @@ import './UserSetup.css';
 
 function UserSetup() {
   return (
-    <div className="UserSetup container bg-light">
+    <div className="UserSetup container">
       <section className="row">
         <div className="UserSetup-form-container col-12">
           <UserSetupForm />
