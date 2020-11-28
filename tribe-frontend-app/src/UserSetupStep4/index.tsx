@@ -14,7 +14,7 @@ function UserSetupStep4({setHasFamilyId, next, currentStep }: IProps) {
   }
 
   return (
-    <div className="col-12 ml-5 text-left">
+    <div className="text-left">
       {currentStep === 4 &&
         <Form className="slide-in-bottom" onSubmit={(evt) => { 
           evt.preventDefault();
@@ -22,13 +22,13 @@ function UserSetupStep4({setHasFamilyId, next, currentStep }: IProps) {
         }}>
           <Form.Group>
             <Form.Label>Do you have a Tribe code?</Form.Label>
-            <div className="row">
-              <Card style={{cursor: "pointer"}} onClick={() => handleClick(true)} className="col-3">
+            <div className="row no-gutters text-center">
+              <Card style={{cursor: "pointer"}} onClick={() => handleClick(true)} className="UserSetUpForm-card slide-in-blurred-left shadow-sm col-3">
                 <Card.Body>
                   Yes
                 </Card.Body>
               </Card>
-              <Card style={{cursor: "pointer"}} onClick={() => handleClick(false)} className="col-3">
+              <Card style={{cursor: "pointer"}} onClick={() => handleClick(false)} className="UserSetUpForm-card slide-in-blurred-right shadow-sm col-3">
                 <Card.Body>
                   Nope
                 </Card.Body>

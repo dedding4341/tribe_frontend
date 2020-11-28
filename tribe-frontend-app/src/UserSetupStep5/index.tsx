@@ -19,7 +19,7 @@ function UserSetupStep5({ isParent, famIdValue, famNameValue, hasFamilyId, handl
     <div className="col-12 ml-5 text-left">
       {currentStep === 5 &&
         <div className="slide-in-bottom">
-          <Form onSubmit={(evt) => handleSubmit(evt as any)}>
+          <Form className="slide-in-bottom" onSubmit={(evt) => handleSubmit(evt as any)}>
             {hasFamilyId ?
               <>
                 <Form.Group>
@@ -38,7 +38,7 @@ function UserSetupStep5({ isParent, famIdValue, famNameValue, hasFamilyId, handl
                   <Button id="enter" type="submit">Submit</Button>
                 </>
                 :
-                <div>Please ask your Tribe leader for an invite code!</div>
+                <div className="UserSetUpStep5-no-code">Please ask your Tribe leader for an invite code!</div>
             }
             <Button className="UserSetupStep5-back-btn " onClick={() => prev()}>Back</Button>
           </Form>

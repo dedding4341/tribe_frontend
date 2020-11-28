@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button, Form } from 'react-bootstrap';
 import './UserSetupStep1.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faLevelUpAlt } from '@fortawesome/free-solid-svg-icons'
 
 interface IProps {
   handleChange: Function;
@@ -21,7 +23,7 @@ function UserSetupStep1({ handleChange, next, currentStep, value }: IProps) {
             <Form.Label>What's your first name?</Form.Label>
             <Form.Control autoFocus={true} id="input-box" name="firstName" value={value} onChange={(evt) => handleChange(evt as any)} />
           </Form.Group>
-          <Button id="enter-btn" size="lg" onClick={() => next()}>Enter</Button>
+          <Button id="enter-btn" size="lg" onClick={() => next()}><FontAwesomeIcon icon={faLevelUpAlt} rotation={90}/>Enter</Button>
         </Form>
       }
     </div>

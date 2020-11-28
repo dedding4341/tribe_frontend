@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Card, Form } from 'react-bootstrap';
+import './UserSetupStep3.css';
 
 interface IProps {
   value: boolean;
@@ -14,19 +15,19 @@ function UserSetupStep3({ value, handleSubmit, handleIsParentChange, next, prev,
   return (
     <div>
       {currentStep === 3 &&
-        <Form className="slide-in-bottom" onSubmit={(evt) => { 
+        <Form onSubmit={(evt) => { 
           evt.preventDefault();
           next();
         }}>
           <Form.Group>
-            <Form.Label className="row">Are you a parent or a child?</Form.Label>
+            <Form.Label className="slide-in-bottom row">Are you a parent or a child?</Form.Label>
             <div className="row">
-              <Card style={{cursor: "pointer"}} onClick={() => handleIsParentChange(true)} className="col-3">
+              <Card style={{cursor: "pointer"}} className="UserSetUpForm-card slide-in-blurred-left col-3 shadow-sm" onClick={() => handleIsParentChange(true)}>
                 <Card.Body>
                   I'm a Parent!
                 </Card.Body>
               </Card>
-              <Card style={{cursor: "pointer"}} onClick={() => handleIsParentChange(false)} className="col-3">
+              <Card style={{cursor: "pointer"}} className="UserSetUpForm-card slide-in-blurred-right col-3 shadow-sm" onClick={() => handleIsParentChange(false)}>
                 <Card.Body>
                   I'm a Child!
                 </Card.Body>
