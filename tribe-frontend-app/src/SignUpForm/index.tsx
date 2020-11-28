@@ -30,7 +30,7 @@ function SignUpForm() {
                 signUpErrors.email = validEmailRegex.test(value) ? '' : 'Email is not valid!';
                 break;
             case 'repeatPassword':
-                signUpErrors.repeatPassword = value == INITIAL_FORM_VALUES.password ? '' : 'Does not match password';
+                signUpErrors.repeatPassword = value === formData.password ? '' : 'Does not match password';
                 break;
             default:
                 break;
@@ -42,21 +42,36 @@ function SignUpForm() {
 
     }
 
+    const validateForm = (errors: any) => {
+        let valid = true;
+        Object.values(errors).forEach(
+          // if we have an error string set valid to false
+            (val: any) => val.length > 0 && (valid = false)
+        );
+        return valid;
+    }
+
 
     const handleSubmit = (evt: React.FormEvent) => {
         evt.preventDefault();
-        if (formData.password === formData.repeatPassword) {
-            fetch(LOCALHOST_SIGNUP_URL, {
-                method: 'POST',
-                body: JSON.stringify(formData),
-                headers: {
-                    "Content-type": "application/json;"
-                }
-            })
-                .then(res => res.json())
-                .then(json => console.log(json))
+        // if (formData.password === formData.repeatPassword) {
+        //     fetch(LOCALHOST_SIGNUP_URL, {
+        //         method: 'POST',
+        //         body: JSON.stringify(formData),
+        //         headers: {
+        //             "Content-type": "application/json;"
+        //         }
+        //     })
+        //         .then(res => res.json())
+        //         .then(json => console.log(json))
+        // } else {
+        //     alert("Passwords do not match!")
+        // }
+
+        if(validateForm(errors)) {
+            console.log('valid Form')
         } else {
-            alert("Passwords do not match!")
+            console.log('Invalid Form')
         }
     }
 
