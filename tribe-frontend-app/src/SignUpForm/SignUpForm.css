@@ -17,3 +17,16 @@
   font-weight: 600;
   width: 100%;
 }
+
+.form-label{
+    
+    font-size: medium;
+}
+
+.control-label{
+  text-align: left;
+}
+
+.form-horizontal .control-label.text-left{
+  text-align: left;
+}

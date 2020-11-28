@@ -1,0 +1,9 @@
+.SearchBar{
+    display: flex;
+    justify-content: space-between;
+    background-color: gainsboro;
+    border-radius: 2rem;
+    padding: 0.5rem;
+    padding-left: 1rem;
+    align-items: center;
+}
