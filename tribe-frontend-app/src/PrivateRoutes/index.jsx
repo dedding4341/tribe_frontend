@@ -6,13 +6,14 @@ import DashCalender from '../DashCalender';
 import DashOverview from '../DashOverview';
 import DashStore from '../DashStore';
 import DashTodo from '../DashTodo';
+import './PrivateRoutes.css';
 
 /**
  * Routing logic for private components
  */
 function PrivateRoutes() {
   return (
-    <Container fluid>
+    <Container fluid className="PrivateRoutes">
       <Row>
         <Col className="text-center mt-5 mb-5">
           <h1>tribe</h1>

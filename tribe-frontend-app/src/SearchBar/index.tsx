@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
+import { Button, Row, Form } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import './SearchBar.css';
 
 //A few things we need to know if we are going to have a initial 
 
 function SearchBar() {
     const URL = ""
-    const INITIAL_VALUE = { search: ""}
+    const INITIAL_VALUE = { search: "" }
     const [searchResult, setSearchResult] = useState(INITIAL_VALUE);
 
     const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
         const { name, value } = e.currentTarget;
-        setSearchResult(currSearch => ({...currSearch, [name]: value }));
+        setSearchResult(currSearch => ({ ...currSearch, [name]: value }));
     }
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -20,16 +23,16 @@ function SearchBar() {
         // .then(json => console.log(json))
     }
 
-    return(
-        <div className="SearchBar">
-            <img src='../images.png'/>
-            <span>
-                <form  onSubmit={handleSubmit}>
-                    <input placeholder="Search" name="search" value={searchResult.search} onChange={handleChange}/>
-                    <button type="submit">Search</button>
-                </form>
-            </span>
-        </div>
+    return (
+        <Form onSubmit={handleSubmit} className="SearchBar">
+            <Row className="SearchBar-row d-flex justify-content-around">
+                <span className="SearchBar-input-container d-flex align-items-center col-7">
+                    <FontAwesomeIcon size="2x" icon={faSearch}></FontAwesomeIcon>
+                    <Form.Control className="SearchBar-input" autoComplete="off" placeholder="Search" name="search" value={searchResult.search} onChange={(evt: any) => handleChange(evt)}></Form.Control>
+                </span>
+                <Button className="SearchBar-submit col-3" type="submit">Filter</Button>
+            </Row>
+        </Form>
     )
 }
 

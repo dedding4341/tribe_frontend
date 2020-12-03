@@ -1,9 +1,45 @@
 .SearchBar{
-    display: flex;
-    justify-content: space-between;
-    background-color: gainsboro;
-    border-radius: 2rem;
-    padding: 0.5rem;
-    padding-left: 1rem;
-    align-items: center;
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    padding: 0.7rem 1rem;
+}
+
+.SearchBar-input {
+    border-radius: 20px;
+    background-color: transparent;
+    border: none;
+    padding: 0 1rem;
+    font-size: 1.4rem;
+}
+
+.SearchBar-input-container {
+    background-color: #eff0f6;
+    border-radius: 20px;
+    box-shadow: none;
+}
+
+.SearchBar-input-container > svg {
+    color: #c4c6da;
+}
+
+.SearchBar-input:focus {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.SearchBar-submit {
+    border-radius: 20px;
+    background-color: white;
+    border: 1px solid #eff0f6;
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: rgb(98, 148, 255);
+    padding: 0.5rem 1rem;
+    transition: 0.5s;
+}
+
+.SearchBar-submit:hover {
+    background-color: rgb(174, 200, 255);
+    color: white;
+    border: 1px solid rgb(174, 200, 255);
 }
