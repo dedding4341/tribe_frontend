@@ -1,0 +1,4 @@
+.DashOverview-title {
+  width: 20px; /* tiny width size to make the 2nd word go to new line */
+  font-size: 4rem;
+}
