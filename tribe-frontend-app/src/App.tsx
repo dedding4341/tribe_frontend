@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import PublicRoutes from './PublicRoutes';
 import PrivateRoutes from './PrivateRoutes';
 
@@ -13,10 +13,6 @@ function App() {
             <PrivateRoutes />
           </Route>
           <PublicRoutes />
-          <Route path='/not-found'>
-            <div>Not found page</div>
-            </Route>
-          <Redirect from='*' to='/not=found'/>
         </Switch>
       </BrowserRouter>
     </div>

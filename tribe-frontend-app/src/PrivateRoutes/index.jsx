@@ -20,11 +20,11 @@ function PrivateRoutes() {
         </Col>
       </Row>
       <Row className="">
-        <Col sm={3} md={3}>
+        <Col sm={3} md={3} lg={4}>
           <DashboardLeft />
         </Col>
         <Switch>
-          <Col sm={9} md={9}>
+          <Col sm={9} md={9} lg={8}>
             <Route exact path="/tribe/:famId/overview">
               <DashOverview />
             </Route>
