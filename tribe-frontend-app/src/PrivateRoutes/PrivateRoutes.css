@@ -1,4 +1,6 @@
 .PrivateRoutes {
   background-color: rgb(227, 238, 245);
-  height: 100vh;
+  min-height: 100vh;
+  height: fit-content;
+  padding-bottom: 5rem;
 }

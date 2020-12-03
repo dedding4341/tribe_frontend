@@ -6,19 +6,19 @@ function ProfileHeader() {
   return (
     <div className="ProfileHeader container">
       <Row className="d-flex align-items-center">
-        <Col sm={6} md={6} lg={4}>
+        <Col sm={10} md={6} lg={4}>
           <div className="ProfileHeader-img-wrapper">
             <Image className="ProfileHeader-img" src="https://pbs.twimg.com/media/ELJ83bNWkAAGZOk.jpg" alt="dp img"/>
           </div>
         </Col>
-        <Col sm={6} md={6} lg={6} className="ProfileHeader-details text-left">
+        <Col sm={3} md={6} lg={6} className="ProfileHeader-details text-left">
           <Row>
-            <Col md={7} className="ProfileHeader-name">
+            <Col sm={12} md={7} className="ProfileHeader-name">
               Diana Liang
             </Col>
           </Row>
           <Row>
-            <Col md={5} className="ProfileHeader-fam-tag">
+            <Col sm={12} md={5} className="ProfileHeader-fam-tag">
               @tribe_fam
             </Col>
           </Row>

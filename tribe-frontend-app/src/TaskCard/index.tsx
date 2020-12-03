@@ -12,8 +12,8 @@ function TaskCard() {
                 <Image className="TaskCard-img" src="https://pbs.twimg.com/media/Emvpv3DW8AEVEpm.jpg" />
             </div>
             <Container>
-                <Row className="d-flex align-items-center">
-                    <Col sm={6} md={8}>
+                <Row className="d-flex align-items-center justify-content-between">
+                    <Col sm={6} md="auto">
                         <Row className="TaskCard-header">
                             <h3>Movie nite w/ fam!</h3>
                             <span className="TaskCard-pts">+{pts}pts</span>
@@ -24,7 +24,7 @@ function TaskCard() {
                             </div>
                         </Row>
                     </Col>
-                    <Col sm={6} md={4}>
+                    <Col sm={6} md="auto">
                         <Button className="TaskCard-button">{isOwner ? "Complete" : "Trade"}</Button>
                     </Col>
                 </Row>
