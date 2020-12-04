@@ -8,6 +8,7 @@
     display: flex;
     position: relative;
     justify-content: space-between;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.068), 0 6px 10px 0 rgba(0, 0, 0, 0.068);
 }
 
 /*https://stackoverflow.com/questions/35336298/responsive-circular-images/35336815#35336815?newreg=700b54890c0544b68c0812ac8ce1d1cb*/

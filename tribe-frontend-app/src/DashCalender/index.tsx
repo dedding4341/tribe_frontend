@@ -15,10 +15,10 @@ function DashCalender() {
       </Row>
       <Container fluid className="mt-3">
         <Row>
-          <Col md={7} className="DashCalender-calender-wrapper">
+          <Col md={8} className="DashCalender-calender-wrapper">
             <Image src="https://3vwizk2qtr8l3diwrm3r2ba0-wpengine.netdna-ssl.com/wp-content/uploads/2016/01/Apple-Google-2.png"></Image>
           </Col>
-          <Col md={5} className="DashCalender-evt-list-wrapper">
+          <Col md={4} className="DashCalender-evt-list-wrapper">
             <Row className="DashCalender-evt-list-header">
               <h2>Upcoming Events</h2>
               <Button>View All</Button>
