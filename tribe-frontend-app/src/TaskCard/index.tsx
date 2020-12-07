@@ -3,18 +3,23 @@ import { Button, Col, Container, Image, OverlayTrigger, Row, Tooltip } from 'rea
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import './TaskCard.css';
+import TradeForm from '../TradeForm';
 
 interface IProps {
     task: any,
-    deleteTask: Function
+    deleteTask: Function,
+    tradeTask: Function,
+    completeTask: Function
 }
 
 const currentUser = { first_name: "Diana", user_id: 231, user_avatar: 'https://pbs.twimg.com/media/Emvpv3DW8AEVEpm.jpg', family_manager: true };
 const familyMembers = [{ first_name: "Taka", user_id: 321, user_avatar: 'https://i.pinimg.com/originals/8d/5f/62/8d5f62968c07c376fb2e4d3b12b248d9.png' }, { first_name: "Diana", user_id: 231, user_avatar: 'https://pbs.twimg.com/media/Emvpv3DW8AEVEpm.jpg' }, { first_name: "Danny", user_id: 132, user_avatar: 'https://www.kindpng.com/picc/m/102-1027630_kawaii-cute-red-bunny-strawberry-strawberries-kawaii-animal.png' }, { first_name: "Dennis", user_id: 123, user_avatar: 'https://cdn.shopify.com/s/files/1/2040/0303/products/Simple_Cute_Kawaii_Nursery_Animal_Cartoon_-_Penguin_696545712_1024x1024@2x.jpg?v=1499733886' }];
 const defaultPfp = 'https://m.media-amazon.com/images/I/41qqZPwvIRL._AC_.jpg';
 
-function TaskCard({ task, deleteTask}: IProps) {
+function TaskCard({ task, deleteTask, tradeTask, completeTask }: IProps) {
     const [showDelConf, setShowDelConf] = useState(false);
+    const [showTradeForm, setShowTradeForm] = useState(false);
+    const isTaskOwner = (task.assignee.indexOf(currentUser.user_id) !== -1);
 
     // filter for the assignees' informations to display
     let assignees = familyMembers.filter(memb => {
@@ -26,12 +31,21 @@ function TaskCard({ task, deleteTask}: IProps) {
         setShowDelConf(false);
     }
 
+    const handleTradeTask = (data: any) => {
+        tradeTask(task.task_id, data.recipients);
+    }
+
+    const handleCompleteTask = () => {
+        completeTask(task.task_id);
+    }
+
     // avatar dynamic styling
     let rightPosition = -30
     let zIdx = assignees.length;
 
     return (
         <div className="TaskCard">
+            <TradeForm show={showTradeForm} handleTradeTask={handleTradeTask} handleClose={() => setShowTradeForm(false)}/>
             {assignees.map(assignee => {
                 // increment and decrement avatar styling variables.
                 rightPosition += 30;
@@ -55,14 +69,12 @@ function TaskCard({ task, deleteTask}: IProps) {
                 {showDelConf ?
                     // HTML for task deletion confirmation 
                     <Row className="d-flex align-items-center justify-content-between">
-                        <Col sm={6} md={6} className="d-flex align-items-center justify-content-between">
-                            <Button className="TaskCard-btn TaskCard-btn-yes" onClick={handleTaskDelete}>Yes</Button>
-                            <Button className="TaskCard-btn TaskCard-btn-no" onClick={() => setShowDelConf(false)}>No</Button>
+                        <Col sm={6} md={6}>
+                            <h4>Delete task for {task.task_name}?</h4>
                         </Col>
                         <Col sm={6} md={6}>
-                            <Row>
-                                <h4>Delete task for {task.task_name}?</h4>
-                            </Row>
+                            <Button className="TaskCard-btn TaskCard-btn-yes" onClick={handleTaskDelete}>Yes</Button>
+                            <Button className="TaskCard-btn TaskCard-btn-no" onClick={() => setShowDelConf(false)}>No</Button>
                         </Col>
                     </Row>
                     :
@@ -80,7 +92,7 @@ function TaskCard({ task, deleteTask}: IProps) {
                             </Row>
                         </Col>
                         <Col sm={6} md="auto">
-                            <Button className="TaskCard-btn">{task.assignee.indexOf(currentUser.user_id) !== -1 ? "Complete" : "Trade"}</Button>
+                            <Button className="TaskCard-btn" onClick={isTaskOwner ? handleCompleteTask : () => setShowTradeForm(true)}>{isTaskOwner ? "Complete" : "Trade"}</Button>
                         </Col>
                     </Row>
                 }

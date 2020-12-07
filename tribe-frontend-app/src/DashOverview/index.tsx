@@ -66,6 +66,19 @@ function DashOverview() {
     setShowNewTaskForm(false);
   }
 
+  // TODO: Implement server logic
+  const tradeTask = (task_id: Number, recipients: any) => {
+    console.log(`Requesting trade for task id ${task_id} to users ${recipients}`);
+    alert(`You've sent trade requests to users #${recipients}.`);
+  }
+
+  // TODO: Implement server logic
+  const completeTask = (task_id: Number) => {
+    console.log(`Completing task id ${task_id}`);
+    alert("You've completed the task.")
+  }
+
+  // TODO: Implement server logic
   const deleteTask = (task_id: Number) => {
     setTasks(currTasks => {
       let filteredTasks = currTasks.filter(task => {
@@ -102,7 +115,7 @@ function DashOverview() {
         <Row>
           {tasks ? tasks.map(task => {
             return (<Col md={6}>
-              <TaskCard task={task} deleteTask={deleteTask}/>
+              <TaskCard task={task} tradeTask={tradeTask} deleteTask={deleteTask} completeTask={completeTask}/>
             </Col>)
           }) : <Col md={6}>No tasks to display.</Col>}
         </Row>

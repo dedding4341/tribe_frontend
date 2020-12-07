@@ -9,12 +9,11 @@ interface IProps {
 
 
 function NewTaskForm({ show, handleClose, postNewTask }: IProps) {
-  // familyMemebers information will be stored in a global state.
+  // familyMembers information will be stored in a global state.
   // for now, it will be placed here.
   const familyMembers = [{ first_name: "Taka", last_name: "M", user_id: 321, family_manager: false }, { first_name: "Diana", last_name: "Liang", user_id: 231, family_manager: true }, { first_name: "Danny", last_name: "M", user_id: 132, family_manager: false }, { first_name: "Dennis", last_name: "E", user_id: 123, family_manager: false }];
   const INITIAL_STATE = { task_name: "", task_description: "", associated_points: 1, assignee: [] as any, completion_time: undefined }
   const [formData, setFormData] = useState(INITIAL_STATE);
-
 
   const handleSubmit = (evt: React.FormEvent) => {
     evt.preventDefault();
