@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
+import * as mock from '../mock';
 
 interface IProps {
   show: Boolean,
@@ -11,7 +12,6 @@ interface IProps {
 function NewTaskForm({ show, handleClose, postNewTask }: IProps) {
   // familyMembers information will be stored in a global state.
   // for now, it will be placed here.
-  const familyMembers = [{ first_name: "Taka", last_name: "M", user_id: 321, family_manager: false }, { first_name: "Diana", last_name: "Liang", user_id: 231, family_manager: true }, { first_name: "Danny", last_name: "M", user_id: 132, family_manager: false }, { first_name: "Dennis", last_name: "E", user_id: 123, family_manager: false }];
   const INITIAL_STATE = { task_name: "", task_description: "", associated_points: 1, assignee: [] as any, completion_time: undefined }
   const [formData, setFormData] = useState(INITIAL_STATE);
 
@@ -71,7 +71,7 @@ function NewTaskForm({ show, handleClose, postNewTask }: IProps) {
           <Form.Group>
             <Form.Label>Assign to:</Form.Label>
             <Form.Control name="assignee" as="select" value={formData.assignee} multiple={true} onChange={(evt: any) => handleMultiselect(evt)}>
-              {familyMembers.map(memb => <option key={memb.user_id} value={memb.user_id}>{memb.first_name}</option>)}
+              {mock.familyMembers.map(memb => <option key={memb.user_id} value={memb.user_id}>{memb.first_name}</option>)}
             </Form.Control>
           </Form.Group>
         </Modal.Body>

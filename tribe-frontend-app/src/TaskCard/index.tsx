@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import './TaskCard.css';
 import TradeForm from '../TradeForm';
+import * as mock from '../mock';
 
 interface IProps {
     task: any,
@@ -12,17 +13,15 @@ interface IProps {
     completeTask: Function
 }
 
-const currentUser = { first_name: "Diana", user_id: 231, user_avatar: 'https://pbs.twimg.com/media/Emvpv3DW8AEVEpm.jpg', family_manager: true };
-const familyMembers = [{ first_name: "Taka", user_id: 321, user_avatar: 'https://i.pinimg.com/originals/8d/5f/62/8d5f62968c07c376fb2e4d3b12b248d9.png' }, { first_name: "Diana", user_id: 231, user_avatar: 'https://pbs.twimg.com/media/Emvpv3DW8AEVEpm.jpg' }, { first_name: "Danny", user_id: 132, user_avatar: 'https://www.kindpng.com/picc/m/102-1027630_kawaii-cute-red-bunny-strawberry-strawberries-kawaii-animal.png' }, { first_name: "Dennis", user_id: 123, user_avatar: 'https://cdn.shopify.com/s/files/1/2040/0303/products/Simple_Cute_Kawaii_Nursery_Animal_Cartoon_-_Penguin_696545712_1024x1024@2x.jpg?v=1499733886' }];
 const defaultPfp = 'https://m.media-amazon.com/images/I/41qqZPwvIRL._AC_.jpg';
 
 function TaskCard({ task, deleteTask, tradeTask, completeTask }: IProps) {
     const [showDelConf, setShowDelConf] = useState(false);
     const [showTradeForm, setShowTradeForm] = useState(false);
-    const isTaskOwner = (task.assignee.indexOf(currentUser.user_id) !== -1);
+    const isTaskOwner = (task.assignee.indexOf(mock.currentUser.user_id) !== -1);
 
     // filter for the assignees' informations to display
-    let assignees = familyMembers.filter(memb => {
+    let assignees = mock.familyMembers.filter(memb => {
         return task.assignee.indexOf(memb.user_id) !== -1;
     });
 
@@ -63,7 +62,7 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask }: IProps) {
                 );
             })}
             <Container>
-                {currentUser.family_manager && <div className="TaskCard-delete-btn">
+                {mock.currentUser.family_manager && <div className="TaskCard-delete-btn">
                     <FontAwesomeIcon style={{ cursor: "pointer" }} icon={faTimes} size="2x" onClick={() => setShowDelConf(!showDelConf)} />
                 </div>}
                 {showDelConf ?

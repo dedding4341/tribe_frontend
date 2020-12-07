@@ -4,6 +4,7 @@ import NewTaskForm from '../NewTaskForm';
 import SearchBar from '../SearchBar';
 import TaskCard from '../TaskCard';
 import './DashOverview.css';
+import * as mock from '../mock';
 
 interface Task {
   task_id: Number,
@@ -20,42 +21,7 @@ function DashOverview() {
 
   useEffect(function handleGetTasks() {
     function getTasks() {
-      return {
-        tasks: [
-          {
-            task_id: 39483,
-            task_name: "Movie nite w/ fam",
-            associated_points: 5,
-            assignee: [132],
-            created_by: 231,
-            completion_time: '12/13/2020'
-          },
-          {
-            task_id: 30493,
-            task_name: "Wash dishes",
-            associated_points: 2,
-            assignee: [231],
-            created_by: 321,
-            completion_time: '12/08/2020'
-          },
-          {
-            task_id: 34839,
-            task_name: "Do laundry",
-            associated_points: 2,
-            assignee: [123],
-            created_by: 321,
-            completion_time: '12/08/2020'
-          },
-          {
-            task_id: 12329,
-            task_name: "help Diana with hw",
-            associated_points: 100,
-            assignee: [123, 132],
-            created_by: 321,
-            completion_time: '12/10/2020'
-          }
-        ]
-      }
+      return mock.response;
     }
     let resp = getTasks();
     setTasks(resp.tasks);
