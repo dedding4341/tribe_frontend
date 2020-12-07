@@ -13,7 +13,7 @@
 
 .TaskCard-delete-btn {
     position: absolute;
-    top: 3%;
+    top: 5%;
     left: 2.5%;
     color: rgb(255, 179, 179);
 }
@@ -47,7 +47,7 @@
     font-weight: 600;
 }
 
-.TaskCard-button {
+.TaskCard-btn {
     padding: 0.5rem 3rem;
     margin: 0.5rem 0;
     font-size: 1.5rem;
@@ -58,10 +58,34 @@
     font-weight: 600;
 }
 
-.TaskCard-button:hover {
+.TaskCard-btn-yes {
+    border-color: #49d38e;
+    color:  #49d38e;
+}
+
+.TaskCard-btn-no {
+    border-color: #ff8f87;
+    color:   #ff8f87;
+}
+
+.TaskCard-btn:hover,
+.TaskCard-btn:active {
     background-color: #7186c0;
     color: white;
 }
+
+.TaskCard-btn-no:hover,
+.TaskCard-btn-no:active {
+    background-color: #ff8f87;
+    border-color: #ff8f87;
+}
+
+.TaskCard-btn-yes:hover,
+.TaskCard-btn-no:active  {
+    background-color: #49d38e;
+    border-color: #49d38e
+}
+
 
 .TaskCard-tooltip {
     font-size: 1.2rem;
