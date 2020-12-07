@@ -24,10 +24,7 @@ function DashCalender() {
               <Button>View All</Button>
             </Row>
             <Row>
-              <Col>
               {/* Need remake a new component similar named EventCard */}
-                <TaskCard/>
-              </Col>
             </Row>
           </Col>
         </Row>

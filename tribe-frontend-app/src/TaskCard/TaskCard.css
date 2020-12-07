@@ -1,14 +1,21 @@
 .TaskCard{
     width: 100%;
-    padding: 2rem 3rem;
+    padding: 2rem 4rem;
     margin-top: 7px;
     background-color: rgb(255, 255, 255);
-    border-radius: 32px;
+    border-radius: 20px;
     color: black;
     display: flex;
     position: relative;
     justify-content: space-between;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.068), 0 6px 10px 0 rgba(0, 0, 0, 0.068);
+}
+
+.TaskCard-delete-btn {
+    position: absolute;
+    top: 3%;
+    left: 2.5%;
+    color: rgb(255, 179, 179);
 }
 
 /*https://stackoverflow.com/questions/35336298/responsive-circular-images/35336815#35336815?newreg=700b54890c0544b68c0812ac8ce1d1cb*/
@@ -19,7 +26,6 @@
     overflow:hidden;
     position: absolute;
     top: -30px;
-    right: 0;
 }
 
 .TaskCard-img {
@@ -47,41 +53,16 @@
     font-size: 1.5rem;
     border-radius: 40px;
     background-color: white;
-    border-color: #5F2EEA;
-    color:  #5F2EEA;
+    border-color: #7186c0;
+    color:  #7186c0;
     font-weight: 600;
 }
 
 .TaskCard-button:hover {
-    background-color: #5F2EEA;
+    background-color: #7186c0;
     color: white;
 }
 
-.NameAndPoint{
-    display: flex;
-    text-align: left;
-    margin-left: 40px;
-    height: 70px;
-}
-.NameAndPoint h5{
-    color: green;
-}
-.taskDetails{
-    display: flex;
-    text-align: left;
-    margin-left: 40px;
-    margin-bottom: 20px;
-}
-.trade-complete-button{
-    border-style: solid;
-    border-radius: 50px;
-    border-color: purple;
-    color: purple;
-    width: 100px;
-    height: 30px;
-    margin-top: 60px;
-    margin-right: 10px;
-}
-.cardContent{
-
+.TaskCard-tooltip {
+    font-size: 1.2rem;
 }
