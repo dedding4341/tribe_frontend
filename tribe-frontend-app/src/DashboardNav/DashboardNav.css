@@ -1,0 +1,24 @@
+.DashboardNav {
+  font-size: 1.5rem;
+  color: black;
+  background-color: white;
+  border-radius: 5px;
+  margin: 2rem;
+}
+
+.DashboardNav a {
+  color: rgb(87, 87, 87);
+  width: 80%;
+  margin: auto;
+}
+
+.DashboardNav a:hover  {
+  color: rgb(20, 20, 20);
+  background-color: rgb(248, 249, 250);
+}
+
+.DashboardNav-vertical-divider {
+  border-bottom: 1px solid rgb(226, 226, 226);
+  width: 50%;
+  margin: 1rem auto;
+}

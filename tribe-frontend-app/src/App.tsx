@@ -1,15 +1,19 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter } from 'react-router-dom';
-import Routes from './Routes';
-import NavBar from './NavBar';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import PublicRoutes from './PublicRoutes';
+import PrivateRoutes from './PrivateRoutes';
 
 function App() {
   return (
     <div className="App">
-      <NavBar/>
       <BrowserRouter>
-        <Routes />
+        <Switch>
+          <Route path="/tribe/:famId/*">
+            <PrivateRoutes />
+          </Route>
+          <PublicRoutes />
+        </Switch>
       </BrowserRouter>
     </div>
   );

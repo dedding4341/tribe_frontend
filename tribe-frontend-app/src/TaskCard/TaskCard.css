@@ -1,42 +1,93 @@
-.taskCard{
-position: absolute;
-width: 525px;
-height: 150px;
-left: 377px;
-top: 228px;
-background-color: azure;
-border: black;
-border-style: solid;
-border-radius: 50px;
-color: black;
-display: flex;
-justify-content: space-between;
-}
-.NameAndPoint{
+.TaskCard{
+    width: 100%;
+    padding: 2rem 4rem;
+    margin-top: 7px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    color: black;
     display: flex;
-    text-align: left;
-    margin-left: 40px;
-    height: 70px;
+    position: relative;
+    justify-content: space-between;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.068), 0 6px 10px 0 rgba(0, 0, 0, 0.068);
+    overflow-wrap: break-word;
 }
-.NameAndPoint h5{
-    color: green;
-}
-.taskDetails{
-    display: flex;
-    text-align: left;
-    margin-left: 40px;
-    margin-bottom: 20px;
-}
-.trade-complete-button{
-    border-style: solid;
-    border-radius: 50px;
-    border-color: purple;
-    color: purple;
-    width: 100px;
-    height: 30px;
-    margin-top: 60px;
-    margin-right: 10px;
-}
-.cardContent{
 
+.TaskCard-delete-btn {
+    position: absolute;
+    top: 5%;
+    left: 2.5%;
+    color: rgb(255, 179, 179);
+}
+
+/*https://stackoverflow.com/questions/35336298/responsive-circular-images/35336815#35336815?newreg=700b54890c0544b68c0812ac8ce1d1cb*/
+.TaskCard-img-wrapper {
+    width: 5rem;
+    height: 5rem;
+    border-radius:50%;
+    overflow:hidden;
+    position: absolute;
+    top: -30px;
+}
+
+.TaskCard-img {
+    object-fit: cover;
+    width:100%;
+    height:100%;
+}
+
+.TaskCard-img,
+.TaskCard-img-wrapper {
+    transition: all .2s ease;
+    vertical-align: middle;
+    background-clip: padding-box;
+}
+
+.TaskCard-pts {
+    color: #00BA88;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.TaskCard-btn {
+    padding: 0.5rem 3rem;
+    margin: 0.5rem 0.5rem 0.5rem 0;
+    font-size: 1.5rem;
+    border-radius: 40px;
+    background-color: white;
+    border-color: #7186c0;
+    color:  #7186c0;
+    font-weight: 600;
+}
+
+.TaskCard-btn-yes {
+    border-color: #49d38e;
+    color:  #49d38e;
+}
+
+.TaskCard-btn-no {
+    border-color: #ff8f87;
+    color:   #ff8f87;
+}
+
+.TaskCard-btn:hover,
+.TaskCard-btn:active {
+    background-color: #7186c0;
+    color: white;
+}
+
+.TaskCard-btn-no:hover,
+.TaskCard-btn-no:active {
+    background-color: #ff8f87;
+    border-color: #ff8f87;
+}
+
+.TaskCard-btn-yes:hover,
+.TaskCard-btn-no:active  {
+    background-color: #49d38e;
+    border-color: #49d38e
+}
+
+
+.TaskCard-tooltip {
+    font-size: 1.2rem;
 }

@@ -1,0 +1,14 @@
+.DashOverview-title {
+  width: 20px; /* tiny width size to make the 2nd word go to new line */
+  font-size: 4rem;
+}
+
+.DashOverview-new-task-btn,
+.DashOverview-new-task-btn:active, 
+.DashOverview-new-task-btn:hover {
+  font-size: 1.6rem;
+  border-radius: 15px;
+  padding: 0.5rem 0.7rem;
+  background-color: rgb(175, 180, 255);
+  border-color: rgb(175, 180, 255);
+}
