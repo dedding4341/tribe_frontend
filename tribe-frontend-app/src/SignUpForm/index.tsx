@@ -18,32 +18,30 @@ function SignUpForm() {
 
     }
 
-    const validationCheck = (form: any) => {
-
-    }
 
     const handleSubmit = (evt: React.FormEvent) => {
         evt.preventDefault();
-        if (formData.password === formData.repeatPassword) {
-            fetch(LOCALHOST_SIGNUP_URL, {
-                method: 'POST',
-                body: JSON.stringify(formData),
-                headers: {
-                    "Content-type": "application/json;"
-                }
-            })
-                .then(res => res.json())
-                .then(json => console.log(json))
-        } else {
-            alert("Passwords do not match!")
-        }
+        // if (formData.password === formData.repeatPassword) {
+        //     fetch(LOCALHOST_SIGNUP_URL, {
+        //         method: 'POST',
+        //         body: JSON.stringify(formData),
+        //         headers: {
+        //             "Content-type": "application/json;"
+        //         }
+        //     })
+        //         .then(res => res.json())
+        //         .then(json => console.log(json))
+        // } else {
+        //     alert("Passwords do not match!")
+        // }
 
         const form = evt.currentTarget as any;
         if (form.checkValidity() === false) {
             evt.preventDefault();
             evt.stopPropagation();
+            console.log(validated)
         }
-        console.log("it worked")
+        console.log(validated)
         setValidated(true);
     }
 
