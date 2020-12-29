@@ -21,25 +21,27 @@ function SignUpForm() {
 
     const handleSubmit = (evt: React.FormEvent) => {
         evt.preventDefault();
-        // if (formData.password === formData.repeatPassword) {
-        //     fetch(LOCALHOST_SIGNUP_URL, {
-        //         method: 'POST',
-        //         body: JSON.stringify(formData),
-        //         headers: {
-        //             "Content-type": "application/json;"
-        //         }
-        //     })
-        //         .then(res => res.json())
-        //         .then(json => console.log(json))
-        // } else {
-        //     alert("Passwords do not match!")
-        // }
+        if (formData.password === formData.repeatPassword && formData.username.length >= 5 && formData.password.length >= 8) {
+            // fetch(LOCALHOST_SIGNUP_URL, {
+            //     method: 'POST',
+            //     body: JSON.stringify(formData),
+            //     headers: {
+            //         "Content-type": "application/json;"
+            //     }
+            // })
+            //     .then(res => res.json())
+            //     .then(json => console.log(json))
+            console.log("Validated")
+        } else {
+            if(validated === true) {
+                setValidated(false)
+            }
+            alert("Passwords do not match!")
+        }
 
         const form = evt.currentTarget as any;
         if (form.checkValidity() === false) {
             evt.preventDefault();
-            evt.stopPropagation();
-            console.log(validated)
         }
         console.log(validated)
         setValidated(true);
@@ -51,6 +53,9 @@ function SignUpForm() {
                 <Form.Label>Username</Form.Label>
                 <Form.Control required size="lg" pattern=".{5,10}" autoComplete="username" placeholder="Username" type="username" name="username" value={formData.username} onChange={(evt) => handleChange(evt as any)} />
             </Form.Group>
+            <Form.Text id="userNameHelpBlock" muted>
+                Your username must be 5-10 characters long.
+            </Form.Text>
             <Form.Group controlId="formGroupEmail">
                 <Form.Label>Email address</Form.Label>
                 <Form.Control required size="lg" placeholder="Enter Email" name="email" type="email" value={formData.email} onChange={(evt) => handleChange(evt as any)} />
@@ -64,7 +69,7 @@ function SignUpForm() {
                 must not contain spaces, special characters, or emoji.
             </Form.Text>
             <Form.Group controlId="formGroupRePassword">
-                <Form.Control required size="lg" pattern=".{password}"autoComplete="current-password" placeholder="Re-type password" name="repeatPassword" value={formData.repeatPassword} type="password" onChange={(evt) => handleChange(evt as any)} />
+                <Form.Control required size="lg" pattern= {formData.password} autoComplete="current-password" placeholder="Re-type password" name="repeatPassword" value={formData.repeatPassword} type="password" onChange={(evt) => handleChange(evt as any)} />
             </Form.Group>
             <Button type="submit">Register</Button>
         </Form>
