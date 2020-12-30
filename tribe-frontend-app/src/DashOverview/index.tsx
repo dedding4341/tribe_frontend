@@ -4,6 +4,7 @@ import NewTaskForm from '../NewTaskForm';
 import SearchBar from '../SearchBar';
 import TaskCard from '../TaskCard';
 import './DashOverview.css';
+import { BASE_URL } from '../config';
 import * as mock from '../mock';
 
 interface Task {
@@ -21,6 +22,9 @@ function DashOverview() {
 
   useEffect(function handleGetTasks() {
     function getTasks() {
+      // const getFamTaskUrl = `${BASE_URL}/tasks/family`;
+      // const res = await fetch(getFamTaskUrl, { credentials: "include" });
+
       return mock.response;
     }
     let resp = getTasks();

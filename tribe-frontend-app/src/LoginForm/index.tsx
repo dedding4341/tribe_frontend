@@ -4,10 +4,9 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal'
 import { stringify } from 'querystring';
-import { formatDiagnosticsWithColorAndContext } from 'typescript';
+import { BASE_URL } from '../config';
 
 
-const EC2_LOGIN_URL = 'http://ec2-52-53-238-185.us-west-1.compute.amazonaws.com:5000/login';
 const LOCALHOST_LOGIN_URL = 'http://127.0.0.1:8000/login';
 
 function UserNameNotRecognized(props: any) {
@@ -73,7 +72,7 @@ function UserNameNotRecognized(props: any) {
         centered
       >
         <Modal.Body>
-          <h4>Your account is not verified, please is check your email for next steps</h4>
+          <h4>Your account is not verified, please check your email for next steps</h4>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={props.onHide}>Close</Button>
@@ -105,10 +104,7 @@ function LoginForm() {
         evt.preventDefault();
         console.log("submitting", formData);
         let retcode: number;
-
         let data;
-        
-
 
         if (!formData.userIdentification.includes('@')) {
             data = {username: formData.userIdentification, password: formData.password}
@@ -117,15 +113,16 @@ function LoginForm() {
             data = {email: formData.userIdentification, password: formData.password}
         }
         console.log(data)
-        fetch(EC2_LOGIN_URL, {
+        fetch(`${BASE_URL}/login`, {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
-                "Content-type": "application/json;"
-            }
+                "Content-type": "application/json"
+            }, 
+            credentials: "include"
         })
         .then(res => {
-            if (res.status == 401) {
+            if (res.status === 401) {
                 retcode = 401
             } else {
                 retcode = 200

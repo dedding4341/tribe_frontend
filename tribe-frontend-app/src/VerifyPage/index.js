@@ -12,7 +12,7 @@ function VerifyPage() {
     async function verify() {
       try {
         const res = await fetch(`${BASE_URL}/verify-user/${verifyCode}`)
-        if (res.status === 201) {
+        if (res.status === 200) {
           setValid(true);
         }
       } catch (err) {
@@ -20,7 +20,7 @@ function VerifyPage() {
       }
     }
     verify();
-  }, [verifyCode])
+  }, [])
 
   return (
     <Container className="VerifyPage">

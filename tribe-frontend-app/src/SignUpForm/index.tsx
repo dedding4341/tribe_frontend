@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import './SignUpForm.css';
+import { BASE_URL } from '../config';
 
-
-const EC2_SIGNUP_URL = 'http://ec2-52-53-238-185.us-west-1.compute.amazonaws.com:5000/sign-up';
 const LOCALHOST_SIGNUP_URL = 'http://127.0.0.1:8000/sign-up';
 
 
@@ -21,15 +20,16 @@ function SignUpForm() {
     const handleSubmit = (evt: React.FormEvent) => {
         evt.preventDefault();
         if (formData.password === formData.repeatPassword && formData.username.length >= 5 && formData.password.length >= 8) {
-            // fetch(LOCALHOST_SIGNUP_URL, {
-            //     method: 'POST',
-            //     body: JSON.stringify(formData),
-            //     headers: {
-            //         "Content-type": "application/json;"
-            //     }
-            // })
-            //     .then(res => res.json())
-            //     .then(json => console.log(json))
+            fetch(`${BASE_URL}/sign-up`, {
+                method: 'POST',
+                body: JSON.stringify(formData),
+                headers: {
+                    "Content-type": "application/json"
+                },
+                credentials: 'include'
+            })
+                .then(res => res.json())
+                .then(json => console.log(json))
             console.log("Validated")
         } else {
             if(validated === true) {
