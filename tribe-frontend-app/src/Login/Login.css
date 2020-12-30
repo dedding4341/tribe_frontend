@@ -5,12 +5,14 @@
 
 .Login-bg {
   margin: auto;
+  margin-top: 7rem;
   width: 95%;
+  height: 90%;
 }
 
 .Login-img-container {
   background-image: url("https://wallpaperaccess.com/full/149370.jpg");
-  height: 75rem;
+  height: 100%;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;

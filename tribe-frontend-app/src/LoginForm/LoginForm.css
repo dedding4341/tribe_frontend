@@ -14,3 +14,11 @@
   font-weight: 600;
   width: 100%;
 }
+
+.modal-content {
+  padding: 2rem;
+}
+
+.sample {
+  align-self: flex-start;
+}

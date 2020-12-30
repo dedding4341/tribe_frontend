@@ -1,0 +1,104 @@
+.slide-in-bottom {
+  animation: tracking-in-expand 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+}
+
+.slide-in-blurred-left {
+	animation: slide-in-blurred-left 2.5s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+}
+
+.slide-in-blurred-right {
+	animation: slide-in-blurred-right 3s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
+}
+
+.UserSetUpForm-card {
+  margin: 2rem 3rem 0 0;
+}
+
+.UserSetupForm form {
+  width: 50rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.UserSetupForm label {
+  font-size: 3rem;
+  font-weight: 200;
+}
+
+.UserSetupForm input {
+  border: none;
+  border-bottom: 1px rgb(206, 206, 206) solid;
+  font-size: 2rem;
+}
+
+.UserSetupForm input:focus { 
+  outline: none;
+  box-shadow: none;
+  border-color: rgb(206, 206, 206);
+}
+
+.UserSetupForm button {
+  background: none;
+  border: none;
+  color: rgb(94, 94, 94);
+  font-size: 2rem;
+}
+
+.UserSetupForm svg {
+  margin-right: 1rem;
+}
+
+@keyframes tracking-in-expand {
+  0% {
+    letter-spacing: -0.5em;
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-blurred-left {
+  0% {
+    -webkit-transform: translateX(-1000px) scaleX(2.5) scaleY(0.2);
+            transform: translateX(-1000px) scaleX(2.5) scaleY(0.2);
+    -webkit-transform-origin: 100% 50%;
+            transform-origin: 100% 50%;
+    -webkit-filter: blur(40px);
+            filter: blur(40px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0) scaleY(1) scaleX(1);
+            transform: translateX(0) scaleY(1) scaleX(1);
+    -webkit-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+    -webkit-filter: blur(0);
+            filter: blur(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-blurred-right {
+  0% {
+    -webkit-transform: translateX(1000px) scaleX(2.5) scaleY(0.2);
+            transform: translateX(1000px) scaleX(2.5) scaleY(0.2);
+    -webkit-transform-origin: 0% 50%;
+            transform-origin: 0% 50%;
+    -webkit-filter: blur(40px);
+            filter: blur(40px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0) scaleY(1) scaleX(1);
+            transform: translateX(0) scaleY(1) scaleX(1);
+    -webkit-transform-origin: 50% 50%;
+            transform-origin: 50% 50%;
+    -webkit-filter: blur(0);
+            filter: blur(0);
+    opacity: 1;
+  }
+}
