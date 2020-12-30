@@ -1,0 +1,12 @@
+.VerifyPage {
+  margin-top: 6rem;
+}
+
+.VerifyPage-header {
+  text-align: left;
+  margin: 5rem 6rem;
+}
+
+.VerifyPage-header > h1 {
+  font-size: 4rem;
+}
