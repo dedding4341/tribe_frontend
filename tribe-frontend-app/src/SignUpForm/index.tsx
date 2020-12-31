@@ -7,6 +7,10 @@ import './SignUpForm.css';
 const EC2_SIGNUP_URL = 'https://api.tribeapp.family/sign-up';
 const LOCALHOST_SIGNUP_URL = 'http://127.0.0.1:8000/sign-up';
 
+function validatePassword() {
+    
+}
+
 
 function SignUpForm() {
     const INITIAL_FORM_VALUES = { username: "", password: "", email: "", repeatPassword: ""}
