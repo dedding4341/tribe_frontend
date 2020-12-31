@@ -11,8 +11,8 @@ function NavBar() {
         <Navbar.Collapse>
           <Nav className="ml-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="#link">About</Nav.Link>
-            <Nav.Link href="#getstarted">Get Started</Nav.Link>
+            <Nav.Link href="/#about">About</Nav.Link>
+            <Nav.Link href="/users/auth">Get Started</Nav.Link>
             <Nav.Link href="/users/auth">Sign In</Nav.Link>
           </Nav>
         </Navbar.Collapse>

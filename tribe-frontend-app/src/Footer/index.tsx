@@ -10,7 +10,7 @@ function Footer() {
           <div className="col-4 footer-info">
             <div className="footer-logo"></div>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in ipsum id orci porta dapibus. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus.
+              Thanks for taking some time to checkout Tribe! We'd love to hear any feedback or help you with any issues you experience. Reach out to us directly using our contact information!
             </p>
             <ul className="footer-social-list">
               <li>
@@ -34,14 +34,7 @@ function Footer() {
           <div className="col-4 footer-contact">
             <h4>Contact</h4>
             <p>
-              1600 Amphitheatre Parkway<br />
-                Mountain View, CA <br />
-                  94043 US<br />
-            </p>
-            <p>
-              someone@dazzlesite.com <br />
-                      Phone: (+63) 555 1212 <br />
-                        Fax: (+63) 555 0100
+              E-mail: support@tribeapp.family
             </p>
           </div>
 
@@ -50,10 +43,6 @@ function Footer() {
             <ul className="list-links">
               <li><a href="#">Home</a></li>
               <li><a href="#">About Us</a></li>
-              <li><a href="#">Blog</a></li>
-              <li><a href="#">FAQ</a></li>
-              <li><a href="#">Terms</a></li>
-              <li><a href="#">Privacy Policy</a></li>
             </ul>
           </div>
 
