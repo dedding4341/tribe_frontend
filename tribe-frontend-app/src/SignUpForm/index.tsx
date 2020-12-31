@@ -7,8 +7,42 @@ import './SignUpForm.css';
 const EC2_SIGNUP_URL = 'https://api.tribeapp.family/sign-up';
 const LOCALHOST_SIGNUP_URL = 'http://127.0.0.1:8000/sign-up';
 
-function validatePassword() {
-    
+function validatePassword(password: String, confirmPassword: String) : Boolean {
+    // Validate length
+    if (password.length < 8 || password.length > 20) {
+        return false;
+    }
+
+    // Check for alphanumeric
+    let containsAlpha = false;
+    let containsNumeric = false;
+    for (let idx = 0; idx < password.length; idx++) {
+        if (!containsAlpha && (/[a-zA-Z]/).test(password.charAt(idx))) {
+            containsAlpha = true;
+        }
+
+        if (!containsNumeric && (/\d/).test(password.charAt(idx))) {
+            containsNumeric = true;
+        }
+    }
+
+    if (!containsNumeric || !containsAlpha) {
+        return false;
+    }
+
+    // Confirm that password + confirmPassword are the same
+    if (password !== confirmPassword) {
+        return false;
+    }
+
+    return true;
+}
+
+function validateUsername(username: String) {
+    if (username.length >= 5 && username.length <= 10) {
+        return true;
+    }
+    return false;
 }
 
 
@@ -24,22 +58,34 @@ function SignUpForm() {
 
     const handleSubmit = (evt: React.FormEvent) => {
         evt.preventDefault();
-        if (formData.password === formData.repeatPassword && formData.username.length >= 5 && formData.password.length >= 8) {
-            fetch(EC2_SIGNUP_URL, {
-                method: 'POST',
-                body: JSON.stringify(formData),
-                headers: {
-                    "Content-type": "application/json;"
-                }
-            })
-                .then(res => res.json())
-                .then(json => console.log(json))
-        } else {
+
+        if (!validateUsername(formData.username)) {
+            // Display error for username & early terminate
             if(validated === true) {
                 setValidated(false)
             }
-            alert("Passwords do not match!")
+            alert("Something is wrong with your username, check the requirements and try again!")
         }
+
+        if (!validatePassword(formData.password, formData.repeatPassword)) {
+            //Display error for password & early terminate
+            if(validated === true) {
+                setValidated(false)
+            }
+            alert("Something is wrong with your password, check the requirements and try again!")
+        }
+
+        // If both checks pass - execute fetch
+        // TODO: What should happen when you recieve a 401 instead of a 200 back from the API? (This error means that the username/email utilized has already been used by another user)
+        // fetch(EC2_SIGNUP_URL, {
+        //     method: 'POST',
+        //     body: JSON.stringify(formData),
+        //     headers: {
+        //         "Content-type": "application/json;"
+        //     }
+        // })
+        // .then(res => res.json())
+        // .then(json => console.log(json))
 
         const form = evt.currentTarget as any;
         if (form.checkValidity() === false) {
