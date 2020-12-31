@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import './SignUpForm.css';
 
 
-const EC2_SIGNUP_URL = 'http://ec2-52-53-238-185.us-west-1.compute.amazonaws.com:5000/sign-up';
+const EC2_SIGNUP_URL = 'https://api.tribeapp.family/sign-up';
 const LOCALHOST_SIGNUP_URL = 'http://127.0.0.1:8000/sign-up';
 
 
@@ -21,16 +21,15 @@ function SignUpForm() {
     const handleSubmit = (evt: React.FormEvent) => {
         evt.preventDefault();
         if (formData.password === formData.repeatPassword && formData.username.length >= 5 && formData.password.length >= 8) {
-            // fetch(LOCALHOST_SIGNUP_URL, {
-            //     method: 'POST',
-            //     body: JSON.stringify(formData),
-            //     headers: {
-            //         "Content-type": "application/json;"
-            //     }
-            // })
-            //     .then(res => res.json())
-            //     .then(json => console.log(json))
-            console.log("Validated")
+            fetch(EC2_SIGNUP_URL, {
+                method: 'POST',
+                body: JSON.stringify(formData),
+                headers: {
+                    "Content-type": "application/json;"
+                }
+            })
+                .then(res => res.json())
+                .then(json => console.log(json))
         } else {
             if(validated === true) {
                 setValidated(false)
@@ -42,7 +41,6 @@ function SignUpForm() {
         if (form.checkValidity() === false) {
             evt.preventDefault();
         }
-        console.log(validated)
         setValidated(true);
     }
 
