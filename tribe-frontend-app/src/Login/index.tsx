@@ -4,9 +4,13 @@ import SignUpForm from '../SignUpForm';
 import './Login.css';
 import Form from 'react-bootstrap/Form';
 
+interface IProps {
+    handleSetUser: any
+}
 
-function Login() {
+function Login({ handleSetUser }: IProps) {
     const [showSignUp, setShowSignUp] = useState(false);
+
     return (
         <div className="Login container-fluid align-items-center justify-content-center d-flex">
             <div className="Login-bg row shadow-lg bg-white rounded">
@@ -28,7 +32,7 @@ function Login() {
                             ></Form.Check>
                         </div>
                     </header>
-                    {showSignUp ? <SignUpForm /> : <LoginForm />}
+                    {showSignUp ? <SignUpForm /> : <LoginForm handleSetUser={handleSetUser} />}
                 </section>
             </div>
         </div>

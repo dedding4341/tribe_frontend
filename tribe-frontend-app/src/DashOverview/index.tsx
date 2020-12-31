@@ -21,13 +21,13 @@ function DashOverview() {
   const [tasks, setTasks] = useState([] as Task[]);
 
   useEffect(function handleGetTasks() {
-    function getTasks() {
-      // const getFamTaskUrl = `${BASE_URL}/tasks/family`;
-      // const res = await fetch(getFamTaskUrl, { credentials: "include" });
-
-      return mock.response;
+    async function getTasks() {
+      const getFamTaskUrl = `${BASE_URL}/tasks/family`;
+      const res = await fetch(getFamTaskUrl, { credentials: "include" });
+      const resData = await res.json();
+      return resData;
     }
-    let resp = getTasks();
+    let resp: any = getTasks();
     setTasks(resp.tasks);
   }, []);
 

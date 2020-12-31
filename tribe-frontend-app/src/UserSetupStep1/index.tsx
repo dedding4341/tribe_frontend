@@ -21,7 +21,7 @@ function UserSetupStep1({ handleChange, next, currentStep, value }: IProps) {
         }}>
           <Form.Group>
             <Form.Label>What's your first name?</Form.Label>
-            <Form.Control autoFocus={true} id="input-box" name="firstName" value={value} onChange={(evt) => handleChange(evt as any)} />
+            <Form.Control autoFocus={true} id="input-box" name="first_name" value={value} onChange={(evt) => handleChange(evt as any)} />
           </Form.Group>
           <Button id="enter-btn" size="lg" onClick={() => next()}><FontAwesomeIcon icon={faLevelUpAlt} rotation={90}/>Enter</Button>
         </Form>

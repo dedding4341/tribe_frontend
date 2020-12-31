@@ -3,11 +3,8 @@ import './LoginForm.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal'
-import { stringify } from 'querystring';
 import { BASE_URL } from '../config';
-
-
-const LOCALHOST_LOGIN_URL = 'http://127.0.0.1:8000/login';
+import { useHistory } from 'react-router-dom';
 
 function UserNameNotRecognized(props: any) {
     return (
@@ -86,7 +83,11 @@ function UserNameNotRecognized(props: any) {
 /**
  * LoginForm renders a controlled form for login information.
  */
-function LoginForm() {
+interface IProps {
+  handleSetUser: any
+}
+
+function LoginForm({ handleSetUser }: IProps) {
     const INITIAL_VALUES = { userIdentification: "", username: "", password: "", email: "" }
     const [formData, setFormData] = useState(INITIAL_VALUES);
 
@@ -94,6 +95,8 @@ function LoginForm() {
     const [passwordIncorrectModalShow, setPasswordIncorrectModalShow] = React.useState(false);
     const [userNotVerifiedModalShow, setUserNotVerifiedModalShow] = React.useState(false);
     const [emailNotRecognizedModalShow, setEmailNotRecognizedModalShow] = React.useState(false);
+
+    const history = useHistory();
 
     const handleChange = (evt: React.FormEvent<HTMLInputElement>) => {
         const { name, value } = evt.currentTarget;
@@ -142,7 +145,15 @@ function LoginForm() {
                 }
 
             } else if (retcode === 200) {
-
+              handleSetUser(json.user.attribute_values);
+              const famId = json.user.attribute_values.family_id;
+              console.log("user data", json.user.attribute_values);
+              if (famId) {
+                // set the user info to the state
+                history.push(`/tribe/overview`);
+              } else {
+                history.push("/users/welcome");
+              }
             }
             console.log(json.msg)
         })

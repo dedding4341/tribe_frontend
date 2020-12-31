@@ -25,16 +25,16 @@ function PrivateRoutes() {
         </Col>
         <Switch>
           <Col sm={9} md={9} lg={8}>
-            <Route exact path="/tribe/:famId/overview">
+            <Route exact path="/tribe/overview">
               <DashOverview />
             </Route>
-            <Route exact path="/tribe/:famId/calender">
+            <Route exact path="/tribe/calender">
               <DashCalender />
             </Route>
-            <Route exact path="/tribe/:famId/todo">
+            <Route exact path="/tribe/todo">
               <DashTodo />
             </Route>
-            <Route exact path="/tribe/:famId/store">
+            <Route exact path="/tribe/store">
               <DashStore />
             </Route>
           </Col>

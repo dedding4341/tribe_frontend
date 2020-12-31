@@ -9,7 +9,11 @@ import VerifyPage from '../VerifyPage';
 /**
  * Routing logic for components
  */
-function PublicRoutes() {
+interface IProps {
+  handleSetUser: any;
+}
+
+function PublicRoutes({ handleSetUser }: IProps) {
   return (
     <>
       <NavBar />
@@ -18,7 +22,7 @@ function PublicRoutes() {
           <UserSetup />
         </Route>
         <Route exact path="/users/auth">
-          <Login />
+          <Login handleSetUser={handleSetUser}/>
         </Route>
         <Route exact path="/verify-user/:verifyCode">
           <VerifyPage />
