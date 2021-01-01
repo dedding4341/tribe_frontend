@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import { UserContext } from '../appContext';
 import Landing from '../Landing';
 import Login from '../Login';
 import NavBar from '../NavBar';
@@ -9,11 +10,13 @@ import VerifyPage from '../VerifyPage';
 /**
  * Routing logic for components
  */
-interface IProps {
-  handleSetUser: any;
-}
+function PublicRoutes() {
+  const { user } = useContext(UserContext);
+  
+  if (user) {
+    return <Redirect to="/tribe/overview"/>
+  }
 
-function PublicRoutes({ handleSetUser }: IProps) {
   return (
     <>
       <NavBar />
@@ -22,7 +25,7 @@ function PublicRoutes({ handleSetUser }: IProps) {
           <UserSetup />
         </Route>
         <Route exact path="/users/auth">
-          <Login handleSetUser={handleSetUser}/>
+          <Login />
         </Route>
         <Route exact path="/verify-user/:verifyCode">
           <VerifyPage />

@@ -1,24 +1,27 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Col, Image, Row } from 'react-bootstrap';
+import { UserContext } from '../appContext';
+import {DEFAULT_PFP} from '../config';
 import './ProfileHeader.css';
-import * as mock from '../mock';
 
 function ProfileHeader() {
+  const { user } = useContext(UserContext)
+
   return (
     <div className="ProfileHeader container">
       <Row className="d-flex align-items-center">
         <Col sm={10} md={6} lg={4}>
           <div className="ProfileHeader-img-wrapper">
-            <Image className="ProfileHeader-img" src={mock.currentUser.user_avatar} alt="dp img" />
+            <Image className="ProfileHeader-img" src={user.user_avatar ? user.user_avatar : DEFAULT_PFP} alt="dp img" />
           </div>
         </Col>
         <Col sm={3} md={6} lg={6} className="ProfileHeader-details text-center">
           <Row>
             <Col sm={12} md={12} className="ProfileHeader-name">
-              {`${mock.currentUser.first_name} ${mock.currentUser.last_name}`}
+              {`${user.first_name} ${user.last_name}`}
             </Col>
             <Col>
-              @ {mock.currentFam.family_name}
+              @ {user.family_name}
             </Col>
           </Row>
         </Col>

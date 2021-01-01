@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
-import * as mock from '../mock';
+import { UserContext } from '../appContext';
 
 interface IProps {
   show: Boolean,
@@ -10,14 +10,14 @@ interface IProps {
 
 
 function NewTaskForm({ show, handleClose, postNewTask }: IProps) {
-  // familyMembers information will be stored in a global state.
-  // for now, it will be placed here.
-  const INITIAL_STATE = { task_name: "", task_description: "", associated_points: 1, assignee: [] as any, completion_time: undefined }
+  const INITIAL_STATE = { task_name: "", task_description: "", associated_points: "" as any, assignee: "" as any, completion_time: undefined }
   const [formData, setFormData] = useState(INITIAL_STATE);
+  const { family } = useContext(UserContext);
 
   const handleSubmit = (evt: React.FormEvent) => {
     evt.preventDefault();
-    formData.assignee = formData.assignee.map((uid: string) => parseInt(uid));
+    formData.assignee = parseInt(formData.assignee);
+    formData.associated_points = parseInt(formData.associated_points);
     postNewTask(formData);
     handleClose();
   }
@@ -25,22 +25,26 @@ function NewTaskForm({ show, handleClose, postNewTask }: IProps) {
   const handleChange = (evt: React.FormEvent<HTMLInputElement>) => {
     const { name, value } = evt.currentTarget;
     setFormData(currData => ({ ...currData, [name]: value }));
+    console.log(name, value);
   }
 
-  const handleMultiselect = (evt: React.ChangeEvent<HTMLSelectElement>) => {
-    let selected: any = [...formData.assignee];
+  
+  const handleSelect = (evt: React.ChangeEvent<HTMLSelectElement>) => {
     let selectedOption = (evt.target.selectedOptions);
+    
+    /**save for the future when there can be multiple assignees*/
+    // let selected: any = [...formData.assignee];
+    // for (let i = 0; i < selectedOption.length; i++) {
+    //   let foundIdx = formData.assignee.indexOf(selectedOption.item(i)?.value);
+    //   if (foundIdx !== -1) {
+    //     selected.splice(foundIdx, 1);
+    //   } else {
+    //     selected.push(selectedOption.item(i)?.value);
+    //   }
+    // }
 
-    for (let i = 0; i < selectedOption.length; i++) {
-      let foundIdx = formData.assignee.indexOf(selectedOption.item(i)?.value);
-      if (foundIdx !== -1) {
-        selected.splice(foundIdx, 1);
-      } else {
-        selected.push(selectedOption.item(i)?.value);
-      }
-    }
-
-    setFormData(currData => ({ ...currData, assignee: selected }))
+    // setFormData(currData => ({ ...currData, assignee: selectedOption }));
+    // console.log(formData);
   }
 
   return (
@@ -70,8 +74,11 @@ function NewTaskForm({ show, handleClose, postNewTask }: IProps) {
           </Form.Group>
           <Form.Group>
             <Form.Label>Assign to:</Form.Label>
-            <Form.Control name="assignee" as="select" value={formData.assignee} multiple={true} onChange={(evt: any) => handleMultiselect(evt)}>
-              {mock.familyMembers.map(memb => <option key={memb.user_id} value={memb.user_id}>{memb.first_name}</option>)}
+            <Form.Control name="assignee" as="select" multiple={true} onChange={(evt: any) => handleChange(evt)}>
+              {family.map((memb: any) => {
+                console.log("memb", memb.attribute_values.user_id);
+              return <option key={memb.attribute_values.user_id} value={memb.attribute_values.user_id}>{memb.attribute_values.first_name}</option>
+              })}
             </Form.Control>
           </Form.Group>
         </Modal.Body>

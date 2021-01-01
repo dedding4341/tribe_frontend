@@ -7,7 +7,8 @@ import UserSetupStep5 from '../UserSetupStep5';
 import UserSetupComplete from '../UserSetupComplete';
 import './UserSetupForm.css';
 import { BASE_URL } from '../config';
-import { Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { getCookie } from '../helpers';
 
 function UserSetupForm() {
   const INITIAL_USER_VALUES = { first_name: "", last_name: "", isParent: true, family_id: "", family_name: "" };
@@ -24,16 +25,12 @@ function UserSetupForm() {
 
   const handleIsParentChange = (value: boolean) => {
     setFormData(currData => ({ ...currData, isParent: value }));
-    console.log("submitting to backend to update the user info...", formData);
-    // submit to the backend endpoint.
     next();
   }
 
   const handleSubmit = async (evt: React.FormEvent) => {
     evt.preventDefault();
-    console.log("submitting to backend to create/add family info....", formData);
-    console.log("the cookie", document.cookie);
-
+    
     const token = getCookie("x-access-token")
 
     try {
@@ -71,12 +68,6 @@ function UserSetupForm() {
     } catch (err) {
       alert(`error:${err}`);
     }
-  }
-
-  function getCookie(name: String) {
-    const value = `; ${document.cookie}`;
-    const parts: Array<any> = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
   }
 
   const handleRedirect = () => {

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './LoginForm.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal'
 import { BASE_URL } from '../config';
 import { useHistory } from 'react-router-dom';
+import { UserContext } from '../appContext';
 
 function UserNameNotRecognized(props: any) {
     return (
@@ -83,11 +84,7 @@ function UserNameNotRecognized(props: any) {
 /**
  * LoginForm renders a controlled form for login information.
  */
-interface IProps {
-  handleSetUser: any
-}
-
-function LoginForm({ handleSetUser }: IProps) {
+function LoginForm() {
     const INITIAL_VALUES = { userIdentification: "", username: "", password: "", email: "" }
     const [formData, setFormData] = useState(INITIAL_VALUES);
 
@@ -97,6 +94,7 @@ function LoginForm({ handleSetUser }: IProps) {
     const [emailNotRecognizedModalShow, setEmailNotRecognizedModalShow] = React.useState(false);
 
     const history = useHistory();
+    const { updateUserCntxt } = useContext(UserContext);
 
     const handleChange = (evt: React.FormEvent<HTMLInputElement>) => {
         const { name, value } = evt.currentTarget;
@@ -105,7 +103,6 @@ function LoginForm({ handleSetUser }: IProps) {
 
     const handleSubmit = (evt: React.FormEvent) => {
         evt.preventDefault();
-        console.log("submitting", formData);
         let retcode: number;
         let data;
 
@@ -115,7 +112,7 @@ function LoginForm({ handleSetUser }: IProps) {
         } else {
             data = {email: formData.userIdentification, password: formData.password}
         }
-        console.log(data)
+
         fetch(`${BASE_URL}/login`, {
             method: 'POST',
             body: JSON.stringify(data),
@@ -145,9 +142,8 @@ function LoginForm({ handleSetUser }: IProps) {
                 }
 
             } else if (retcode === 200) {
-              handleSetUser(json.user.attribute_values);
               const famId = json.user.attribute_values.family_id;
-              console.log("user data", json.user.attribute_values);
+              updateUserCntxt(json.user.attribute_values);
               if (famId) {
                 // set the user info to the state
                 history.push(`/tribe/overview`);
@@ -155,8 +151,7 @@ function LoginForm({ handleSetUser }: IProps) {
                 history.push("/users/welcome");
               }
             }
-            console.log(json.msg)
-        })
+        });
     }
 
     return (

@@ -4,9 +4,6 @@ import Button from 'react-bootstrap/Button';
 import './SignUpForm.css';
 import { BASE_URL } from '../config';
 
-const LOCALHOST_SIGNUP_URL = 'http://127.0.0.1:8000/sign-up';
-
-
 function SignUpForm() {
     const INITIAL_FORM_VALUES = { username: "", password: "", email: "", repeatPassword: ""}
     const [formData, setFormData] = useState(INITIAL_FORM_VALUES);
@@ -42,7 +39,6 @@ function SignUpForm() {
         if (form.checkValidity() === false) {
             evt.preventDefault();
         }
-        console.log(validated)
         setValidated(true);
     }
 

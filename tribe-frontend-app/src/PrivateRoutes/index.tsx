@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import {UserContext} from '../appContext';
 import DashboardLeft from '../DashboardLeft';
 import DashCalender from '../DashCalender';
 import DashOverview from '../DashOverview';
 import DashStore from '../DashStore';
 import DashTodo from '../DashTodo';
 import './PrivateRoutes.css';
-
 /**
  * Routing logic for private components
  */
 function PrivateRoutes() {
+  const { user } = useContext(UserContext);
+
+  if (!user) {
+    return <Redirect to="/users/auth"/>
+  }
+
   return (
     <Container fluid className="PrivateRoutes">
       <Row>
@@ -21,7 +27,7 @@ function PrivateRoutes() {
       </Row>
       <Row className="">
         <Col sm={3} md={3} lg={4}>
-          <DashboardLeft />
+          <DashboardLeft/>
         </Col>
         <Switch>
           <Col sm={9} md={9} lg={8}>
