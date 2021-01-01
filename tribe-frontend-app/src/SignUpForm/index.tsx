@@ -110,14 +110,14 @@ function SignUpForm() {
 
             <Form.Group controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control required size="lg" pattern=".{8,20}"autoComplete="current-password" placeholder="Password" name="password" value={formData.password} type="password" onChange={(evt) => handleChange(evt as any)} />
+                <Form.Control required size="lg" pattern="^(?=.*[a-zA-Z])(?=.*[0-9])[A-Za-z0-9]{8,20}$" autoComplete="current-password" placeholder="Password" name="password" value={formData.password} type="password" onChange={(evt) => handleChange(evt as any)} />
             </Form.Group>
             <Form.Text id="passwordHelpBlock" muted>
                 Your password must be 8-20 characters long, contain letters and numbers, and
                 must not contain spaces, special characters, or emoji.
             </Form.Text>
             <Form.Group controlId="formGroupRePassword">
-                <Form.Control required size="lg" pattern= {formData.password} autoComplete="current-password" placeholder="Re-type password" name="repeatPassword" value={formData.repeatPassword} type="password" onChange={(evt) => handleChange(evt as any)} />
+                <Form.Control required size="lg" pattern={formData.password} autoComplete="current-password" placeholder="Re-type password" name="repeatPassword" value={formData.repeatPassword} type="password" onChange={(evt) => handleChange(evt as any)} />
             </Form.Group>
             <Button variant="primary" type="submit">
                 Submit
