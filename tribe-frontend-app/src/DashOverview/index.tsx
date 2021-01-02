@@ -20,7 +20,7 @@ interface Task {
 function DashOverview() {
   const [showNewTaskForm, setShowNewTaskForm] = useState(false);
   const [tasks, setTasks] = useState([] as any[]);
-  const { user } = useContext(UserContext);
+  const { user, loading } = useContext(UserContext);
 
   useEffect(function handleGetTasks() {
     async function getTasks() {
@@ -38,8 +38,8 @@ function DashOverview() {
       const resData = await res.json();
       setTasks(resData.family_tasks);
     }
-    getTasks();
-  }, []);
+    if (!loading) getTasks();
+  }, [loading]);
 
   // GET all the tasks from their family id and display them here as a TaskCard
   const handleClose = () => {
@@ -60,7 +60,7 @@ function DashOverview() {
   const deleteTask = (task_id: Number) => {
     setTasks(currTasks => {
       let filteredTasks = currTasks.filter(task => {
-        return task.attribute_values.task_id !== task_id;
+        return task.task_id !== task_id;
       });
       return filteredTasks;
     });
@@ -77,8 +77,7 @@ function DashOverview() {
       },
       credentials: "include"
     });
-    console.log("Posted the task", data);
-    setTasks(currTasks => ([...currTasks, { attribute_values: { ...data, created_by: user.user_id, created_at: new Date().getUTCDate() } }]));
+    setTasks(currTasks => ([{ ...data, created_by: user.user_id, created_at: new Date().getUTCDate() }, ...currTasks ]));
   }
 
   return (
@@ -91,16 +90,16 @@ function DashOverview() {
             Overview
           </h1>
         </Col>
-        <Col md={8} className="d-flex justify-content-around align-items-center">
+        <Col md={7} className="d-flex justify-content-around align-items-center">
           <Button className="DashOverview-new-task-btn" onClick={() => setShowNewTaskForm(!showNewTaskForm)}>Add Task</Button>
           <SearchBar />
         </Col>
       </Row>
       <Container fluid className="mt-3">
         <Row>
-          {tasks ? tasks.map(task => {
+          {tasks && !loading ? tasks.map(task => {
             return (<Col md={6}>
-              <TaskCard task={task.attribute_values} tradeTask={tradeTask} deleteTask={deleteTask} completeTask={completeTask} />
+              <TaskCard key={task.task_id} task={task} tradeTask={tradeTask} deleteTask={deleteTask} completeTask={completeTask} />
             </Col>)
           }) : <Col md={6}>No tasks to display.</Col>}
         </Row>

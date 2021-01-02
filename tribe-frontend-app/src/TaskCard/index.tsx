@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, Col, Container, Image, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
@@ -17,20 +17,22 @@ interface IProps {
 function TaskCard({ task, deleteTask, tradeTask, completeTask }: IProps) {
     const [showDelConf, setShowDelConf] = useState(false);
     const [showTradeForm, setShowTradeForm] = useState(false);
-    const { user, family } = useContext(UserContext);
-
+    const { user, famMembers } = useContext(UserContext);
     const isTaskOwner = (task.assignee === user.user_id);
-    const taskOwner = family.filter((memb: any) => {
-        return task.created_by === memb.attribute_values.user_id;
+    console.log("this is the family members in the task card:..", famMembers);
+
+    const taskOwner = famMembers.filter((memb: any) => {
+        return task.created_by === memb.user_id;
     })[0];
 
     /**filter if current user is task owner. works if multiple assignees */
     // const isTaskOwner = (task.assignee.indexOf(mock.currentUser.user_id) !== -1);
 
     /*filter for the assignees' informations to display*/
-    let assignees = family.filter((memb: any) => {
-        return task.assignee === memb.attribute_values.user_id;
+    let assignees = famMembers.filter((memb: any) => {
+        return task.assignee === memb.user_id;
     });
+
 
     const handleTaskDelete = () => {
         deleteTask(task.task_id);
@@ -61,15 +63,15 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask }: IProps) {
                         <OverlayTrigger
                             placement="top"
                             delay={{ show: 250, hide: 400 }}
-                            overlay={<Tooltip className="TaskCard-tooltip" id={`tooltip-${assignee.attribute_values.user_id}`}>{assignee.attribute_values.first_name}</Tooltip>}
+                            overlay={<Tooltip className="TaskCard-tooltip" id={`tooltip-${assignee.user_id}`}>{assignee.first_name}</Tooltip>}
                         >
-                            <Image className="TaskCard-img" src={assignee.attribute_values.user_avatar || DEFAULT_PFP} />
+                            <Image className="TaskCard-img" src={assignee.user_avatar || DEFAULT_PFP} />
                         </OverlayTrigger>
                     </div>
                 );
             })}
             <Container>
-                {user.family_manager && <div className="TaskCard-delete-btn">
+                {user.famMembers_manager && <div className="TaskCard-delete-btn">
                     <FontAwesomeIcon style={{ cursor: "pointer" }} icon={faTimes} size="2x" onClick={() => setShowDelConf(!showDelConf)} />
                 </div>}
                 {showDelConf ?
@@ -93,7 +95,7 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask }: IProps) {
                             </Row>
                             <Row>
                                 <div className="TaskCard-deadline ml-2">
-                                    Created on {new Date(task.created_at).toString()} by {taskOwner.attribute_values.first_name}
+                                    Created on {new Date(task.created_at).toString()} by {taskOwner.first_name}
                                 </div>
                             </Row>
                         </Col>

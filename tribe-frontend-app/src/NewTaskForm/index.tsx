@@ -12,7 +12,7 @@ interface IProps {
 function NewTaskForm({ show, handleClose, postNewTask }: IProps) {
   const INITIAL_STATE = { task_name: "", task_description: "", associated_points: "" as any, assignee: "" as any, completion_time: undefined }
   const [formData, setFormData] = useState(INITIAL_STATE);
-  const { family } = useContext(UserContext);
+  const { famMembers } = useContext(UserContext);
 
   const handleSubmit = (evt: React.FormEvent) => {
     evt.preventDefault();
@@ -75,9 +75,9 @@ function NewTaskForm({ show, handleClose, postNewTask }: IProps) {
           <Form.Group>
             <Form.Label>Assign to:</Form.Label>
             <Form.Control name="assignee" as="select" multiple={true} onChange={(evt: any) => handleChange(evt)}>
-              {family.map((memb: any) => {
-                console.log("memb", memb.attribute_values.user_id);
-              return <option key={memb.attribute_values.user_id} value={memb.attribute_values.user_id}>{memb.attribute_values.first_name}</option>
+              {famMembers.map((memb: any) => {
+                console.log("memb", memb);
+              return <option key={memb.user_id} value={memb.user_id}>{memb.first_name}</option>
               })}
             </Form.Control>
           </Form.Group>

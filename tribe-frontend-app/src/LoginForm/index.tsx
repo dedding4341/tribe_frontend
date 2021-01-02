@@ -142,8 +142,8 @@ function LoginForm() {
                 }
 
             } else if (retcode === 200) {
-              const famId = json.user.attribute_values.family_id;
-              updateUserCntxt(json.user.attribute_values);
+              const famId = json.user.family_id;
+              updateUserCntxt(json.user);
               if (famId) {
                 // set the user info to the state
                 history.push(`/tribe/overview`);

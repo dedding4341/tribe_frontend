@@ -5,7 +5,7 @@ import {DEFAULT_PFP} from '../config';
 import './ProfileHeader.css';
 
 function ProfileHeader() {
-  const { user } = useContext(UserContext)
+  const { user, family } = useContext(UserContext)
 
   return (
     <div className="ProfileHeader container">
@@ -21,7 +21,7 @@ function ProfileHeader() {
               {`${user.first_name} ${user.last_name}`}
             </Col>
             <Col>
-              @ {user.family_name}
+              @ {family.family_name}
             </Col>
           </Row>
         </Col>

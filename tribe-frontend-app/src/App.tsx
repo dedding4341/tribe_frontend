@@ -10,38 +10,55 @@ import { BASE_URL } from './config';
 function App() {
   const [user, setUser] = useState<any>();
   const [family, setFamily] = useState<any>();
+  const [famMembers, setFamMembers] = useState<any>();
+  const [loading, setLoading] = useState<Boolean>(true);
 
   useEffect(function checkLoggedIn() {
     const token = getCookie("x-access-token");
 
-    async function getUser() {
-      const res = await fetch(`${BASE_URL}/get-user`, {
-        method: 'GET',
-        headers: {
-          "x-access-token": token
-        },
-        credentials: "include"
-      });
-      const resData = await res.json()
-      setUser(resData.user.attribute_values);
-      console.log("Obtained users!", resData.user.attribute_values);
-    }
+    async function getUserInfo() {
+      try {
+        const res = await fetch(`${BASE_URL}/get-user`, {
+          method: 'GET',
+          headers: {
+            "x-access-token": token
+          },
+          credentials: "include"
+        });
+        const resData = await res.json()
+        setUser(resData.user);
 
-    async function getFamily() {
-      const res = await fetch(`${BASE_URL}/family`, {
-        method: 'GET',
-        headers: {
-          "x-access-token": token
-        },
-        credentials: "include"
-      });
-      const resData = await res.json();
-      setFamily(resData.users);
+        const famRes = await fetch(`${BASE_URL}/get-family-info`, {
+          method: 'GET',
+          headers: {
+            "x-access-token": token
+          },
+          credentials: "include"
+        });
+        const famResData = await famRes.json();
+        setFamily(famResData.family);
+
+        const famMembRes = await fetch(`${BASE_URL}/family`, {
+          method: 'GET',
+          headers: {
+            "x-access-token": token
+          },
+          credentials: "include"
+        });
+        const famMembResData = await famMembRes.json();
+        setFamMembers(famMembResData.users);
+        setLoading(false);
+      } catch (err) {
+        alert("You have been signed out, please login again.")
+      }
     }
 
     if (token && !user) {
-      getUser();
-      getFamily();
+      getUserInfo();
+    }
+
+    return function cleanUp() {
+      setLoading(true);
     }
   }, []);
 
@@ -52,7 +69,9 @@ function App() {
   const providerValue = {
     user,
     updateUserCntxt,
-    family
+    family,
+    famMembers,
+    loading
   };
 
   return (
