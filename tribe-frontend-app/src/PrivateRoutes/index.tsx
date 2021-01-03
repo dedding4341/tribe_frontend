@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import { Redirect, Route, Switch } from 'react-router-dom';
-import { UserContext } from '../appContext';
+import { Route, Switch } from 'react-router-dom';
 import DashboardLeft from '../DashboardLeft';
 import DashCalender from '../DashCalender';
 import DashOverview from '../DashOverview';
@@ -12,6 +11,9 @@ import './PrivateRoutes.css';
  * Routing logic for private components
  */
 function PrivateRoutes() {
+  
+  // protect these privateroutes by adding a redirect to the login path.
+
 
   return (
     <Container fluid className="PrivateRoutes">
