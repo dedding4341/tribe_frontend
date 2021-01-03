@@ -19,7 +19,6 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask }: IProps) {
     const [showTradeForm, setShowTradeForm] = useState(false);
     const { user, famMembers } = useContext(UserContext);
     const isTaskOwner = (task.assignee === user.user_id);
-    console.log("this is the family members in the task card:..", famMembers);
 
     const taskOwner = famMembers.filter((memb: any) => {
         return task.created_by === memb.user_id;
@@ -71,7 +70,7 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask }: IProps) {
                 );
             })}
             <Container>
-                {user.famMembers_manager && <div className="TaskCard-delete-btn">
+                {user.family_manager && <div className="TaskCard-delete-btn">
                     <FontAwesomeIcon style={{ cursor: "pointer" }} icon={faTimes} size="2x" onClick={() => setShowDelConf(!showDelConf)} />
                 </div>}
                 {showDelConf ?

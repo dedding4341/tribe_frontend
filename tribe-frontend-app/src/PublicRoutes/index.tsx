@@ -11,9 +11,9 @@ import VerifyPage from '../VerifyPage';
  * Routing logic for components
  */
 function PublicRoutes() {
-  const { user } = useContext(UserContext);
+  const { user, family } = useContext(UserContext);
   
-  if (user) {
+  if (user && family) {
     return <Redirect to="/tribe/overview"/>
   }
 

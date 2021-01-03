@@ -94,7 +94,7 @@ function LoginForm() {
     const [emailNotRecognizedModalShow, setEmailNotRecognizedModalShow] = React.useState(false);
 
     const history = useHistory();
-    const { updateUserCntxt } = useContext(UserContext);
+    const { updateUserCntxt, loginUser } = useContext(UserContext);
 
     const handleChange = (evt: React.FormEvent<HTMLInputElement>) => {
         const { name, value } = evt.currentTarget;
@@ -143,9 +143,9 @@ function LoginForm() {
 
             } else if (retcode === 200) {
               const famId = json.user.family_id;
+              loginUser();
               updateUserCntxt(json.user);
               if (famId) {
-                // set the user info to the state
                 history.push(`/tribe/overview`);
               } else {
                 history.push("/users/welcome");

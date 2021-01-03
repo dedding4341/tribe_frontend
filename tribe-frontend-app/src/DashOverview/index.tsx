@@ -7,6 +7,7 @@ import './DashOverview.css';
 import { BASE_URL } from '../config';
 import { getCookie } from '../helpers';
 import { UserContext } from '../appContext';
+import { Redirect } from 'react-router-dom';
 
 interface Task {
   task_id: Number,
@@ -21,12 +22,12 @@ function DashOverview() {
   const [showNewTaskForm, setShowNewTaskForm] = useState(false);
   const [tasks, setTasks] = useState([] as any[]);
   const { user, loading } = useContext(UserContext);
+  const token = getCookie("x-access-token");
 
   useEffect(function handleGetTasks() {
     async function getTasks() {
-      const token = getCookie("x-access-token");
-
       const getFamTaskUrl = `${BASE_URL}/tasks/family`;
+      console.log("retrieving tasks");
       const res = await fetch(getFamTaskUrl, {
         method: "GET",
         headers: {
@@ -39,7 +40,7 @@ function DashOverview() {
       setTasks(resData.family_tasks);
     }
     if (!loading) getTasks();
-  }, [loading]);
+  }, [loading, token]);
 
   // GET all the tasks from their family id and display them here as a TaskCard
   const handleClose = () => {
@@ -52,12 +53,42 @@ function DashOverview() {
   }
 
   // TODO: Implement server logic
-  const completeTask = (task_id: Number) => {
-    alert("You've completed the task.")
+  const completeTask = async (task_id: Number) => {
+    alert("You've completed the task.");
+    const res = await fetch(`${BASE_URL}/complete-task`, {
+      method: "PATCH",
+      body: JSON.stringify({ task_id }),
+      headers: {
+        "Content-type": "application/json",
+        "x-access-token": `${token}`
+      },
+      credentials: "include"
+    });
+    if (res.status === 200) {
+      console.log("completed");
+    }
+    setTasks(currTasks => {
+      let filteredTasks = currTasks.filter(task => {
+        return task.task_id !== task_id;
+      });
+      return filteredTasks;
+    });
   }
 
   // TODO: Implement server logic
-  const deleteTask = (task_id: Number) => {
+  const deleteTask = async (task_id: Number) => {
+    const res = await fetch(`${BASE_URL}/delete-task`, {
+      method: "PATCH",
+      body: JSON.stringify({ task_id }),
+      headers: {
+        "Content-type": "application/json",
+        "x-access-token": `${token}`
+      },
+      credentials: "include"
+    });
+    if (res.status === 200) {
+      console.log("yeet");
+    }
     setTasks(currTasks => {
       let filteredTasks = currTasks.filter(task => {
         return task.task_id !== task_id;
@@ -67,7 +98,6 @@ function DashOverview() {
   }
 
   const postNewTask = async (data: Task) => {
-    const token = getCookie("x-access-token");
     await fetch(`${BASE_URL}/create-task`, {
       method: "POST",
       body: JSON.stringify(data),
@@ -97,7 +127,7 @@ function DashOverview() {
       </Row>
       <Container fluid className="mt-3">
         <Row>
-          {tasks && !loading ? tasks.map(task => {
+          {tasks.length > 0 ? tasks.map(task => {
             return (<Col md={6}>
               <TaskCard key={task.task_id} task={task} tradeTask={tradeTask} deleteTask={deleteTask} completeTask={completeTask} />
             </Col>)
