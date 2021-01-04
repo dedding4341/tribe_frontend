@@ -8,16 +8,19 @@ import DashStore from '../DashStore';
 import DashTodo from '../DashTodo';
 import { useSelector} from 'react-redux';
 import './PrivateRoutes.css';
+import { getCookie } from '../helpers';
 
 /**
  * Routing logic for private components
  */
 function PrivateRoutes() {
+  const token = getCookie("x-access-token");
   const user = useSelector((st: any) => st.user);
   const isLoggedIn = useSelector((st: any) => st.isLoggedIn);
+  const loading = useSelector((st: any) => st.loading);
 
   // protect these privateroutes by adding a redirect to the login path.
-  if (!isLoggedIn && !user.user_id) {
+  if (!isLoggedIn && !token) {
     return <Redirect to="/users/auth"/>
   } 
 

@@ -144,10 +144,10 @@ export function loginByToken() {
   return { type: LOGIN_BY_TOKEN }
 }
 
-function startLoading() {
+export function startLoading() {
   return { type: START_LOADING }
 }
 
-function stopLoading() {
+export function stopLoading() {
   return { type: STOP_LOADING }
 }

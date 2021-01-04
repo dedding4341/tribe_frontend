@@ -6,7 +6,7 @@ import Modal from 'react-bootstrap/Modal'
 import { BASE_URL } from '../config';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { loginUser } from '../actionCreators';
+import { getFamilyFromAPI, getFamilyMembersFromAPI, getFamilyTasksFromAPI, loginUser } from '../actionCreators';
 
 function UserNameNotRecognized(props: any) {
     return (
@@ -143,7 +143,11 @@ function LoginForm() {
 
             } else if (retcode === 200) {
               const famId = json.user.family_id;
+              console.log("logging in! fetching data now!")
               dispatch(loginUser(json.user));
+              dispatch(getFamilyFromAPI())
+              dispatch(getFamilyMembersFromAPI());
+              dispatch(getFamilyTasksFromAPI());
               if (famId) {
                 history.push(`/tribe/overview`);
               } else {

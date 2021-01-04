@@ -60,7 +60,7 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask }: IProps) {
                 rightPosition += 30;
                 zIdx--;
                 return (
-                    <div style={{ right: rightPosition, zIndex: zIdx }} className="TaskCard-img-wrapper">
+                    <div style={{ right: rightPosition, zIndex: zIdx }} key={assignee.user_id} className="TaskCard-img-wrapper">
                         <OverlayTrigger
                             placement="top"
                             delay={{ show: 250, hide: 400 }}

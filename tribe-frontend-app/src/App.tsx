@@ -5,7 +5,7 @@ import PublicRoutes from './PublicRoutes';
 import PrivateRoutes from './PrivateRoutes';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCookie } from './helpers';
-import { getFamilyFromAPI, getFamilyMembersFromAPI, getFamilyTasksFromAPI, getUserFromAPI, loginByToken } from './actionCreators';
+import { getFamilyFromAPI, getFamilyMembersFromAPI, getFamilyTasksFromAPI, getUserFromAPI, loginByToken, stopLoading } from './actionCreators';
 
 function App() {
   const isLoggedIn = useSelector((st: any) => st.isLoggedIn);
@@ -27,13 +27,12 @@ function App() {
           dispatch(getFamilyTasksFromAPI());
         }
         dispatch(loginByToken());
-        if (isLoggedIn && token && user.user_id && family.family_id) {
-          history.push("/tribe/overview");
-        }
       } catch (err) {
         alert("Session token has expired, please login again");
         history.push("/users/auth");
       }
+    } else {
+      dispatch(stopLoading());
     }
   }, [isLoggedIn]);
 
