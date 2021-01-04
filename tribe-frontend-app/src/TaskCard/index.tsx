@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, Col, Container, Image, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import './TaskCard.css';
 import TradeForm from '../TradeForm';
-import * as mock from '../mock';
+import { UserContext } from '../appContext';
+import { DEFAULT_PFP } from '../config';
 
 interface IProps {
     task: any,
@@ -13,17 +14,24 @@ interface IProps {
     completeTask: Function
 }
 
-const defaultPfp = 'https://m.media-amazon.com/images/I/41qqZPwvIRL._AC_.jpg';
-
 function TaskCard({ task, deleteTask, tradeTask, completeTask }: IProps) {
     const [showDelConf, setShowDelConf] = useState(false);
     const [showTradeForm, setShowTradeForm] = useState(false);
-    const isTaskOwner = (task.assignee.indexOf(mock.currentUser.user_id) !== -1);
+    const { user, famMembers } = useContext(UserContext);
+    const isTaskOwner = (task.assignee === user.user_id);
 
-    // filter for the assignees' informations to display
-    let assignees = mock.familyMembers.filter(memb => {
-        return task.assignee.indexOf(memb.user_id) !== -1;
+    const taskOwner = famMembers.filter((memb: any) => {
+        return task.created_by === memb.user_id;
+    })[0];
+
+    /**filter if current user is task owner. works if multiple assignees */
+    // const isTaskOwner = (task.assignee.indexOf(mock.currentUser.user_id) !== -1);
+
+    /*filter for the assignees' informations to display*/
+    let assignees = famMembers.filter((memb: any) => {
+        return task.assignee === memb.user_id;
     });
+
 
     const handleTaskDelete = () => {
         deleteTask(task.task_id);
@@ -45,7 +53,7 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask }: IProps) {
     return (
         <div className="TaskCard">
             <TradeForm show={showTradeForm} handleTradeTask={handleTradeTask} handleClose={() => setShowTradeForm(false)}/>
-            {assignees.map(assignee => {
+            {assignees.map((assignee: any) => {
                 // increment and decrement avatar styling variables.
                 rightPosition += 30;
                 zIdx--;
@@ -56,13 +64,13 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask }: IProps) {
                             delay={{ show: 250, hide: 400 }}
                             overlay={<Tooltip className="TaskCard-tooltip" id={`tooltip-${assignee.user_id}`}>{assignee.first_name}</Tooltip>}
                         >
-                            <Image className="TaskCard-img" src={assignee.user_avatar || defaultPfp} />
+                            <Image className="TaskCard-img" src={assignee.user_avatar || DEFAULT_PFP} />
                         </OverlayTrigger>
                     </div>
                 );
             })}
             <Container>
-                {mock.currentUser.family_manager && <div className="TaskCard-delete-btn">
+                {user.family_manager && <div className="TaskCard-delete-btn">
                     <FontAwesomeIcon style={{ cursor: "pointer" }} icon={faTimes} size="2x" onClick={() => setShowDelConf(!showDelConf)} />
                 </div>}
                 {showDelConf ?
@@ -86,7 +94,7 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask }: IProps) {
                             </Row>
                             <Row>
                                 <div className="TaskCard-deadline ml-2">
-                                    Due by {task.completion_time}
+                                    Created on {new Date(task.created_at).toString()} by {taskOwner.first_name}
                                 </div>
                             </Row>
                         </Col>

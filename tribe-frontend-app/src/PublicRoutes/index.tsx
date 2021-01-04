@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import { UserContext } from '../appContext';
 import Landing from '../Landing';
 import Login from '../Login';
 import NavBar from '../NavBar';
@@ -10,6 +11,12 @@ import VerifyPage from '../VerifyPage';
  * Routing logic for components
  */
 function PublicRoutes() {
+  const { user, family } = useContext(UserContext);
+  
+  if (user && family) {
+    return <Redirect to="/tribe/overview"/>
+  }
+
   return (
     <>
       <NavBar />

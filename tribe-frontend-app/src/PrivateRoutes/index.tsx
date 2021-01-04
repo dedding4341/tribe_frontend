@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import { UserContext } from '../appContext';
 import DashboardLeft from '../DashboardLeft';
 import DashCalender from '../DashCalender';
 import DashOverview from '../DashOverview';
 import DashStore from '../DashStore';
 import DashTodo from '../DashTodo';
 import './PrivateRoutes.css';
-
 /**
  * Routing logic for private components
  */
 function PrivateRoutes() {
+
   return (
     <Container fluid className="PrivateRoutes">
       <Row>
@@ -25,16 +26,16 @@ function PrivateRoutes() {
         </Col>
         <Switch>
           <Col sm={9} md={9} lg={8}>
-            <Route exact path="/tribe/:famId/overview">
+            <Route exact path="/tribe/overview">
               <DashOverview />
             </Route>
-            <Route exact path="/tribe/:famId/calender">
+            <Route exact path="/tribe/calender">
               <DashCalender />
             </Route>
-            <Route exact path="/tribe/:famId/todo">
+            <Route exact path="/tribe/todo">
               <DashTodo />
             </Route>
-            <Route exact path="/tribe/:famId/store">
+            <Route exact path="/tribe/store">
               <DashStore />
             </Route>
           </Col>

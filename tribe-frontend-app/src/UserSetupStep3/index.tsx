@@ -7,11 +7,10 @@ interface IProps {
   next: Function;
   prev: Function;
   currentStep: Number;
-  handleSubmit: Function;
   handleIsParentChange: Function;
 }
 
-function UserSetupStep3({ value, handleSubmit, handleIsParentChange, next, prev, currentStep }: IProps) {
+function UserSetupStep3({ value, handleIsParentChange, next, prev, currentStep }: IProps) {
   return (
     <div>
       {currentStep === 3 &&

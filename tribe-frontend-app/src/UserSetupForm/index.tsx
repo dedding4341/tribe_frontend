@@ -6,36 +6,72 @@ import UserSetupStep4 from '../UserSetupStep4';
 import UserSetupStep5 from '../UserSetupStep5';
 import UserSetupComplete from '../UserSetupComplete';
 import './UserSetupForm.css';
+import { BASE_URL } from '../config';
+import { useHistory } from 'react-router-dom';
+import { getCookie } from '../helpers';
 
 function UserSetupForm() {
-  const INITIAL_USER_VALUES = { firstName: "", lastName: "", isParent: true };
-  const INITIAL_FAMILY_VALUES = { familyId: "", familyName: "" };
+  const INITIAL_USER_VALUES = { first_name: "", last_name: "", isParent: true, family_id: "", family_name: "" };
   const [hasFamilyId, setHasFamilyId] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState(INITIAL_USER_VALUES);
-  const [newFamData, setNewFamData] = useState(INITIAL_FAMILY_VALUES);
 
+  const history = useHistory();
 
   const handleChange = (evt: React.FormEvent<HTMLInputElement>) => {
     const { name, value } = evt.currentTarget;
-    if (name === "familyName" || name === "familyId") {
-      setNewFamData(currData => ({ ...currData, [name]: value }));
-    } else {
-      setFormData(currData => ({ ...currData, [name]: value }));
-    }
+    setFormData(currData => ({ ...currData, [name]: value }));
   }
 
   const handleIsParentChange = (value: boolean) => {
     setFormData(currData => ({ ...currData, isParent: value }));
-    console.log("submitting to backend to update the user info...", formData);
-    // submit to the backend endpoint.
     next();
   }
 
-  const handleSubmit = (evt: React.FormEvent) => {
+  const handleSubmit = async (evt: React.FormEvent) => {
     evt.preventDefault();
-    console.log("submitting to backend to create/add family info....", newFamData);
-    next();
+    
+    const token = getCookie("x-access-token")
+
+    try {
+      if (!hasFamilyId) {
+        const newFamResp = await fetch(`${BASE_URL}/create-family`, {
+          method: 'POST',
+          headers: {
+            "Content-type": "application/json",
+            "x-access-token": `${token}`,
+          },
+          body: JSON.stringify({ family_name: formData.family_name }),
+          credentials: "include"
+        });
+
+        if (newFamResp.status !== 201) {
+          console.log("failed to create family");
+        } 
+      }
+
+
+      const resp = await fetch(`${BASE_URL}/update-user`, {
+        method: 'PATCH',
+        body: JSON.stringify(formData),
+        headers: {
+          "Content-type": "application/json",
+          "x-access-token": `${token}`,
+        },
+        credentials: 'include',
+      });
+      if (resp.status === 200) {
+        next();
+      } else {
+        alert("failed to update user information.")
+      }
+    } catch (err) {
+      alert(`error:${err}`);
+    }
+  }
+
+  const handleRedirect = () => {
+    history.push("/tribe/overview");
   }
 
   const next = () => {
@@ -48,12 +84,12 @@ function UserSetupForm() {
 
   return (
     <div className="UserSetupForm" id="UserSetupForm">
-      <UserSetupStep1 value={formData.firstName} handleChange={handleChange} next={next} currentStep={currentStep} />
-      <UserSetupStep2 value={formData.lastName} handleChange={handleChange} next={next} prev={prev} currentStep={currentStep} />
-      <UserSetupStep3 value={formData.isParent} handleIsParentChange={handleIsParentChange} handleSubmit={handleSubmit} next={next} prev={prev} currentStep={currentStep} />
+      <UserSetupStep1 value={formData.first_name} handleChange={handleChange} next={next} currentStep={currentStep} />
+      <UserSetupStep2 value={formData.last_name} handleChange={handleChange} next={next} prev={prev} currentStep={currentStep} />
+      <UserSetupStep3 value={formData.isParent} handleIsParentChange={handleIsParentChange} next={next} prev={prev} currentStep={currentStep} />
       <UserSetupStep4 setHasFamilyId={setHasFamilyId} next={next} currentStep={currentStep} />
-      <UserSetupStep5 isParent={formData.isParent} famIdValue={newFamData.familyId} famNameValue={newFamData.familyName} hasFamilyId={hasFamilyId} handleChange={handleChange} handleSubmit={handleSubmit} next={next} prev={prev} currentStep={currentStep} />
-      <UserSetupComplete currentStep={currentStep} />
+      <UserSetupStep5 isParent={formData.isParent} famIdValue={formData.family_id} famNameValue={formData.family_name} hasFamilyId={hasFamilyId} handleChange={handleChange} handleSubmit={handleSubmit} next={next} prev={prev} currentStep={currentStep} />
+      <UserSetupComplete currentStep={currentStep} handleRedirect={handleRedirect} />
     </div>
   );
 }

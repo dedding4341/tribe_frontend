@@ -4,10 +4,9 @@ import ProfileHeader from '../ProfileHeader';
 import './DashboardLeft.css';
 
 function DashboardLeft() {
-  console.log("i'm rerendering!")
   return (
     <div className="DashboardLeft">
-      <ProfileHeader />
+      <ProfileHeader/>
       <DashboardNav />
     </div>
   );

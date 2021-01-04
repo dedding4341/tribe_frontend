@@ -87,6 +87,8 @@ function SignUpForm() {
         if(formData.repeatPassword !== formData.password) {
             msgs.push("Password and repeat password do not match.")
         }
+       
+        console.log(msgs)
         return (
             msgs.map(msg => <ListGroup.Item>{msg}</ListGroup.Item> )
         )
@@ -199,7 +201,7 @@ function SignUpForm() {
         if(validatePassword(formData.password, formData.repeatPassword) && validateUsername(formData.username) && /\S+@\S+\.\S+/.test(formData.email)){
         // If both checks pass - execute fetch
         // TODO: What should happen when you recieve a 401 instead of a 200 back from the API? (This error means that the username/email utilized has already been used by another user)
-            fetch(`${BASE_URL}/sign-up`, {
+            fetch(LOCALHOST_SIGNUP_URL, {
                 method: 'POST',
                 body: JSON.stringify(formData),
                 headers: {

@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import NewTaskForm from '../NewTaskForm';
 import SearchBar from '../SearchBar';
 import TaskCard from '../TaskCard';
 import './DashOverview.css';
-import * as mock from '../mock';
+import { BASE_URL } from '../config';
+import { getCookie } from '../helpers';
+import { UserContext } from '../appContext';
+import { Redirect } from 'react-router-dom';
 
 interface Task {
   task_id: Number,
@@ -17,15 +20,27 @@ interface Task {
 
 function DashOverview() {
   const [showNewTaskForm, setShowNewTaskForm] = useState(false);
-  const [tasks, setTasks] = useState([] as Task[]);
+  const [tasks, setTasks] = useState([] as any[]);
+  const { user, loading } = useContext(UserContext);
+  const token = getCookie("x-access-token");
 
   useEffect(function handleGetTasks() {
-    function getTasks() {
-      return mock.response;
+    async function getTasks() {
+      const getFamTaskUrl = `${BASE_URL}/tasks/family`;
+      console.log("retrieving tasks");
+      const res = await fetch(getFamTaskUrl, {
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          "x-access-token": `${token}`,
+        },
+        credentials: "include"
+      });
+      const resData = await res.json();
+      setTasks(resData.family_tasks);
     }
-    let resp = getTasks();
-    setTasks(resp.tasks);
-  }, []);
+    if (!loading) getTasks();
+  }, [loading, token]);
 
   // GET all the tasks from their family id and display them here as a TaskCard
   const handleClose = () => {
@@ -34,18 +49,24 @@ function DashOverview() {
 
   // TODO: Implement server logic
   const tradeTask = (task_id: Number, recipients: any) => {
-    console.log(`Requesting trade for task id ${task_id} to users ${recipients}`);
     alert(`You've sent trade requests to users #${recipients}.`);
   }
 
   // TODO: Implement server logic
-  const completeTask = (task_id: Number) => {
-    console.log(`Completing task id ${task_id}`);
-    alert("You've completed the task.")
-  }
-
-  // TODO: Implement server logic
-  const deleteTask = (task_id: Number) => {
+  const completeTask = async (task_id: Number) => {
+    alert("You've completed the task.");
+    const res = await fetch(`${BASE_URL}/complete-task`, {
+      method: "PATCH",
+      body: JSON.stringify({ task_id }),
+      headers: {
+        "Content-type": "application/json",
+        "x-access-token": `${token}`
+      },
+      credentials: "include"
+    });
+    if (res.status === 200) {
+      console.log("completed");
+    }
     setTasks(currTasks => {
       let filteredTasks = currTasks.filter(task => {
         return task.task_id !== task_id;
@@ -54,12 +75,39 @@ function DashOverview() {
     });
   }
 
-  const postNewTask = (data: Task) => {
-    // TODO: Delete the Math.random line once the backend communication is implemented.
-    // We need `data.task_id` because it needs a `task_id` for the `deleteTask` fxn.
-    data.task_id = Math.floor(Math.random() * (99999 - 10001) + 10001);
+  // TODO: Implement server logic
+  const deleteTask = async (task_id: Number) => {
+    const res = await fetch(`${BASE_URL}/delete-task`, {
+      method: "PATCH",
+      body: JSON.stringify({ task_id }),
+      headers: {
+        "Content-type": "application/json",
+        "x-access-token": `${token}`
+      },
+      credentials: "include"
+    });
+    if (res.status === 200) {
+      console.log("yeet");
+    }
+    setTasks(currTasks => {
+      let filteredTasks = currTasks.filter(task => {
+        return task.task_id !== task_id;
+      });
+      return filteredTasks;
+    });
+  }
 
-    setTasks(currTasks => ([...currTasks, data]));
+  const postNewTask = async (data: Task) => {
+    await fetch(`${BASE_URL}/create-task`, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-type": "application/json",
+        "x-access-token": `${token}`
+      },
+      credentials: "include"
+    });
+    setTasks(currTasks => ([{ ...data, created_by: user.user_id, created_at: new Date().getUTCDate() }, ...currTasks ]));
   }
 
   return (
@@ -72,16 +120,16 @@ function DashOverview() {
             Overview
           </h1>
         </Col>
-        <Col md={8} className="d-flex justify-content-around align-items-center">
+        <Col md={7} className="d-flex justify-content-around align-items-center">
           <Button className="DashOverview-new-task-btn" onClick={() => setShowNewTaskForm(!showNewTaskForm)}>Add Task</Button>
           <SearchBar />
         </Col>
       </Row>
       <Container fluid className="mt-3">
         <Row>
-          {tasks ? tasks.map(task => {
+          {tasks.length > 0 ? tasks.map(task => {
             return (<Col md={6}>
-              <TaskCard task={task} tradeTask={tradeTask} deleteTask={deleteTask} completeTask={completeTask}/>
+              <TaskCard key={task.task_id} task={task} tradeTask={tradeTask} deleteTask={deleteTask} completeTask={completeTask} />
             </Col>)
           }) : <Col md={6}>No tasks to display.</Col>}
         </Row>
