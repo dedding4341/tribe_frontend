@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
-import { UserContext } from '../appContext';
+import { useSelector } from 'react-redux';
 
 interface IProps {
   show: Boolean,
@@ -12,7 +12,7 @@ interface IProps {
 function NewTaskForm({ show, handleClose, postNewTask }: IProps) {
   const INITIAL_STATE = { task_name: "", task_description: "", associated_points: "" as any, assignee: "" as any, completion_time: undefined }
   const [formData, setFormData] = useState(INITIAL_STATE);
-  const { famMembers } = useContext(UserContext);
+  const famMembers = useSelector((st: any) => st.famMembers);
 
   const handleSubmit = (evt: React.FormEvent) => {
     evt.preventDefault();

@@ -1,26 +1,26 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Nav, Button } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
-import { UserContext } from '../appContext';
+import { useDispatch } from 'react-redux';
+import { NavLink, useHistory } from 'react-router-dom';
+import { logoutUser } from '../actionCreators';
 import './DashboardNav.css';
 
 function DashboardNav() {
-  const { reset } = useContext(UserContext); 
+  const dispatch = useDispatch();
   const history = useHistory();
 
   const handleLogout = () => {
-    reset();
-    document.cookie = "x-access-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    dispatch(logoutUser());
     history.push("/users/auth");
   }
 
   return (
     <div className="DashboardNav">
       <Nav defaultActiveKey="/tribe" className="flex-column" >
-        <Nav.Link className="mt-2 mb-2"  href={`/tribe/overview`}>Home</Nav.Link>
-        <Nav.Link className="mt-2 mb-2" href={`/tribe/calender`}>Calender</Nav.Link>
-        <Nav.Link className="mt-2 mb-2" href={`/tribe/todo`}>To-do</Nav.Link>
-        <Nav.Link className="mt-2 mb-2" href={`/tribe/store`}>Store</Nav.Link>
+        <NavLink className="mt-2 mb-2"  to={`/tribe/overview`}>Home</NavLink>
+        <NavLink className="mt-2 mb-2" to={`/tribe/calender`}>Calender</NavLink>
+        <NavLink className="mt-2 mb-2" to={`/tribe/todo`}>To-do</NavLink>
+        <NavLink className="mt-2 mb-2" to={`/tribe/store`}>Store</NavLink>
         <li className="DashboardNav-vertical-divider"></li>
         <Button className="mt-2 mb-2" onClick={handleLogout}>Logout</Button>
       </Nav>

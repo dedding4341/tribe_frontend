@@ -1,122 +1,53 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, useHistory } from 'react-router-dom';
 import PublicRoutes from './PublicRoutes';
 import PrivateRoutes from './PrivateRoutes';
+import { useDispatch, useSelector } from 'react-redux';
 import { getCookie } from './helpers';
-import { UserContext } from './appContext';
-import { BASE_URL } from './config';
+import { getFamilyFromAPI, getFamilyMembersFromAPI, getFamilyTasksFromAPI, getUserFromAPI, loginByToken } from './actionCreators';
 
 function App() {
-  const [user, setUser] = useState<any>();
-  const [family, setFamily] = useState<any>();
-  const [famMembers, setFamMembers] = useState<any>();
-  const [loading, setLoading] = useState<Boolean>(true);
-  const [isLoggedIn, setIsLoggedIn] = useState<Boolean>(false);
+  const isLoggedIn = useSelector((st: any) => st.isLoggedIn);
+  const family = useSelector((st: any) => st.family);
+  const user = useSelector((st: any) => st.user);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-  useEffect(function checkLoggedIn() {
+  useEffect(() => {
     const token = getCookie("x-access-token");
-
-    async function getUserInfo() {
+    if (token && !isLoggedIn) {
       try {
-        console.log("retrieving info in App component.")
-        if (!user) {
-          console.log("user in App component.")
-          const res = await fetch(`${BASE_URL}/get-user`, {
-            method: 'GET',
-            headers: {
-              "x-access-token": token
-            },
-            credentials: "include"
-          });
-          const resData = await res.json()
-          setUser(resData.user);
+        if (!user.user_id) {
+          dispatch(getUserFromAPI());
         }
-        if (!family) {
-          console.log("family info in App component.")
-          const famRes = await fetch(`${BASE_URL}/get-family-info`, {
-            method: 'GET',
-            headers: {
-              "x-access-token": token
-            },
-            credentials: "include"
-          });
-          const famResData = await famRes.json();
-          setFamily(famResData.family);
+        if (!family.family_id) {
+          dispatch(getFamilyFromAPI());
+          dispatch(getFamilyMembersFromAPI());
+          dispatch(getFamilyTasksFromAPI());
         }
-        if (!famMembers) {
-          console.log("family members in App component.")
-          const famMembRes = await fetch(`${BASE_URL}/family`, {
-            method: 'GET',
-            headers: {
-              "x-access-token": token
-            },
-            credentials: "include"
-          });
-          const famMembResData = await famMembRes.json();
-          setFamMembers(famMembResData.users);
+        dispatch(loginByToken());
+        if (isLoggedIn && token && user.user_id && family.family_id) {
+          history.push("/tribe/overview");
         }
-        setLoading(false);
-        loginUser();
       } catch (err) {
-        alert("You have been signed out, please login again.")
+        alert("Session token has expired, please login again");
+        history.push("/users/auth");
       }
-    }
-
-    if (token) {
-      if (!loading) setLoading(true);
-      getUserInfo();
-    }
-
-    return function cleanUp() {
-      setLoading(true);
     }
   }, [isLoggedIn]);
 
-  function updateUserCntxt(data: any) {
-    setUser(data);
-  }
-
-  function reset() {
-    setUser(undefined);
-    setFamily(undefined);
-    setFamMembers(undefined);
-    setLoading(true);
-    logoutUser();
-  }
-
-  function loginUser() {
-    setIsLoggedIn(true);
-  }
-
-  function logoutUser() {
-    setIsLoggedIn(false);
-  }
-
-  const providerValue = {
-    user,
-    updateUserCntxt,
-    family,
-    famMembers,
-    loading,
-    reset,
-    loginUser,
-    logoutUser
-  };
-
   return (
-    <UserContext.Provider value={providerValue}>
-      <div className="App">
-        <BrowserRouter>
-          <Switch>
-            <Route path="/tribe/*">
-              <PrivateRoutes />
-            </Route>
-            <PublicRoutes />
-          </Switch>
-        </BrowserRouter>
-      </div>
-    </UserContext.Provider>
+    <div className="App">
+      <BrowserRouter>
+        <Switch>
+          <Route path="/tribe/*">
+            <PrivateRoutes />
+          </Route>
+          <PublicRoutes />
+        </Switch>
+      </BrowserRouter>
+    </div>
   );
 }
 

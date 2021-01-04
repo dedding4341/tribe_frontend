@@ -1,11 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button, Col, Container, Image, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import moment from "moment";
 import './TaskCard.css';
 import TradeForm from '../TradeForm';
-import { UserContext } from '../appContext';
 import { DEFAULT_PFP } from '../config';
+import { useSelector } from 'react-redux';
 
 interface IProps {
     task: any,
@@ -17,7 +18,8 @@ interface IProps {
 function TaskCard({ task, deleteTask, tradeTask, completeTask }: IProps) {
     const [showDelConf, setShowDelConf] = useState(false);
     const [showTradeForm, setShowTradeForm] = useState(false);
-    const { user, famMembers } = useContext(UserContext);
+    const user = useSelector((st: any) => st.user);
+    const famMembers = useSelector((st: any) => st.famMembers)
     const isTaskOwner = (task.assignee === user.user_id);
 
     const taskOwner = famMembers.filter((memb: any) => {
@@ -87,18 +89,22 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask }: IProps) {
                     :
                     // HTML for task details 
                     <Row className="d-flex align-items-center justify-content-between">
-                        <Col sm={6} md="auto">
+                        <Col sm={6} md={7}>
                             <Row className="TaskCard-header">
-                                <h3>{task.task_name}</h3>
-                                <span className="TaskCard-pts">+{task.associated_points}pts</span>
+                                <h3>{task.task_name}<span className="TaskCard-pts">+{task.associated_points}pts</span></h3>
                             </Row>
                             <Row>
-                                <div className="TaskCard-deadline ml-2">
-                                    Created on {new Date(task.created_at).toString()} by {taskOwner.first_name}
+                                <p className="TaskCard-description">
+                                    {task.task_description}
+                                </p>
+                            </Row>
+                            <Row>
+                                <div className="TaskCard-deadline text-left">
+                                    posted {moment(new Date(task.created_at).toString()).calendar()} by {taskOwner.first_name}
                                 </div>
                             </Row>
                         </Col>
-                        <Col sm={6} md="auto">
+                        <Col sm={6} md={5}>
                             <Button className="TaskCard-btn" onClick={isTaskOwner ? handleCompleteTask : () => setShowTradeForm(true)}>{isTaskOwner ? "Complete" : "Trade"}</Button>
                         </Col>
                     </Row>
