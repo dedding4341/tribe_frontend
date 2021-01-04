@@ -1,11 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Col, Image, Row } from 'react-bootstrap';
-import { UserContext } from '../appContext';
+import { useSelector } from 'react-redux';
 import {DEFAULT_PFP} from '../config';
 import './ProfileHeader.css';
 
 function ProfileHeader() {
-  const { user, family } = useContext(UserContext)
+  const user = useSelector((st: any) => st.user);
+  const family = useSelector((st: any) => st.family);
 
   return (
     <div className="ProfileHeader container">

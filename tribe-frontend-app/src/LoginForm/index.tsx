@@ -5,7 +5,8 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal'
 import { BASE_URL } from '../config';
 import { useHistory } from 'react-router-dom';
-import { UserContext } from '../appContext';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../actionCreators';
 
 function UserNameNotRecognized(props: any) {
     return (
@@ -92,9 +93,8 @@ function LoginForm() {
     const [passwordIncorrectModalShow, setPasswordIncorrectModalShow] = React.useState(false);
     const [userNotVerifiedModalShow, setUserNotVerifiedModalShow] = React.useState(false);
     const [emailNotRecognizedModalShow, setEmailNotRecognizedModalShow] = React.useState(false);
-
+    const dispatch = useDispatch();
     const history = useHistory();
-    const { updateUserCntxt, loginUser } = useContext(UserContext);
 
     const handleChange = (evt: React.FormEvent<HTMLInputElement>) => {
         const { name, value } = evt.currentTarget;
@@ -143,8 +143,7 @@ function LoginForm() {
 
             } else if (retcode === 200) {
               const famId = json.user.family_id;
-              loginUser();
-              updateUserCntxt(json.user);
+              dispatch(loginUser(json.user));
               if (famId) {
                 history.push(`/tribe/overview`);
               } else {

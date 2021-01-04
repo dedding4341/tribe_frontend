@@ -1,0 +1,13 @@
+.PublicRoute-notice-link {
+  color :blue;
+}
+
+.PublicRoutes-notice {
+  width: 60%;
+  position: absolute;
+  top: 5rem;
+  z-index: 9;
+  right: 0;
+  left: 0;
+  margin: auto;
+}

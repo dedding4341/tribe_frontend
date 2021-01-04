@@ -1,19 +1,25 @@
 import React from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import DashboardLeft from '../DashboardLeft';
 import DashCalender from '../DashCalender';
 import DashOverview from '../DashOverview';
 import DashStore from '../DashStore';
 import DashTodo from '../DashTodo';
+import { useSelector} from 'react-redux';
 import './PrivateRoutes.css';
+
 /**
  * Routing logic for private components
  */
 function PrivateRoutes() {
-  
-  // protect these privateroutes by adding a redirect to the login path.
+  const user = useSelector((st: any) => st.user);
+  const isLoggedIn = useSelector((st: any) => st.isLoggedIn);
 
+  // protect these privateroutes by adding a redirect to the login path.
+  if (!isLoggedIn && !user.user_id) {
+    return <Redirect to="/users/auth"/>
+  } 
 
   return (
     <Container fluid className="PrivateRoutes">

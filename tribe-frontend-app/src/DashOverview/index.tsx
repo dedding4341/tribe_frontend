@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import NewTaskForm from '../NewTaskForm';
 import SearchBar from '../SearchBar';
@@ -6,7 +6,8 @@ import TaskCard from '../TaskCard';
 import './DashOverview.css';
 import { BASE_URL } from '../config';
 import { getCookie } from '../helpers';
-import { UserContext } from '../appContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteTaskFromAPI, postTaskToAPI } from '../actionCreators';
 import { Redirect } from 'react-router-dom';
 
 interface Task {
@@ -20,27 +21,9 @@ interface Task {
 
 function DashOverview() {
   const [showNewTaskForm, setShowNewTaskForm] = useState(false);
-  const [tasks, setTasks] = useState([] as any[]);
-  const { user, loading } = useContext(UserContext);
+  const family_tasks = useSelector((st: any) => st.family_tasks);
+  const dispatch = useDispatch();
   const token = getCookie("x-access-token");
-
-  useEffect(function handleGetTasks() {
-    async function getTasks() {
-      const getFamTaskUrl = `${BASE_URL}/tasks/family`;
-      console.log("retrieving tasks");
-      const res = await fetch(getFamTaskUrl, {
-        method: "GET",
-        headers: {
-          "Content-type": "application/json",
-          "x-access-token": `${token}`,
-        },
-        credentials: "include"
-      });
-      const resData = await res.json();
-      setTasks(resData.family_tasks);
-    }
-    if (!loading) getTasks();
-  }, [loading, token]);
 
   // GET all the tasks from their family id and display them here as a TaskCard
   const handleClose = () => {
@@ -67,47 +50,15 @@ function DashOverview() {
     if (res.status === 200) {
       console.log("completed");
     }
-    setTasks(currTasks => {
-      let filteredTasks = currTasks.filter(task => {
-        return task.task_id !== task_id;
-      });
-      return filteredTasks;
-    });
   }
 
   // TODO: Implement server logic
   const deleteTask = async (task_id: Number) => {
-    const res = await fetch(`${BASE_URL}/delete-task`, {
-      method: "PATCH",
-      body: JSON.stringify({ task_id }),
-      headers: {
-        "Content-type": "application/json",
-        "x-access-token": `${token}`
-      },
-      credentials: "include"
-    });
-    if (res.status === 200) {
-      console.log("yeet");
-    }
-    setTasks(currTasks => {
-      let filteredTasks = currTasks.filter(task => {
-        return task.task_id !== task_id;
-      });
-      return filteredTasks;
-    });
+    dispatch(deleteTaskFromAPI(task_id));
   }
 
   const postNewTask = async (data: Task) => {
-    await fetch(`${BASE_URL}/create-task`, {
-      method: "POST",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-type": "application/json",
-        "x-access-token": `${token}`
-      },
-      credentials: "include"
-    });
-    setTasks(currTasks => ([{ ...data, created_by: user.user_id, created_at: new Date().getUTCDate() }, ...currTasks ]));
+    dispatch(postTaskToAPI(data));
   }
 
   return (
@@ -127,7 +78,7 @@ function DashOverview() {
       </Row>
       <Container fluid className="mt-3">
         <Row>
-          {tasks.length > 0 ? tasks.map(task => {
+          {family_tasks.length > 0 ? family_tasks.map((task: any) => {
             return (<Col md={6}>
               <TaskCard key={task.task_id} task={task} tradeTask={tradeTask} deleteTask={deleteTask} completeTask={completeTask} />
             </Col>)
