@@ -29,7 +29,7 @@ function DashboardNav() {
 			}
 		})
 		.then(res => {
-			if(res.status == 500){
+			if(res.status === 500){
 				retcode = 500
 			} else {
 				retcode = 201

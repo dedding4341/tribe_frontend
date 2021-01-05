@@ -23,7 +23,7 @@ function ProfileHeader() {
               {`${user.first_name} ${user.last_name}`}
             </Col>
             <Col>
-              @ {family.family_name}
+              @{family.family_name}_tribe
             </Col>
           </Row>
         </Col>

@@ -5,15 +5,16 @@
 
 .DashOverview-new-task-btn,
 .DashOverview-new-task-btn:active {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   margin-right: 1rem;
-  border-radius: 15px;
+  border-radius: 5px;
   padding: 0.3rem 0.9rem;
   background-color: rgb(88, 176, 211);
   border-color: rgb(88, 176, 211);
 }
 
-.DashOverview-new-task-btn:hover {
+.DashOverview-new-task-btn:hover,
+.DashOverview-new-task-btn:focus {
   background-color: rgb(71, 146, 175);
   border-color: rgb(71, 146, 175);
 }

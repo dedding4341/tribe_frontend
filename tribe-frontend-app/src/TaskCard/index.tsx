@@ -38,7 +38,6 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask }: IPr
         return task.assignee === memb.user_id;
     });
 
-
     const handleTaskDelete = () => {
         deleteTask(task.task_id);
         setShowDelConf(false);
@@ -57,8 +56,7 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask }: IPr
         updateTask(updatedTask, user.user_id);
     }
 
-
-    // avatar dynamic styling
+    // avatar dynamic styling: if more than one assignee.
     let rightPosition = -30
     let zIdx = assignees.length;
 

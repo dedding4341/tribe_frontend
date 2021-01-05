@@ -1,9 +1,9 @@
 .FilterBar {
   background-color: rgb(255, 255, 255);
   border-radius: 20px;
-  padding: 0.7rem 1rem;
+  padding: 0.7rem 2rem;
   margin: 2rem 0;
-  width: 80%;
+  width: fit-content;
   font-size: 1.6rem;
 }
 
@@ -16,4 +16,9 @@
   border: none;
   margin: 0.2rem;
   font-size: 1.3rem;
+}
+
+.FilterBar > Button:hover,
+.FilterBar > Button:focus {
+  background-color: rgb(60, 84, 112);
 }
