@@ -44,6 +44,7 @@
     transition: all .2s ease;
     vertical-align: middle;
     background-clip: padding-box;
+    border:rgb(236, 236, 236) 1px solid;
 }
 
 .TaskCard-pts {

@@ -10,6 +10,7 @@
   height: 8rem;
   border-radius:50%;
   overflow:hidden;
+  border:rgb(236, 236, 236) 1px solid;
 }
 
 .ProfileHeader-img {

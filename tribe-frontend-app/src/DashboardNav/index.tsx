@@ -1,5 +1,5 @@
 import React from 'react';
-import { Nav, Button, NavItem } from 'react-bootstrap';
+import { Nav, Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
 import { logoutUser } from '../actionCreators';
@@ -47,7 +47,7 @@ function DashboardNav() {
 			}
 		})
 		.then(res => {
-			if(res.status == 500){
+			if(res.status === 500){
 				retcode = 500
 			} else {
 				retcode = 201
@@ -74,7 +74,7 @@ function DashboardNav() {
         <NavLink className="mt-2 mb-2" to={`/tribe/store`}>Store</NavLink>
 				<Nav.Item className="Family_code" onClick={getFamilyCode}>{codeDisplay}</Nav.Item>
         <li className="DashboardNav-vertical-divider"></li>
-        <Button className="mt-2 mb-2" onClick={handleLogout}>Logout</Button>
+        <Button className="DashboardNav-logout-btn mt-2 mb-2" onClick={handleLogout}>Logout</Button>
       </Nav>
     </div>
   );

@@ -15,9 +15,7 @@ import { getCookie } from '../helpers';
  */
 function PrivateRoutes() {
   const token = getCookie("x-access-token");
-  const user = useSelector((st: any) => st.user);
   const isLoggedIn = useSelector((st: any) => st.isLoggedIn);
-  const loading = useSelector((st: any) => st.loading);
 
   // protect these privateroutes by adding a redirect to the login path.
   if (!isLoggedIn && !token) {

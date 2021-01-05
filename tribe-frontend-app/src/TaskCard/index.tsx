@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Col, Container, Image, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
@@ -7,36 +7,43 @@ import './TaskCard.css';
 import TradeForm from '../TradeForm';
 import { DEFAULT_PFP } from '../config';
 import { useSelector } from 'react-redux';
+import TaskCardDetailsModal from '../TaskCardDetailsModal';
 
 interface IProps {
     task: any,
     deleteTask: Function,
     tradeTask: Function,
-    completeTask: Function
+    completeTask: Function,
+    updateTask: Function
 }
 
-function TaskCard({ task, deleteTask, tradeTask, completeTask }: IProps) {
+/**
+ * TaskCard component displays each task.
+ * Handler functions to delegate task-related CRUD operations.
+ */
+function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask }: IProps) {
     const [showDelConf, setShowDelConf] = useState(false);
     const [showTradeForm, setShowTradeForm] = useState(false);
+    const [showTaskDetails, setShowTaskDetails] = useState(false);
     const user = useSelector((st: any) => st.user);
     const famMembers = useSelector((st: any) => st.famMembers)
     const isTaskOwner = (task.assignee === user.user_id);
 
+    // `taskOwner` is a user object of the task's `created_by` user.
     const taskOwner = famMembers.filter((memb: any) => {
         return task.created_by === memb.user_id;
     })[0];
 
-    /**filter if current user is task owner. works if multiple assignees */
-    // const isTaskOwner = (task.assignee.indexOf(mock.currentUser.user_id) !== -1);
-
-    /*filter for the assignees' informations to display*/
+    /*filter for the assignees' informations to display
+        - This is kept incase future updates involve multiple assignees to a task.
+    */
     let assignees = famMembers.filter((memb: any) => {
         return task.assignee === memb.user_id;
     });
 
-
     const handleTaskDelete = () => {
         deleteTask(task.task_id);
+        // close the delete confirmation notice.
         setShowDelConf(false);
     }
 
@@ -48,13 +55,21 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask }: IProps) {
         completeTask(task.task_id);
     }
 
-    // avatar dynamic styling
+    const handleUpdateTask = (updatedTask: any) => {
+        // task_id is appended to the updatedTask formData object 
+        // for backend PATCH.
+        updatedTask.task_id = task.task_id;
+        updateTask(updatedTask, user.user_id);
+    }
+
+    // avatar dynamic styling: if more than one assignee. (future update)
     let rightPosition = -30
     let zIdx = assignees.length;
 
     return (
         <div className="TaskCard">
             <TradeForm show={showTradeForm} handleTradeTask={handleTradeTask} handleClose={() => setShowTradeForm(false)}/>
+            <TaskCardDetailsModal show={showTaskDetails} handleUpdateTask={handleUpdateTask} handleClose={() => setShowTaskDetails(false)} task={task} taskOwner={taskOwner} isFamilyAdmin={user.family_manager} />
             {assignees.map((assignee: any) => {
                 // increment and decrement avatar styling variables.
                 rightPosition += 30;
@@ -72,6 +87,7 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask }: IProps) {
                 );
             })}
             <Container>
+                {/**DELETE button if current user is a `family_manager`*/}
                 {user.family_manager && <div className="TaskCard-delete-btn">
                     <FontAwesomeIcon style={{ cursor: "pointer" }} icon={faTimes} size="2x" onClick={() => setShowDelConf(!showDelConf)} />
                 </div>}
@@ -89,7 +105,7 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask }: IProps) {
                     :
                     // HTML for task details 
                     <Row className="d-flex align-items-center justify-content-between">
-                        <Col sm={6} md={7}>
+                        <Col sm={6} md={7} onClick={() => setShowTaskDetails(true)}>
                             <Row className="TaskCard-header">
                                 <h3>{task.task_name}<span className="TaskCard-pts">+{task.associated_points}pts</span></h3>
                             </Row>

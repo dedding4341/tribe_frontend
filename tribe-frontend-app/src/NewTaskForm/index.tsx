@@ -5,18 +5,23 @@ import { useSelector } from 'react-redux';
 interface IProps {
   show: Boolean,
   handleClose: Function,
-  postNewTask: Function
+  postNewTask: Function,
+  isEdit: Boolean
 }
 
-
-function NewTaskForm({ show, handleClose, postNewTask }: IProps) {
+/**
+ * This NewTaskForm modal component works for both:
+ * - making a new task AND 
+ * - patching an existing task
+ */
+function NewTaskForm({ show, handleClose, postNewTask, isEdit }: IProps) {
   const INITIAL_STATE = { task_name: "", task_description: "", associated_points: "" as any, assignee: "" as any, completion_time: undefined }
   const [formData, setFormData] = useState(INITIAL_STATE);
   const famMembers = useSelector((st: any) => st.famMembers);
 
   const handleSubmit = (evt: React.FormEvent) => {
     evt.preventDefault();
-    formData.assignee = parseInt(formData.assignee);
+    formData.assignee = formData.assignee !== "N/A" ? parseInt(formData.assignee) : "N/A";
     formData.associated_points = parseInt(formData.associated_points);
     postNewTask(formData);
     handleClose();
@@ -25,13 +30,12 @@ function NewTaskForm({ show, handleClose, postNewTask }: IProps) {
   const handleChange = (evt: React.FormEvent<HTMLInputElement>) => {
     const { name, value } = evt.currentTarget;
     setFormData(currData => ({ ...currData, [name]: value }));
-    console.log(name, value);
   }
 
-  
+
   const handleSelect = (evt: React.ChangeEvent<HTMLSelectElement>) => {
     let selectedOption = (evt.target.selectedOptions);
-    
+
     /**save for the future when there can be multiple assignees*/
     // let selected: any = [...formData.assignee];
     // for (let i = 0; i < selectedOption.length; i++) {
@@ -51,7 +55,7 @@ function NewTaskForm({ show, handleClose, postNewTask }: IProps) {
     <Modal show={show} onHide={handleClose} className="NewTaskForm">
       <Modal.Header>
         <Modal.Title>
-          Create a task
+          {isEdit ? "Edit task" : "Create a task"}
         </Modal.Title>
       </Modal.Header>
       <Form onSubmit={handleSubmit}>
@@ -75,15 +79,16 @@ function NewTaskForm({ show, handleClose, postNewTask }: IProps) {
           <Form.Group>
             <Form.Label>Assign to:</Form.Label>
             <Form.Control name="assignee" as="select" multiple={true} onChange={(evt: any) => handleChange(evt)}>
+              <option value="N/A">Assign task later</option>
               {famMembers.map((memb: any) => {
-                console.log("memb", memb);
-              return <option key={memb.user_id} value={memb.user_id}>{memb.first_name}</option>
+                return <option key={memb.user_id} value={memb.user_id}>{memb.first_name ? memb.first_name : "Unknown"}</option>
               })}
             </Form.Control>
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button type="submit">Add</Button>
+          <Button variant="secondary" onClick={() => handleClose()}>Close</Button>
+          <Button type="submit">{isEdit ? "Save" : "Add"}</Button>
         </Modal.Footer>
       </Form>
     </Modal>

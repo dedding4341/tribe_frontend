@@ -19,7 +19,6 @@ function PublicRoutes() {
   const history = useHistory();
 
   useEffect(function () {
-    console.log("mounting the public routes...")
     if (isLoggedIn) {
       setShow(true);
     }

@@ -1,11 +1,10 @@
-import { ADD_TASK, DELETE_TASK, LOAD_FAMILY_TASKS, LOGIN, LOGIN_BY_TOKEN, LOGOUT, SAVE_FAMILY, SAVE_FAMILY_MEMBERS, SAVE_USER, START_LOADING, STOP_LOADING } from "./actionTypes";
+import { ADD_TASK, DELETE_TASK, LOAD_FAMILY_TASKS, LOGIN, LOGIN_BY_TOKEN, LOGOUT, SAVE_FAMILY, SAVE_FAMILY_MEMBERS, SAVE_USER, START_LOADING, STOP_LOADING, UPDATE_TASK } from "./actionTypes";
 import { BASE_URL } from "./config";
 import { getCookie } from "./helpers";
 
 export function getUserFromAPI() {
   return async function (dispatch: any) {
     const token = getCookie("x-access-token");
-
     const res = await fetch(`${BASE_URL}/get-user`, {
       method: 'GET',
       headers: {
@@ -21,7 +20,6 @@ export function getUserFromAPI() {
 export function getFamilyFromAPI() {
   return async function (dispatch: any) {
     const token = getCookie("x-access-token");
-
     const res = await fetch(`${BASE_URL}/get-family-info`, {
       method: 'GET',
       headers: {
@@ -52,8 +50,8 @@ export function getFamilyMembersFromAPI() {
 
 export function getFamilyTasksFromAPI() {
   return async function (dispatch: any) {
+    dispatch(startLoading());
     const token = getCookie("x-access-token");
-
     const getFamTaskUrl = `${BASE_URL}/tasks/family`;
     const res = await fetch(getFamTaskUrl, {
       method: "GET",
@@ -64,7 +62,8 @@ export function getFamilyTasksFromAPI() {
       credentials: "include"
     });
     const resData = await res.json();
-    dispatch(gotFamilyTasks(resData.family_tasks))
+    dispatch(gotFamilyTasks(resData.family_tasks));
+    dispatch(stopLoading());
   }
 }
 
@@ -104,6 +103,29 @@ export function postTaskToAPI(task: any) {
   }
 }
 
+export function updateTaskToAPI(task: any, currentUserId: Number) {
+  return async function (dispatch: any) {
+    const token = getCookie("x-access-token");
+    await fetch(`${BASE_URL}/edit-task`, {
+      method: "PATCH",
+      body: JSON.stringify(task),
+      headers: {
+        "Content-type": "application/json",
+        "x-access-token": `${token}`
+      },
+      credentials: "include"
+    });
+    // Assign `created_at` and `created_by` to updated task object
+    // to display the task's TaskCard.
+    task.created_at = new Date().getUTCDate();
+    task.created_by = currentUserId;
+    dispatch(updateTask(task));
+  }
+}
+
+function updateTask(task: any) {
+  return { type: UPDATE_TASK, payload: { task } };
+}
 
 function addTask(task: any) {
   return { type: ADD_TASK, payload: { task } };
