@@ -8,7 +8,6 @@ import { getCookie } from '../helpers';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteTaskFromAPI, postTaskToAPI, updateTaskToAPI } from '../actionCreators';
 import FilterBar from '../FilterBar';
-import userEvent from '@testing-library/user-event';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
@@ -21,16 +20,22 @@ interface Task {
   completion_time: String;
 }
 
+/**
+ * `DashOverview` component handles the task-related dispatches to
+ * handle backend communication and Store updates.
+ */
 function DashOverview() {
-  const [showNewTaskForm, setShowNewTaskForm] = useState(false);
+  // `loading` is true until all required information is received from API.
+  const loading = useSelector((st: any) => st.loading);
   const family_tasks = useSelector((st: any) => st.family_tasks);
-  const [tasks, setTasks] = useState(family_tasks);
   const userId = useSelector((st: any) => st.user.user_id);
+
+  const [showNewTaskForm, setShowNewTaskForm] = useState(false);
+  const [tasks, setTasks] = useState(family_tasks);
+
   const dispatch = useDispatch();
   const token = getCookie("x-access-token");
-  const loading = useSelector((st: any) => st.loading);
 
-  // GET all the tasks from their family id and display them here as a TaskCard
   const handleClose = () => {
     setShowNewTaskForm(false);
   }
@@ -57,35 +62,41 @@ function DashOverview() {
     }
   }
 
-  // TODO: Implement server logic
+  // Deletes an existing task on the backend and update the Store.
   const deleteTask = async (task_id: Number) => {
     dispatch(deleteTaskFromAPI(task_id));
   }
 
+  // Posts a new task on the backend and update the Store.
   const postNewTask = async (data: Task) => {
     dispatch(postTaskToAPI(data));
   }
 
+  // Updates an existing task on the backend and update the Store.
   const updateTask = async (data: Task, currentUserId: Number) => {
     dispatch(updateTaskToAPI(data, currentUserId));
   }
 
+  // `filter` filters tasks on the `filterType` to display on UI.
   const filter = (filterType: String) => {
     let filteredTasks: Array<any>;
     switch (filterType) {
       case "unassigned":
+        // show unassigned tasks
         filteredTasks = family_tasks.filter((t: any) => {
           return t.assignee === true;
         });
         setTasks(filteredTasks);
         break;
       case "myTasks":
+        // show currentUser's tasks
         filteredTasks = family_tasks.filter((t: any) => {
           return t.assignee === userId;
         });
         setTasks(filteredTasks);
         break;
       default:
+        // show all tasks
         setTasks(family_tasks);
         break;
     }

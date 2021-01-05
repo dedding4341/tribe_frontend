@@ -7,7 +7,6 @@ import './TaskCard.css';
 import TradeForm from '../TradeForm';
 import { DEFAULT_PFP } from '../config';
 import { useSelector } from 'react-redux';
-import NewTaskForm from '../NewTaskForm';
 import TaskCardDetailsModal from '../TaskCardDetailsModal';
 
 interface IProps {
@@ -18,6 +17,10 @@ interface IProps {
     updateTask: Function
 }
 
+/**
+ * TaskCard component displays each task.
+ * Handler functions to delegate task-related CRUD operations.
+ */
 function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask }: IProps) {
     const [showDelConf, setShowDelConf] = useState(false);
     const [showTradeForm, setShowTradeForm] = useState(false);
@@ -26,20 +29,21 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask }: IPr
     const famMembers = useSelector((st: any) => st.famMembers)
     const isTaskOwner = (task.assignee === user.user_id);
 
+    // `taskOwner` is a user object of the task's `created_by` user.
     const taskOwner = famMembers.filter((memb: any) => {
         return task.created_by === memb.user_id;
     })[0];
 
-    /**filter if current user is task owner. works if multiple assignees */
-    // const isTaskOwner = (task.assignee.indexOf(mock.currentUser.user_id) !== -1);
-
-    /*filter for the assignees' informations to display*/
+    /*filter for the assignees' informations to display
+        - This is kept incase future updates involve multiple assignees to a task.
+    */
     let assignees = famMembers.filter((memb: any) => {
         return task.assignee === memb.user_id;
     });
 
     const handleTaskDelete = () => {
         deleteTask(task.task_id);
+        // close the delete confirmation notice.
         setShowDelConf(false);
     }
 
@@ -52,11 +56,13 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask }: IPr
     }
 
     const handleUpdateTask = (updatedTask: any) => {
+        // task_id is appended to the updatedTask formData object 
+        // for backend PATCH.
         updatedTask.task_id = task.task_id;
         updateTask(updatedTask, user.user_id);
     }
 
-    // avatar dynamic styling: if more than one assignee.
+    // avatar dynamic styling: if more than one assignee. (future update)
     let rightPosition = -30
     let zIdx = assignees.length;
 
@@ -81,6 +87,7 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask }: IPr
                 );
             })}
             <Container>
+                {/**DELETE button if current user is a `family_manager`*/}
                 {user.family_manager && <div className="TaskCard-delete-btn">
                     <FontAwesomeIcon style={{ cursor: "pointer" }} icon={faTimes} size="2x" onClick={() => setShowDelConf(!showDelConf)} />
                 </div>}

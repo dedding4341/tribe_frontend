@@ -12,6 +12,10 @@ interface IProps {
   isFamilyAdmin: Boolean
 }
 
+/**
+ * `TaskCardDetailsModal` modal component displays a task's information in full.
+ * Includes navigation to EDIT a task if current user is a `family_manager`
+ */
 function TaskCardDetailsModal({ show, handleUpdateTask, handleClose, task, taskOwner, isFamilyAdmin }: IProps) {
   const [showTaskEdit, setShowTaskEdit] = useState(false);
 
@@ -38,6 +42,7 @@ function TaskCardDetailsModal({ show, handleUpdateTask, handleClose, task, taskO
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={() => handleClose()}>Close</Button>
+        {/**If the current user is a `family_admin`, the Edit Task button will display to show `NewTaskForm` modal */}
         {isFamilyAdmin && <Button onClick={() => handleShowEdit()}>Edit task</Button>}
       </Modal.Footer>
     </Modal>
