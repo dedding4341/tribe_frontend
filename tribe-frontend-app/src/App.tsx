@@ -31,8 +31,6 @@ function App() {
         alert("Session token has expired, please login again");
         history.push("/users/auth");
       }
-    } else {
-      dispatch(stopLoading());
     }
   }, [isLoggedIn]);
 

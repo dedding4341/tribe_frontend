@@ -10,7 +10,7 @@ function ProfileHeader() {
 
   return (
     <div className="ProfileHeader container">
-      { family && user &&
+      { family && user.first_name &&
       <Row className="d-flex align-items-center">
         <Col sm={10} md={6} lg={4}>
           <div className="ProfileHeader-img-wrapper">

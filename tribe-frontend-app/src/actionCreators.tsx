@@ -1,12 +1,10 @@
 import { ADD_TASK, DELETE_TASK, LOAD_FAMILY_TASKS, LOGIN, LOGIN_BY_TOKEN, LOGOUT, SAVE_FAMILY, SAVE_FAMILY_MEMBERS, SAVE_USER, START_LOADING, STOP_LOADING, UPDATE_TASK } from "./actionTypes";
 import { BASE_URL } from "./config";
 import { getCookie } from "./helpers";
-import { currentUser } from "./mock";
 
 export function getUserFromAPI() {
   return async function (dispatch: any) {
     const token = getCookie("x-access-token");
-
     const res = await fetch(`${BASE_URL}/get-user`, {
       method: 'GET',
       headers: {
@@ -22,7 +20,6 @@ export function getUserFromAPI() {
 export function getFamilyFromAPI() {
   return async function (dispatch: any) {
     const token = getCookie("x-access-token");
-
     const res = await fetch(`${BASE_URL}/get-family-info`, {
       method: 'GET',
       headers: {
@@ -53,8 +50,8 @@ export function getFamilyMembersFromAPI() {
 
 export function getFamilyTasksFromAPI() {
   return async function (dispatch: any) {
+    dispatch(startLoading());
     const token = getCookie("x-access-token");
-
     const getFamTaskUrl = `${BASE_URL}/tasks/family`;
     const res = await fetch(getFamTaskUrl, {
       method: "GET",
@@ -65,7 +62,8 @@ export function getFamilyTasksFromAPI() {
       credentials: "include"
     });
     const resData = await res.json();
-    dispatch(gotFamilyTasks(resData.family_tasks))
+    dispatch(gotFamilyTasks(resData.family_tasks));
+    dispatch(stopLoading());
   }
 }
 

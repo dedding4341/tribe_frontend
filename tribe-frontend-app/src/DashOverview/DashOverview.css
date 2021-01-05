@@ -18,3 +18,19 @@
   background-color: rgb(71, 146, 175);
   border-color: rgb(71, 146, 175);
 }
+
+.DashOverview-fetch-task-btn,
+.DashOverview-fetch-task-btn:active {
+  font-size: 1.3rem;
+  margin-right: 1rem;
+  border-radius: 5px;
+  padding: 0.3rem 0.9rem;
+  background-color: rgb(110, 197, 125);
+  border-color: rgb(110, 197, 125);
+}
+
+.DashOverview-fetch-task-btn:hover,
+.DashOverview-fetch-task-btn:focus {
+  background-color: rgb(64, 145, 125);
+  border-color: rgb(64, 145, 125);
+}

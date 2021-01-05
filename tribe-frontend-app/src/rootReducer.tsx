@@ -33,6 +33,7 @@ export default function rootReducer(state = INITIAL_STATE, action: Action) {
       });
       return { ...state, family_tasks: updatedTasks };
     case LOAD_FAMILY_TASKS:
+      console.log("saving the tasks...,", action.payload.family_tasks)
       return { ...state, family_tasks: action.payload.family_tasks }
     case SAVE_FAMILY:
       console.log("saving the family...,", action.payload.family)

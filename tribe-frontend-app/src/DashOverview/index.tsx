@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import NewTaskForm from '../NewTaskForm';
 import TaskCard from '../TaskCard';
@@ -6,10 +6,10 @@ import './DashOverview.css';
 import { BASE_URL } from '../config';
 import { getCookie } from '../helpers';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteTaskFromAPI, postTaskToAPI, updateTaskToAPI } from '../actionCreators';
+import { deleteTaskFromAPI, getFamilyTasksFromAPI, postTaskToAPI, stopLoading, updateTaskToAPI } from '../actionCreators';
 import FilterBar from '../FilterBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faAirFreshener } from '@fortawesome/free-solid-svg-icons';
 
 interface Task {
   task_id: Number,
@@ -35,6 +35,12 @@ function DashOverview() {
 
   const dispatch = useDispatch();
   const token = getCookie("x-access-token");
+
+  useEffect(() => {
+    if (tasks.length === 0) {
+      setTasks(family_tasks);
+    }
+  }, [family_tasks]);
 
   const handleClose = () => {
     setShowNewTaskForm(false);
@@ -77,6 +83,10 @@ function DashOverview() {
     dispatch(updateTaskToAPI(data, currentUserId));
   }
 
+  const fetchTasks = async () => {
+    dispatch(getFamilyTasksFromAPI());
+  }
+
   // `filter` filters tasks on the `filterType` to display on UI.
   const filter = (filterType: String) => {
     let filteredTasks: Array<any>;
@@ -112,10 +122,12 @@ function DashOverview() {
               <h1 className="DashOverview-title">
                 Task
                 Overview
-          </h1>
+              </h1>
             </Col>
             <Col md={7} className="d-flex justify-content-around align-items-center">
-              <Button className="DashOverview-new-task-btn shadow-none" onClick={() => setShowNewTaskForm(!showNewTaskForm)}><FontAwesomeIcon icon={faPlus}/> Add Task</Button>
+              
+              <Button className="DashOverview-fetch-task-btn shadow-none" onClick={fetchTasks}><FontAwesomeIcon icon={faAirFreshener} /></Button>
+              <Button className="DashOverview-new-task-btn shadow-none" onClick={() => setShowNewTaskForm(!showNewTaskForm)}><FontAwesomeIcon icon={faPlus} /> Add Task</Button>
               <FilterBar filter={filter} />
             </Col>
           </Row>

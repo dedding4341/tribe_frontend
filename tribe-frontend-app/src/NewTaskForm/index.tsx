@@ -81,7 +81,6 @@ function NewTaskForm({ show, handleClose, postNewTask, isEdit }: IProps) {
             <Form.Control name="assignee" as="select" multiple={true} onChange={(evt: any) => handleChange(evt)}>
               <option value="N/A">Assign task later</option>
               {famMembers.map((memb: any) => {
-                console.log("memb", memb);
                 return <option key={memb.user_id} value={memb.user_id}>{memb.first_name ? memb.first_name : "Unknown"}</option>
               })}
             </Form.Control>
