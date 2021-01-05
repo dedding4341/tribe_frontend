@@ -11,7 +11,7 @@ import { useHistory } from 'react-router-dom';
 import { getCookie } from '../helpers';
 
 function UserSetupForm() {
-  const INITIAL_USER_VALUES = { first_name: "", last_name: "", isParent: true, family_id: "", family_name: "" };
+  const INITIAL_USER_VALUES = { first_name: "", last_name: "", isParent: true, family_code: "", family_name: "" };
   const [hasFamilyId, setHasFamilyId] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState(INITIAL_USER_VALUES);
@@ -88,7 +88,7 @@ function UserSetupForm() {
       <UserSetupStep2 value={formData.last_name} handleChange={handleChange} next={next} prev={prev} currentStep={currentStep} />
       <UserSetupStep3 value={formData.isParent} handleIsParentChange={handleIsParentChange} next={next} prev={prev} currentStep={currentStep} />
       <UserSetupStep4 setHasFamilyId={setHasFamilyId} next={next} currentStep={currentStep} />
-      <UserSetupStep5 isParent={formData.isParent} famIdValue={formData.family_id} famNameValue={formData.family_name} hasFamilyId={hasFamilyId} handleChange={handleChange} handleSubmit={handleSubmit} next={next} prev={prev} currentStep={currentStep} />
+      <UserSetupStep5 isParent={formData.isParent} famIdValue={formData.family_code} famNameValue={formData.family_name} hasFamilyId={hasFamilyId} handleChange={handleChange} handleSubmit={handleSubmit} next={next} prev={prev} currentStep={currentStep} />
       <UserSetupComplete currentStep={currentStep} handleRedirect={handleRedirect} />
     </div>
   );

@@ -8,7 +8,7 @@ import { BASE_URL } from '../config';
 
 
 const EC2_SIGNUP_URL = 'https://api.tribeapp.family/sign-up';
-const LOCALHOST_SIGNUP_URL = 'http://localhost:8000/sign-up';
+const LOCALHOST_SIGNUP_URL = 'http://localhost:5000/sign-up';
 
 function validatePassword(password: String, confirmPassword: String) : Boolean {
     // Validate length
@@ -201,7 +201,7 @@ function SignUpForm() {
         if(validatePassword(formData.password, formData.repeatPassword) && validateUsername(formData.username) && /\S+@\S+\.\S+/.test(formData.email)){
         // If both checks pass - execute fetch
         // TODO: What should happen when you recieve a 401 instead of a 200 back from the API? (This error means that the username/email utilized has already been used by another user)
-            fetch(LOCALHOST_SIGNUP_URL, {
+            fetch(`${BASE_URL}/sign-up`, {
                 method: 'POST',
                 body: JSON.stringify(formData),
                 headers: {
