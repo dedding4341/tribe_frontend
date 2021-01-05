@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import './LoginForm.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -148,6 +148,7 @@ function LoginForm() {
               dispatch(getFamilyFromAPI())
               dispatch(getFamilyMembersFromAPI());
               dispatch(getFamilyTasksFromAPI());
+
               if (famId) {
                 history.push(`/tribe/overview`);
               } else {
