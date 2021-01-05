@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import NewTaskForm from '../NewTaskForm';
-import SearchBar from '../SearchBar';
 import TaskCard from '../TaskCard';
 import './DashOverview.css';
 import { BASE_URL } from '../config';
 import { getCookie } from '../helpers';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteTaskFromAPI, postTaskToAPI } from '../actionCreators';
-import { Redirect } from 'react-router-dom';
+import { deleteTaskFromAPI, postTaskToAPI, updateTaskToAPI } from '../actionCreators';
+import FilterBar from '../FilterBar';
 
 interface Task {
   task_id: Number,
@@ -62,11 +61,15 @@ function DashOverview() {
     dispatch(postTaskToAPI(data));
   }
 
+  const updateTask = async (data: Task, currentUserId: Number) => {
+    dispatch(updateTaskToAPI(data, currentUserId));
+  }
+
   return (
     <Container className="DashOverview">
       {loading ? <div> loading... </div> :
         <>
-          { showNewTaskForm && <NewTaskForm postNewTask={postNewTask} show={showNewTaskForm} handleClose={handleClose} />}
+          { showNewTaskForm && <NewTaskForm postNewTask={postNewTask} show={showNewTaskForm} handleClose={handleClose} isEdit={false}/>}
           <Row className="d-flex align-items-center">
             <Col md={4}>
               <h1 className="DashOverview-title">
@@ -76,14 +79,14 @@ function DashOverview() {
             </Col>
             <Col md={7} className="d-flex justify-content-around align-items-center">
               <Button className="DashOverview-new-task-btn" onClick={() => setShowNewTaskForm(!showNewTaskForm)}>Add Task</Button>
-              <SearchBar />
+              <FilterBar/>
             </Col>
           </Row>
           <Container fluid className="mt-3">
             <Row>
               {family_tasks.length > 0 ? family_tasks.map((task: any) => {
                 return (<Col md={6}>
-                  <TaskCard key={task.task_id} task={task} tradeTask={tradeTask} deleteTask={deleteTask} completeTask={completeTask} />
+                  <TaskCard key={task.task_id} task={task} updateTask={updateTask} tradeTask={tradeTask} deleteTask={deleteTask} completeTask={completeTask} />
                 </Col>)
               }) : <Col md={6}>No tasks to display.</Col>}
             </Row>

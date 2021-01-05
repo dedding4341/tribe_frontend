@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Col, Container, Image, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
@@ -7,17 +7,21 @@ import './TaskCard.css';
 import TradeForm from '../TradeForm';
 import { DEFAULT_PFP } from '../config';
 import { useSelector } from 'react-redux';
+import NewTaskForm from '../NewTaskForm';
+import TaskCardDetailsModal from '../TaskCardDetailsModal';
 
 interface IProps {
     task: any,
     deleteTask: Function,
     tradeTask: Function,
-    completeTask: Function
+    completeTask: Function,
+    updateTask: Function
 }
 
-function TaskCard({ task, deleteTask, tradeTask, completeTask }: IProps) {
+function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask }: IProps) {
     const [showDelConf, setShowDelConf] = useState(false);
     const [showTradeForm, setShowTradeForm] = useState(false);
+    const [showTaskDetails, setShowTaskDetails] = useState(false);
     const user = useSelector((st: any) => st.user);
     const famMembers = useSelector((st: any) => st.famMembers)
     const isTaskOwner = (task.assignee === user.user_id);
@@ -48,6 +52,12 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask }: IProps) {
         completeTask(task.task_id);
     }
 
+    const handleUpdateTask = (updatedTask: any) => {
+        updatedTask.task_id = task.task_id;
+        updateTask(updatedTask, user.user_id);
+    }
+
+
     // avatar dynamic styling
     let rightPosition = -30
     let zIdx = assignees.length;
@@ -55,6 +65,7 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask }: IProps) {
     return (
         <div className="TaskCard">
             <TradeForm show={showTradeForm} handleTradeTask={handleTradeTask} handleClose={() => setShowTradeForm(false)}/>
+            <TaskCardDetailsModal show={showTaskDetails} handleUpdateTask={handleUpdateTask} handleClose={() => setShowTaskDetails(false)} task={task} taskOwner={taskOwner} isFamilyAdmin={user.family_manager} />
             {assignees.map((assignee: any) => {
                 // increment and decrement avatar styling variables.
                 rightPosition += 30;
@@ -89,7 +100,7 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask }: IProps) {
                     :
                     // HTML for task details 
                     <Row className="d-flex align-items-center justify-content-between">
-                        <Col sm={6} md={7}>
+                        <Col sm={6} md={7} onClick={() => setShowTaskDetails(true)}>
                             <Row className="TaskCard-header">
                                 <h3>{task.task_name}<span className="TaskCard-pts">+{task.associated_points}pts</span></h3>
                             </Row>

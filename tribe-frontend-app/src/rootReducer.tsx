@@ -1,4 +1,4 @@
-import { ADD_TASK, DELETE_TASK, LOAD_FAMILY_TASKS, LOGIN, LOGIN_BY_TOKEN, LOGOUT, SAVE_FAMILY, SAVE_FAMILY_MEMBERS, SAVE_USER, START_LOADING, STOP_LOADING } from "./actionTypes";
+import { ADD_TASK, DELETE_TASK, LOAD_FAMILY_TASKS, LOGIN, LOGIN_BY_TOKEN, LOGOUT, SAVE_FAMILY, SAVE_FAMILY_MEMBERS, SAVE_USER, START_LOADING, STOP_LOADING, UPDATE_TASK } from "./actionTypes";
 
 const INITIAL_STATE: any = {
   user: {},
@@ -24,6 +24,14 @@ export default function rootReducer(state = INITIAL_STATE, action: Action) {
         return task.task_id !== action.payload.task_id;
       });
       return { ...state, family_tasks: filteredTasks };
+    case UPDATE_TASK:
+      let updatedTasks = state.family_tasks.map((task: any) => {
+        if (task.task_id === action.payload.task.task_id) {
+          return action.payload.task
+        }
+        return task;
+      });
+      return { ...state, family_tasks: updatedTasks };
     case LOAD_FAMILY_TASKS:
       return { ...state, family_tasks: action.payload.family_tasks }
     case SAVE_FAMILY:

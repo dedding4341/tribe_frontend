@@ -1,0 +1,19 @@
+.FilterBar {
+  background-color: rgb(255, 255, 255);
+  border-radius: 20px;
+  padding: 0.7rem 1rem;
+  margin: 2rem 0;
+  width: 80%;
+  font-size: 1.6rem;
+}
+
+.FilterBar > svg {
+  color:rgb(133, 143, 155);
+}
+
+.FilterBar > Button {
+  background-color: rgb(156, 176, 199);
+  border: none;
+  margin: 0.2rem;
+  font-size: 1.3rem;
+}
