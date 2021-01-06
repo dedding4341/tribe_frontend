@@ -6,7 +6,7 @@ import './DashOverview.css';
 import { BASE_URL } from '../config';
 import { getCookie } from '../helpers';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteTaskFromAPI, getFamilyTasksFromAPI, postTaskToAPI, stopLoading, updateTaskToAPI } from '../actionCreators';
+import { deleteTaskFromAPI, getFamilyTasksFromAPI, postTaskToAPI, updateTaskToAPI } from '../actionCreators';
 import FilterBar from '../FilterBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faAirFreshener } from '@fortawesome/free-solid-svg-icons';
@@ -29,6 +29,7 @@ function DashOverview() {
   const loading = useSelector((st: any) => st.loading);
   const family_tasks = useSelector((st: any) => st.family_tasks);
   const userId = useSelector((st: any) => st.user.user_id);
+  const familyManager = useSelector((st: any) => st.user.family_manager);
 
   const [showNewTaskForm, setShowNewTaskForm] = useState(false);
   const [tasks, setTasks] = useState(family_tasks);
@@ -125,9 +126,8 @@ function DashOverview() {
               </h1>
             </Col>
             <Col md={7} className="d-flex justify-content-around align-items-center">
-              
               <Button className="DashOverview-fetch-task-btn shadow-none" onClick={fetchTasks}><FontAwesomeIcon icon={faAirFreshener} /></Button>
-              <Button className="DashOverview-new-task-btn shadow-none" onClick={() => setShowNewTaskForm(!showNewTaskForm)}><FontAwesomeIcon icon={faPlus} /> Add Task</Button>
+              {familyManager && <Button className="DashOverview-new-task-btn shadow-none" onClick={() => setShowNewTaskForm(!showNewTaskForm)}><FontAwesomeIcon icon={faPlus} /> Add Task</Button>}
               <FilterBar filter={filter} />
             </Col>
           </Row>
