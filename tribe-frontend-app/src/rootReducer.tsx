@@ -1,4 +1,4 @@
-import { ADD_TASK, DELETE_TASK, LOAD_FAMILY_TASKS, LOGIN, LOGIN_BY_TOKEN, LOGOUT, SAVE_FAMILY, SAVE_FAMILY_MEMBERS, SAVE_USER, START_LOADING, STOP_LOADING, UPDATE_TASK } from "./actionTypes";
+import { ADD_TASK, COMPLETE_TASK, DELETE_TASK, LOAD_FAMILY_TASKS, LOGIN, LOGIN_BY_TOKEN, LOGOUT, SAVE_FAMILY, SAVE_FAMILY_MEMBERS, SAVE_USER, START_LOADING, STOP_LOADING, UPDATE_TASK } from "./actionTypes";
 
 const INITIAL_STATE: any = {
   user: {},
@@ -15,9 +15,20 @@ interface Action {
 }
 
 export default function rootReducer(state = INITIAL_STATE, action: Action) {
+  let tasks;
   switch (action.type) {
+    case COMPLETE_TASK:
+      // find the task and update the completed and completed time key.
+      tasks = state.family_tasks.map((task: any) => {
+        if (task.task_id === action.payload.task_id) {
+          task.completed = true;
+          task.completed_time = new Date().getUTCDate();
+        }
+        return task;
+      });
+      return { ...state, family_tasks: tasks };
     case ADD_TASK:
-      let tasks = [{ ...action.payload.task, created_by: state.user.user_id, created_at: new Date().getUTCDate() }, ...state.family_tasks]
+      tasks = [{ ...action.payload.task, created_by: state.user.user_id, created_at: new Date().getUTCDate() }, ...state.family_tasks]
       return { ...state, family_tasks: tasks }
     case DELETE_TASK:
       let filteredTasks = state.family_tasks.filter((task: any) => {

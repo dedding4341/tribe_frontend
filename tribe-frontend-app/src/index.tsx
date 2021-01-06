@@ -4,21 +4,35 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import App from './App';
 import { Provider } from 'react-redux';
-import { applyMiddleware, createStore } from 'redux';
+import { AnyAction, applyMiddleware, createStore, Store } from 'redux';
 import reportWebVitals from './reportWebVitals';
 import rootReducer from './rootReducer';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { PersistGate } from 'redux-persist/integration/react';
+import storage from 'redux-persist/lib/storage';
+import { persistReducer, persistStore } from 'redux-persist';
 
-const store = createStore(rootReducer,
+const persistConfig = {
+  key: "root",
+  storage
+}
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+const store: Store<any, AnyAction> = createStore(persistedReducer,
   composeWithDevTools(
     applyMiddleware(thunk)
   ));
 
+let persistor = persistStore(store);
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <PersistGate loading={null} persistor={persistor}>
+        <App />
+      </PersistGate>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

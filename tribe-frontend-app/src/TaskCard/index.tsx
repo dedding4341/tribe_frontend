@@ -68,7 +68,7 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask }: IPr
 
     return (
         <div className="TaskCard">
-            <TradeForm show={showTradeForm} handleTradeTask={handleTradeTask} handleClose={() => setShowTradeForm(false)}/>
+            <TradeForm show={showTradeForm} handleTradeTask={handleTradeTask} handleClose={() => setShowTradeForm(false)} />
             <TaskCardDetailsModal show={showTaskDetails} handleUpdateTask={handleUpdateTask} handleClose={() => setShowTaskDetails(false)} task={task} taskOwner={taskOwner} isFamilyAdmin={user.family_manager} />
             {assignees.map((assignee: any) => {
                 // increment and decrement avatar styling variables.
@@ -116,13 +116,16 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask }: IPr
                             </Row>
                             <Row>
                                 <div className="TaskCard-deadline text-left">
-                                    posted {moment(new Date(task.created_at).toString()).calendar()} by {taskOwner.first_name}
+                                    {task.completed ? `completed ${moment(new Date(task.completion_time).toString()).calendar()}` : `posted ${moment(new Date(task.created_at).toString()).calendar()} by ${taskOwner.first_name}`}
                                 </div>
                             </Row>
                         </Col>
-                        <Col sm={6} md={5}>
-                            <Button className="TaskCard-btn" onClick={isTaskOwner ? handleCompleteTask : () => setShowTradeForm(true)}>{isTaskOwner ? "Complete" : "Trade"}</Button>
-                        </Col>
+                        {!task.completed && <Col sm={6} md={5}>
+                            {isTaskOwner ?
+                                <Button className="TaskCard-btn TaskCard-complete-btn" onClick={handleCompleteTask}>Complete</Button>
+                                : <Button className="TaskCard-btn TaskCard-trade-btn" onClick={() => setShowTradeForm(true)}>Trade</Button>
+                            }
+                        </Col> } 
                     </Row>
                 }
             </Container>

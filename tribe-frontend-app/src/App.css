@@ -27,24 +27,3 @@
 .App-link {
   color: #61dafb;
 }
-
-.spinner { 
-  animation: spin infinite 5s linear;
-  margin: auto;
-  display: flex;
-  align-self: center;
-}
-.spinner-wrapper {
-  display: flex;
-  height: 80vh;
-}
-
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}

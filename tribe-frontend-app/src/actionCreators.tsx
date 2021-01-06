@@ -1,4 +1,4 @@
-import { ADD_TASK, DELETE_TASK, LOAD_FAMILY_TASKS, LOGIN, LOGIN_BY_TOKEN, LOGOUT, SAVE_FAMILY, SAVE_FAMILY_MEMBERS, SAVE_USER, START_LOADING, STOP_LOADING, UPDATE_TASK } from "./actionTypes";
+import { ADD_TASK, COMPLETE_TASK, DELETE_TASK, LOAD_FAMILY_TASKS, LOGIN, LOGIN_BY_TOKEN, LOGOUT, SAVE_FAMILY, SAVE_FAMILY_MEMBERS, SAVE_USER, START_LOADING, STOP_LOADING, UPDATE_TASK } from "./actionTypes";
 import { BASE_URL } from "./config";
 import { getCookie } from "./helpers";
 
@@ -121,6 +121,26 @@ export function updateTaskToAPI(task: any, currentUserId: Number) {
     task.created_by = currentUserId;
     dispatch(updateTask(task));
   }
+}
+
+export function completeTaskFromAPI(task_id: Number) {
+  return async function (dispatch: any) {
+    const token = getCookie("x-access-token");
+    await fetch(`${BASE_URL}/complete-task`, {
+      method: "PATCH",
+      body: JSON.stringify({ task_id }),
+      headers: {
+        "Content-type": "application/json",
+        "x-access-token": `${token}`
+      },
+      credentials: "include"
+    });
+    dispatch(completeTask(task_id));
+  }
+}
+
+function completeTask(task_id: Number) {
+  return { type: COMPLETE_TASK, payload: { task_id }}
 }
 
 function updateTask(task: any) {
