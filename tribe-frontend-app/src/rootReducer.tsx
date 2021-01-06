@@ -1,4 +1,4 @@
-import { ADD_TASK, DELETE_TASK, LOAD_FAMILY_TASKS, LOGIN, LOGIN_BY_TOKEN, LOGOUT, SAVE_FAMILY, SAVE_FAMILY_MEMBERS, SAVE_USER, START_LOADING, STOP_LOADING, UPDATE_TASK } from "./actionTypes";
+import { ADD_TASK, DELETE_TASK, LOAD_FAMILY_TASKS, LOGIN, LOGIN_BY_TOKEN, LOGOUT, SAVE_FAMILY, SAVE_FAMILY_MEMBERS, SAVE_USER, START_LOADING, STOP_LOADING, UPDATE_TASK, EPIC_TIME, SHOWING_CODE, NO_CODE } from "./actionTypes";
 
 const INITIAL_STATE: any = {
   user: {},
@@ -7,6 +7,8 @@ const INITIAL_STATE: any = {
   family_tasks: [],
   loading: true,
   isLoggedIn: false,
+  eTime: '00',
+  isShowing: false,
 };
 
 interface Action {
@@ -55,6 +57,14 @@ export default function rootReducer(state = INITIAL_STATE, action: Action) {
     case LOGOUT:
       console.log("logging out in the rootReducer...")
       return INITIAL_STATE;
+    case EPIC_TIME:
+      let targetTime = Date.now() + (30 * 60000);
+      console.log(targetTime)
+      return {...INITIAL_STATE, eTime: targetTime}
+    case SHOWING_CODE:
+      return {...INITIAL_STATE, isShowing: true}
+    case NO_CODE:
+      return {...INITIAL_STATE, isShowing:false}
     default:
       return state;
   }

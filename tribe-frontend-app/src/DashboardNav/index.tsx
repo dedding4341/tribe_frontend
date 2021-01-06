@@ -1,49 +1,36 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Nav, Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
-import { logoutUser } from '../actionCreators';
+import { logoutUser, epicTime, isShowing } from '../actionCreators';
 import { getCookie } from '../helpers';
 import { BASE_URL } from '../config';
+import { useSelector } from 'react-redux';
+import CodeTimer from '../CodeTimer/index'
 import './DashboardNav.css';
 
 function DashboardNav() {
   const dispatch = useDispatch();
 	const history = useHistory();
 	const token = getCookie("x-access-token");
+	const targetTime = useSelector((state: any) => state.eTime)
 
-	const [codeDisplay, setCodeDisplay] = React.useState("Generate family code!")
+	const [codeDisplay, setCodeDisplay] = React.useState("Generate family code!");
+
 
   const handleLogout = () => {
     dispatch(logoutUser());
     history.push("/users/auth");
 	}
-
-	const calculateTimeLeft = () => {
-    let year = new Date();
-    let difference = +new Date(`10/01/${year}`) - +new Date();
-    let timeLeft = {};
-
-    if (difference > 0) {
-      timeLeft = {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60)
-    };
-  }
-
-  return timeLeft;
-
-}
 	
 	const getFamilyCode = () => {
 		let retcode: number;
+		if(codeDisplay === "Generate family code!")
 		fetch(`${BASE_URL}/generate-family-code`,{
 			method: "POST",
 			headers: {
 				"Content-type": "application/json",
-        "x-access-token": `${token}`
+				"x-access-token": `${token}`
 			}
 		})
 		.then(res => {
@@ -60,10 +47,19 @@ function DashboardNav() {
 					setCodeDisplay("Try Again.")
 				}
 			} else if (retcode === 201){
+				dispatch(epicTime())
+				// dispatch(isShowing())
 				setCodeDisplay(json.family_code)
 			}
 		})
 	}
+	
+	useEffect(() => {
+		if(targetTime === 1 + Date.now()){
+			console.log("her")
+			setCodeDisplay("Generate family code!")
+		}
+	})
 
   return (
     <div className="DashboardNav">
@@ -72,7 +68,7 @@ function DashboardNav() {
         <NavLink className="mt-2 mb-2" to={`/tribe/calender`}>Calender</NavLink>
         <NavLink className="mt-2 mb-2" to={`/tribe/todo`}>To-do</NavLink>
         <NavLink className="mt-2 mb-2" to={`/tribe/store`}>Store</NavLink>
-				<Nav.Item className="Family_code" onClick={getFamilyCode}>{codeDisplay}</Nav.Item>
+				<Nav.Item className="Family_code" onClick={getFamilyCode}><span>{codeDisplay} <CodeTimer/></span></Nav.Item>
         <li className="DashboardNav-vertical-divider"></li>
         <Button className="DashboardNav-logout-btn mt-2 mb-2" onClick={handleLogout}>Logout</Button>
       </Nav>
