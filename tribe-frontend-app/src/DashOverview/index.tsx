@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { completeTaskFromAPI, deleteTaskFromAPI, getFamilyTasksFromAPI, postTaskToAPI, updateTaskToAPI } from '../actionCreators';
 import FilterBar from '../FilterBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faAirFreshener } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 interface Task {
   task_id: Number,
@@ -88,6 +88,7 @@ function DashOverview({ showHistory }: IProps) {
     dispatch(getFamilyTasksFromAPI());
   }
 
+  // TODO: Migrate and update this filter to another component (maybe the FilterBar component)
   // `filter` filters tasks on the `filterType` to display on UI.
   const filter = (filterType: String) => {
     let filteredTasks: Array<any>;
@@ -149,8 +150,8 @@ function DashOverview({ showHistory }: IProps) {
           </Row>
           <Row className="mt-3">
             {tasks.length > 0 ? tasks.map((task: any) => {
-              return (<Col md={6}>
-                <TaskCard key={task.task_id} task={task} updateTask={updateTask} tradeTask={tradeTask} deleteTask={deleteTask} completeTask={completeTask} />
+              return (<Col key={`${task.associated_points}-${task.task_id}`} md={6}>
+                <TaskCard key={`${task.task_id}-card`} task={task} updateTask={updateTask} tradeTask={tradeTask} deleteTask={deleteTask} completeTask={completeTask} />
               </Col>)
             }) : <Col md={6}>No tasks to display.</Col>}
           </Row>

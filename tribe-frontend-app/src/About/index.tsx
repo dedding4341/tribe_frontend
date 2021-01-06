@@ -1,4 +1,3 @@
-import { faBookDead } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
 
 // TODO: THIS NEEDS TO BE REFACTORED INTO SMALLER COMPONENTS

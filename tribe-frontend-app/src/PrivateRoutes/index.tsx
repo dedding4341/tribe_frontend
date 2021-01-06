@@ -27,7 +27,7 @@ function PrivateRoutes() {
     return <Redirect to="/users/auth" />
   }
 
-  
+
   return (
     <Container fluid className="PrivateRoutes">
       <Row>
@@ -35,15 +35,15 @@ function PrivateRoutes() {
           <h1>tribe</h1>
         </Col>
       </Row>
-      { loading ? <Preloader/> :
+      { loading ? <Preloader /> :
         <Row className="">
           <Col sm={3} md={3} lg={4}>
             <DashboardLeft />
           </Col>
-          <Switch>
-            <Col sm={9} md={9} lg={8}>
+          <Col sm={9} md={9} lg={8}>
+            <Switch>
               <Route exact path="/tribe/overview">
-                <DashOverview showHistory={false}/>
+                <DashOverview showHistory={false} />
               </Route>
               <Route exact path="/tribe/calender">
                 <DashCalender />
@@ -55,10 +55,10 @@ function PrivateRoutes() {
                 <DashStore />
               </Route>
               <Route exact path="/tribe/completed">
-                <DashOverview showHistory={true}/>
+                <DashOverview showHistory={true} />
               </Route>
-            </Col>
-          </Switch>
+            </Switch>
+          </Col>
         </Row>
       }
     </Container>

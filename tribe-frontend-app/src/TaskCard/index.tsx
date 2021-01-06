@@ -122,7 +122,7 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask }: IPr
                         </Col>
                         {!task.completed && <Col sm={6} md={5}>
                             {isTaskOwner ?
-                                <Button className="TaskCard-btn TaskCard-complete-btn" onClick={handleCompleteTask}>Complete</Button>
+                                <Button className="TaskCard-btn TaskCard-complete-btn"  onClick={handleCompleteTask}>Complete</Button>
                                 : <Button className="TaskCard-btn TaskCard-trade-btn" onClick={() => setShowTradeForm(true)}>Trade</Button>
                             }
                         </Col> } 
