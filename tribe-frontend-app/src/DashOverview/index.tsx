@@ -65,7 +65,6 @@ function DashOverview({ showHistory }: IProps) {
 
   // TODO: Implement server logic
   const completeTask = async (task_id: Number) => {
-    alert("You've completed the task.");
     dispatch(completeTaskFromAPI(task_id));
   }
 
