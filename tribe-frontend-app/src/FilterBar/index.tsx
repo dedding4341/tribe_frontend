@@ -16,9 +16,9 @@ function FilterBar({filter}: IProps) {
 
   return (
     <div className="FilterBar">
+      <Button className="shadow-none" onClick={() => handleFilter("all")}><FontAwesomeIcon icon={faFilter} /> Active tasks</Button>
       <Button className="shadow-none" onClick={() => handleFilter("unassigned")}><FontAwesomeIcon icon={faFilter} /> Unassigned tasks</Button>
       <Button className="shadow-none" onClick={() => handleFilter("myTasks")}><FontAwesomeIcon icon={faFilter} /> My tasks</Button>
-      <Button className="shadow-none" onClick={() => handleFilter("all")}><FontAwesomeIcon icon={faFilter} /> All tasks</Button>
     </div>
   )
 }

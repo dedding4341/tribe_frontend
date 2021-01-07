@@ -1,4 +1,4 @@
-import { ADD_TASK, DELETE_TASK, LOAD_FAMILY_TASKS, LOGIN, LOGIN_BY_TOKEN, LOGOUT, SAVE_FAMILY, SAVE_FAMILY_MEMBERS, SAVE_USER, START_LOADING, STOP_LOADING, UPDATE_TASK, EPIC_TIME, SHOWING_CODE, NO_CODE } from "./actionTypes";
+import { ADD_TASK, COMPLETE_TASK, DELETE_TASK, LOAD_FAMILY_TASKS, LOGIN, LOGIN_BY_TOKEN, LOGOUT, SAVE_FAMILY, SAVE_FAMILY_MEMBERS, SAVE_USER, START_LOADING, STOP_LOADING, UPDATE_TASK, EPIC_TIME, SHOWING_CODE, FAMILY_CODE, NO_FAMILY_CODE } from "./actionTypes";
 import { BASE_URL } from "./config";
 import { getCookie } from "./helpers";
 
@@ -123,6 +123,26 @@ export function updateTaskToAPI(task: any, currentUserId: Number) {
   }
 }
 
+export function completeTaskFromAPI(task_id: Number) {
+  return async function (dispatch: any) {
+    const token = getCookie("x-access-token");
+    await fetch(`${BASE_URL}/complete-task`, {
+      method: "PATCH",
+      body: JSON.stringify({ task_id }),
+      headers: {
+        "Content-type": "application/json",
+        "x-access-token": `${token}`
+      },
+      credentials: "include"
+    });
+    dispatch(completeTask(task_id));
+  }
+}
+
+function completeTask(task_id: Number) {
+  return { type: COMPLETE_TASK, payload: { task_id }}
+}
+
 function updateTask(task: any) {
   return { type: UPDATE_TASK, payload: { task } };
 }
@@ -182,6 +202,10 @@ export function isShowing() {
   return { type: SHOWING_CODE}
 }
 
-export function notShowing() {
-  return { type: NO_CODE}
+export function familyCode(code: string) {
+  return { type: FAMILY_CODE, payload: { code }}
+}
+
+export function noFamilyCode(code: string) {
+  return { type: NO_FAMILY_CODE, payload: { code }}
 }

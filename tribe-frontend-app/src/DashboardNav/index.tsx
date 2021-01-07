@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import { Nav, Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
-import { logoutUser, epicTime, isShowing } from '../actionCreators';
+import { logoutUser, epicTime, isShowing, familyCode } from '../actionCreators';
 import { getCookie } from '../helpers';
 import { BASE_URL } from '../config';
 import { useSelector } from 'react-redux';
@@ -14,6 +14,7 @@ function DashboardNav() {
 	const history = useHistory();
 	const token = getCookie("x-access-token");
 	const targetTime = useSelector((state: any) => state.eTime)
+	const family_code = useSelector((state: any) => state.familyCode)
 
 	const [codeDisplay, setCodeDisplay] = React.useState("Generate family code!");
 
@@ -48,16 +49,21 @@ function DashboardNav() {
 				}
 			} else if (retcode === 201){
 				dispatch(epicTime())
-				// dispatch(isShowing())
+				dispatch(familyCode(json.family_code))
 				setCodeDisplay(json.family_code)
 			}
 		})
 	}
 	
 	useEffect(() => {
-		if(targetTime === 1 + Date.now()){
-			console.log("her")
-			setCodeDisplay("Generate family code!")
+		if(family_code !== ""){
+			console.log("hey")
+			setCodeDisplay(family_code)
+			// setCodeDisplay("Generate family code!")
+		} else {
+			if(codeDisplay !== "Generate family code!") {
+				setCodeDisplay("Generate family code!")
+			}
 		}
 	})
 
@@ -67,6 +73,7 @@ function DashboardNav() {
         <NavLink className="mt-2 mb-2"  to={`/tribe/overview`}>Home</NavLink>
         <NavLink className="mt-2 mb-2" to={`/tribe/calender`}>Calender</NavLink>
         <NavLink className="mt-2 mb-2" to={`/tribe/todo`}>To-do</NavLink>
+				<NavLink className="mt-2 mb-2" to={`/tribe/completed`}>Completed Tasks</NavLink>
         <NavLink className="mt-2 mb-2" to={`/tribe/store`}>Store</NavLink>
 				<Nav.Item className="Family_code" onClick={getFamilyCode}><span>{codeDisplay} <CodeTimer/></span></Nav.Item>
         <li className="DashboardNav-vertical-divider"></li>

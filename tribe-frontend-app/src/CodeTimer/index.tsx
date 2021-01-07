@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch} from 'react-redux';
-import { notShowing } from '../actionCreators';
+import { noFamilyCode } from '../actionCreators';
+
 
 function CodeTimer(){
     const x = useSelector((state: any) => state.eTime);
     const currTime = Date.now();
     const dispatch = useDispatch();
+    const family_code = useSelector((state: any) => state.familyCode)
     // const timeDiff = targetTime - currTime;
     // let mins = Math.floor((timeDiff % (1000 * 60 * 60 )) / (1000 * 60));
     // let second = Math.floor((timeDiff % (1000 * 60)) / 1000);
@@ -25,6 +27,10 @@ function CodeTimer(){
                 minutes: Math.floor((timeDiff % (1000 * 60 * 60 )) / (1000 * 60)),
                 seconds: Math.floor((timeDiff % (1000 * 60)) / 1000)
             }
+        } else {
+            if( family_code !== ""){
+                dispatch(noFamilyCode(""))
+            }
         }
 
         return timeLeft;
@@ -36,7 +42,7 @@ function CodeTimer(){
         const timer = setTimeout(() => {
             setTimeLeft(getDiff());
         }, 1000);
-
+        
         //clears when unmounted
         return() => clearTimeout(timer)
     })
@@ -45,6 +51,7 @@ function CodeTimer(){
         if(!timeLeft[interval]){
             return;
         }
+        
         timerComponents.push(
             <span key={interval}>
                 {timeLeft[interval]} {interval}{" "}

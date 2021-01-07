@@ -3,6 +3,10 @@
   font-size: 4rem;
 }
 
+.test {
+  border: 2px blue solid;
+}
+
 .DashOverview-new-task-btn,
 .DashOverview-new-task-btn:active {
   font-size: 1.3rem;

@@ -11,6 +11,7 @@ import './PrivateRoutes.css';
 import { getCookie } from '../helpers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDrumstickBite } from '@fortawesome/free-solid-svg-icons';
+import Preloader from '../Preloader';
 
 
 /**
@@ -26,6 +27,7 @@ function PrivateRoutes() {
     return <Redirect to="/users/auth" />
   }
 
+
   return (
     <Container fluid className="PrivateRoutes">
       <Row>
@@ -33,15 +35,15 @@ function PrivateRoutes() {
           <h1>tribe</h1>
         </Col>
       </Row>
-      { loading ? <div className="spinner-wrapper"><FontAwesomeIcon icon={faDrumstickBite} className="spinner" size="5x" /></div>:
+      { loading ? <Preloader /> :
         <Row className="">
           <Col sm={3} md={3} lg={4}>
             <DashboardLeft />
           </Col>
-          <Switch>
-            <Col sm={9} md={9} lg={8}>
+          <Col sm={9} md={9} lg={8}>
+            <Switch>
               <Route exact path="/tribe/overview">
-                <DashOverview />
+                <DashOverview showHistory={false} />
               </Route>
               <Route exact path="/tribe/calender">
                 <DashCalender />
@@ -52,8 +54,11 @@ function PrivateRoutes() {
               <Route exact path="/tribe/store">
                 <DashStore />
               </Route>
-            </Col>
-          </Switch>
+              <Route exact path="/tribe/completed">
+                <DashOverview showHistory={true} />
+              </Route>
+            </Switch>
+          </Col>
         </Row>
       }
     </Container>
