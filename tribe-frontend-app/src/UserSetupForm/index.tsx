@@ -46,7 +46,7 @@ function UserSetupForm() {
         });
 
         if (newFamResp.status !== 201) {
-          console.log("failed to create family");
+          // console.log("failed to create family");
         } 
       }
 

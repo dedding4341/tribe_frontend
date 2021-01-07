@@ -17,7 +17,7 @@ function DashboardNav() {
 	const family_code = useSelector((state: any) => state.familyCode)
 	const family = useSelector((state: any) => state.family)
 
-	const [codeDisplay, setCodeDisplay] = React.useState("Generate family code!");
+	const [codeDisplay, setCodeDisplay] = React.useState("Generate family code");
 
 
   const handleLogout = () => {
@@ -55,6 +55,7 @@ function DashboardNav() {
 				dispatch(epochTime(new Date(json.family_code.expire).getTime()))
 				dispatch(familyCode(json.family_code.family_code))
 				setCodeDisplay(json.family_code.family_code)
+				console.log(json.family_code)
 			}
 		})
 	}
@@ -64,8 +65,8 @@ function DashboardNav() {
 			setCodeDisplay(family_code)
 			// setCodeDisplay("Generate family code!")
 		} else {
-			if(codeDisplay !== "Generate family code!") {
-				setCodeDisplay("Generate family code!")
+			if(codeDisplay !== "Generate family code") {
+				setCodeDisplay("Generate family code")
 			}
 		}
 	})
