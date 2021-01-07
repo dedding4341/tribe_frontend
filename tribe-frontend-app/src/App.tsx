@@ -39,14 +39,12 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Fragment>
-          <Switch>
-            <Route path="/tribe/*">
-              <PrivateRoutes />
-            </Route>
-            <PublicRoutes />
-          </Switch>
-        </Fragment>
+        <Switch>
+          <Route path="/tribe/*">
+            <PrivateRoutes />
+          </Route>
+          <PublicRoutes />
+        </Switch>
       </BrowserRouter>
     </div>
   );
