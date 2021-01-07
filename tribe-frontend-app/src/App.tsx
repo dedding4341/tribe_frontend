@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import './App.css';
 import { BrowserRouter, Route, Switch, useHistory } from 'react-router-dom';
 import PublicRoutes from './PublicRoutes';
@@ -39,12 +39,14 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Switch>
-          <Route path="/tribe/*">
-            <PrivateRoutes />
-          </Route>
-          <PublicRoutes />
-        </Switch>
+        <Fragment>
+          <Switch>
+            <Route path="/tribe/*">
+              <PrivateRoutes />
+            </Route>
+            <PublicRoutes />
+          </Switch>
+        </Fragment>
       </BrowserRouter>
     </div>
   );
