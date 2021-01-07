@@ -24,7 +24,7 @@ function App() {
         if (!family.family_id) {
           dispatch(getFamilyFromAPI());
           dispatch(getFamilyMembersFromAPI());
-          dispatch(getFamilyTasksFromAPI());
+          dispatch(getFamilyTasksFromAPI(user.family_id));
         }
         dispatch(loginByToken());
       } catch (err) {

@@ -32,7 +32,7 @@ function DashOverview({ showHistory }: IProps) {
   // `loading` is true until all required information is received from API.
   const loading = useSelector((st: any) => st.loading);
   const family_tasks = useSelector((st: any) => st.family_tasks);
-  const userId = useSelector((st: any) => st.user.user_id);
+  const user = useSelector((st: any) => st.user);
   const familyManager = useSelector((st: any) => st.user.family_manager);
 
   const [showNewTaskForm, setShowNewTaskForm] = useState(false);
@@ -84,7 +84,7 @@ function DashOverview({ showHistory }: IProps) {
   }
 
   const fetchTasks = async () => {
-    dispatch(getFamilyTasksFromAPI());
+    dispatch(getFamilyTasksFromAPI(user.family_id));
   }
 
   // TODO: Migrate and update this filter to another component (maybe the FilterBar component)
@@ -102,13 +102,13 @@ function DashOverview({ showHistory }: IProps) {
       case "myTasks":
         // show currentUser's tasks
         filteredTasks = family_tasks.filter((t: any) => {
-          return t.assignee === userId && !t.completed;
+          return t.assignee === user.user_id && !t.completed;
         });
         setTasks(filteredTasks);
         break;
       case "completedTasks":
         filteredTasks = family_tasks.filter((t: any) => {
-          return t.assignee === userId && t.completed;
+          return t.assignee === user.user_id && t.completed;
         });
         setTasks(filteredTasks);
         break;

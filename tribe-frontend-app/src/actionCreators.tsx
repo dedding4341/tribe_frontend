@@ -48,13 +48,14 @@ export function getFamilyMembersFromAPI() {
   }
 }
 
-export function getFamilyTasksFromAPI() {
+export function getFamilyTasksFromAPI(family_id: number) {
   return async function (dispatch: any) {
     dispatch(startLoading());
     const token = getCookie("x-access-token");
     const getFamTaskUrl = `${BASE_URL}/tasks/family`;
     const res = await fetch(getFamTaskUrl, {
       method: "GET",
+      body: JSON.stringify({ family_id }),
       headers: {
         "Content-type": "application/json",
         "x-access-token": `${token}`,
