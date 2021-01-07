@@ -18,9 +18,9 @@ function SearchBar() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // fetch(URL)
-        // .then(res => res.json())
-        // .then(json => console.log(json))
+        fetch(URL)
+        .then(res => res.json())
+        .then(json => {return})
     }
 
     return (

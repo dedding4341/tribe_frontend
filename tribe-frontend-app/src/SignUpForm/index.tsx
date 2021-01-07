@@ -88,7 +88,7 @@ function SignUpForm() {
             msgs.push("Password and repeat password do not match.")
         }
        
-        console.log(msgs)
+        // console.log(msgs)
         return (
             msgs.map(msg => <ListGroup.Item>{msg}</ListGroup.Item> )
         )

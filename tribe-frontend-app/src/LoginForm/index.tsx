@@ -143,7 +143,7 @@ function LoginForm() {
 
             } else if (retcode === 200) {
               const famId = json.user.family_id;
-              console.log("logging in! fetching data now!")
+              // console.log("logging in! fetching data now!")
               dispatch(loginUser(json.user));
               dispatch(getFamilyFromAPI())
               dispatch(getFamilyMembersFromAPI());
