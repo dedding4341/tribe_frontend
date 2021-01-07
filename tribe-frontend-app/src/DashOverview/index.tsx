@@ -84,7 +84,7 @@ function DashOverview({ showHistory }: IProps) {
   }
 
   const fetchTasks = async () => {
-    dispatch(getFamilyTasksFromAPI(user.family_id));
+    dispatch(getFamilyTasksFromAPI());
   }
 
   // TODO: Migrate and update this filter to another component (maybe the FilterBar component)

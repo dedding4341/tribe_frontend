@@ -147,7 +147,7 @@ function LoginForm() {
               dispatch(loginUser(json.user));
               dispatch(getFamilyFromAPI())
               dispatch(getFamilyMembersFromAPI());
-              dispatch(getFamilyTasksFromAPI(famId));
+              dispatch(getFamilyTasksFromAPI());
 
               if (famId) {
                 history.push(`/tribe/overview`);
