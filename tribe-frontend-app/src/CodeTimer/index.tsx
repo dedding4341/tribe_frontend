@@ -18,10 +18,9 @@ function CodeTimer(){
     //Calculates the amount of time that is left
     const getDiff = () => {
         let targetTime = x;
-        const timeDiff = +targetTime - +currTime;
+        const timeDiff = targetTime - currTime;
         
         let timeLeft: any = {};
-
         if(timeDiff > 0) {
             timeLeft = {
                 minutes: Math.floor((timeDiff % (1000 * 60 * 60 )) / (1000 * 60)),
@@ -29,7 +28,7 @@ function CodeTimer(){
             }
         } else {
             if( family_code !== ""){
-                dispatch(noFamilyCode(""))
+                dispatch(noFamilyCode())
             }
         }
 
@@ -51,7 +50,6 @@ function CodeTimer(){
         if(!timeLeft[interval]){
             return;
         }
-        
         timerComponents.push(
             <span key={interval}>
                 {timeLeft[interval]} {interval}{" "}

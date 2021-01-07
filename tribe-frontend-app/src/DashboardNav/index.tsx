@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import { Nav, Button } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
-import { logoutUser, epicTime, isShowing, familyCode } from '../actionCreators';
+import { logoutUser, epochTime, isShowing, familyCode } from '../actionCreators';
 import { getCookie } from '../helpers';
 import { BASE_URL } from '../config';
 import { useSelector } from 'react-redux';
@@ -15,6 +15,7 @@ function DashboardNav() {
 	const token = getCookie("x-access-token");
 	const targetTime = useSelector((state: any) => state.eTime)
 	const family_code = useSelector((state: any) => state.familyCode)
+	const family = useSelector((state: any) => state.family)
 
 	const [codeDisplay, setCodeDisplay] = React.useState("Generate family code!");
 
@@ -26,9 +27,12 @@ function DashboardNav() {
 	
 	const getFamilyCode = () => {
 		let retcode: number;
-		if(codeDisplay === "Generate family code!")
+		if(codeDisplay === "Generate family code")
 		fetch(`${BASE_URL}/generate-family-code`,{
 			method: "POST",
+			body: JSON.stringify({
+				family_id: family.family_id,
+			}),
 			headers: {
 				"Content-type": "application/json",
 				"x-access-token": `${token}`
@@ -48,16 +52,15 @@ function DashboardNav() {
 					setCodeDisplay("Try Again.")
 				}
 			} else if (retcode === 201){
-				dispatch(epicTime())
-				dispatch(familyCode(json.family_code))
-				setCodeDisplay(json.family_code)
+				dispatch(epochTime(new Date(json.family_code.expire).getTime()))
+				dispatch(familyCode(json.family_code.family_code))
+				setCodeDisplay(json.family_code.family_code)
 			}
 		})
 	}
 	
 	useEffect(() => {
 		if(family_code !== ""){
-			console.log("hey")
 			setCodeDisplay(family_code)
 			// setCodeDisplay("Generate family code!")
 		} else {

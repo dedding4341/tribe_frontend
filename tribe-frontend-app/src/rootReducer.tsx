@@ -70,15 +70,14 @@ export default function rootReducer(state = INITIAL_STATE, action: Action) {
       console.log("logging out in the rootReducer...")
       return INITIAL_STATE;
     case EPIC_TIME:
-      let targetTime = Date.now() + (30 * 1000);
-      console.log(targetTime)
-      return {...state, eTime: targetTime}
+      // let targetTime = Date.now() + (30 * 60000);
+      return {...state, eTime: action.payload.epochTime}
     case SHOWING_CODE:
       return {...state, isShowing: true}
     case FAMILY_CODE:
       return {...state, familyCode: action.payload.code}
     case NO_FAMILY_CODE:
-      return {...state, familyCode: action.payload.code}
+      return {...state, familyCode: ""}
     default:
       return state;
   }

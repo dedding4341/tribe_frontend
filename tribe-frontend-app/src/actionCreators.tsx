@@ -194,8 +194,8 @@ export function stopLoading() {
   return { type: STOP_LOADING }
 }
 
-export function epicTime() {
-  return { type: EPIC_TIME }
+export function epochTime(epochTime: number) {
+  return { type: EPIC_TIME, payload: { epochTime } }
 }
 
 export function isShowing() {
@@ -206,6 +206,6 @@ export function familyCode(code: string) {
   return { type: FAMILY_CODE, payload: { code }}
 }
 
-export function noFamilyCode(code: string) {
-  return { type: NO_FAMILY_CODE, payload: { code }}
+export function noFamilyCode() {
+  return { type: NO_FAMILY_CODE }
 }
