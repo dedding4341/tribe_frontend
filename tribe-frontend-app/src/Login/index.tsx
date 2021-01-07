@@ -4,9 +4,9 @@ import SignUpForm from '../SignUpForm';
 import './Login.css';
 import Form from 'react-bootstrap/Form';
 
-
 function Login() {
     const [showSignUp, setShowSignUp] = useState(false);
+
     return (
         <div className="Login container-fluid align-items-center justify-content-center d-flex">
             <div className="Login-bg row shadow-lg bg-white rounded">

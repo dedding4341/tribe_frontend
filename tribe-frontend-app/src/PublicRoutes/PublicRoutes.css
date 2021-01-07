@@ -1,0 +1,16 @@
+.PublicRoute-notice-link {
+  color :rgb(1, 131, 253);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.PublicRoutes-notice {
+  font-size: 1.6rem;
+  width: 60%;
+  position: absolute;
+  top: 5rem;
+  z-index: 9;
+  right: 0;
+  left: 0;
+  margin: auto;
+}

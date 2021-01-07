@@ -8,7 +8,7 @@ import { BASE_URL } from '../config';
 
 
 const EC2_SIGNUP_URL = 'https://api.tribeapp.family/sign-up';
-const LOCALHOST_SIGNUP_URL = 'http://localhost:8000/sign-up';
+const LOCALHOST_SIGNUP_URL = 'http://localhost:5000/sign-up';
 
 function validatePassword(password: String, confirmPassword: String) : Boolean {
     // Validate length
@@ -87,6 +87,8 @@ function SignUpForm() {
         if(formData.repeatPassword !== formData.password) {
             msgs.push("Password and repeat password do not match.")
         }
+       
+        console.log(msgs)
         return (
             msgs.map(msg => <ListGroup.Item>{msg}</ListGroup.Item> )
         )

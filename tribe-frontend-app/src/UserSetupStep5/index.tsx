@@ -24,7 +24,7 @@ function UserSetupStep5({ isParent, famIdValue, famNameValue, hasFamilyId, handl
               <>
                 <Form.Group>
                   <Form.Label>Enter your Tribe's invite! ^_^</Form.Label>
-                  <Form.Control autoFocus={true} name="familyId" value={famIdValue} onChange={(evt) => handleChange(evt as any)} />
+                  <Form.Control autoFocus={true} name="family_code" value={famIdValue} onChange={(evt) => handleChange(evt as any)} />
                 </Form.Group>
                 <Button id="enter" type="submit">Submit</Button>
               </>
@@ -33,7 +33,7 @@ function UserSetupStep5({ isParent, famIdValue, famNameValue, hasFamilyId, handl
                 <>
                   <Form.Group>
                     <Form.Label>Create your Tribe's name! ^_^</Form.Label>
-                    <Form.Control autoFocus={true} name="familyName" value={famNameValue} onChange={(evt) => handleChange(evt as any)} />
+                    <Form.Control autoFocus={true} name="family_name" value={famNameValue} onChange={(evt) => handleChange(evt as any)} />
                   </Form.Group>
                   <Button id="enter" type="submit">Submit</Button>
                 </>

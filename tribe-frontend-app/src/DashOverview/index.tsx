@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import NewTaskForm from '../NewTaskForm';
-import SearchBar from '../SearchBar';
 import TaskCard from '../TaskCard';
 import './DashOverview.css';
-import * as mock from '../mock';
+import { useDispatch, useSelector } from 'react-redux';
+import { completeTaskFromAPI, deleteTaskFromAPI, getFamilyTasksFromAPI, postTaskToAPI, updateTaskToAPI } from '../actionCreators';
+import FilterBar from '../FilterBar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 interface Task {
   task_id: Number,
@@ -15,77 +18,145 @@ interface Task {
   completion_time: String;
 }
 
-function DashOverview() {
+interface IProps {
+  showHistory: Boolean
+}
+
+/**
+ * `DashOverview` component handles the task-related dispatches to
+ * handle backend communication and Store updates.
+ * 
+ * Depending on `showHistory`, it will render Task Overview or (current user's) Task History
+ */
+function DashOverview({ showHistory }: IProps) {
+  // `loading` is true until all required information is received from API.
+  const loading = useSelector((st: any) => st.loading);
+  const family_tasks = useSelector((st: any) => st.family_tasks);
+  const userId = useSelector((st: any) => st.user.user_id);
+  const familyManager = useSelector((st: any) => st.user.family_manager);
+
   const [showNewTaskForm, setShowNewTaskForm] = useState(false);
-  const [tasks, setTasks] = useState([] as Task[]);
+  const [tasks, setTasks] = useState(family_tasks);
 
-  useEffect(function handleGetTasks() {
-    function getTasks() {
-      return mock.response;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    let tasks;
+    if (showHistory) {
+      tasks = family_tasks.filter((t: any) => {
+        return t.completed;
+      });
+    } else {
+      tasks = family_tasks.filter((t: any) => {
+        return !t.completed;
+      });
     }
-    let resp = getTasks();
-    setTasks(resp.tasks);
-  }, []);
+    setTasks(tasks);
+  }, [family_tasks]);
 
-  // GET all the tasks from their family id and display them here as a TaskCard
   const handleClose = () => {
     setShowNewTaskForm(false);
   }
 
   // TODO: Implement server logic
   const tradeTask = (task_id: Number, recipients: any) => {
-    console.log(`Requesting trade for task id ${task_id} to users ${recipients}`);
     alert(`You've sent trade requests to users #${recipients}.`);
   }
 
   // TODO: Implement server logic
-  const completeTask = (task_id: Number) => {
-    console.log(`Completing task id ${task_id}`);
-    alert("You've completed the task.")
+  const completeTask = async (task_id: Number) => {
+    dispatch(completeTaskFromAPI(task_id));
   }
 
-  // TODO: Implement server logic
-  const deleteTask = (task_id: Number) => {
-    setTasks(currTasks => {
-      let filteredTasks = currTasks.filter(task => {
-        return task.task_id !== task_id;
-      });
-      return filteredTasks;
-    });
+  // Deletes an existing task on the backend and update the Store.
+  const deleteTask = async (task_id: Number) => {
+    dispatch(deleteTaskFromAPI(task_id));
   }
 
-  const postNewTask = (data: Task) => {
-    // TODO: Delete the Math.random line once the backend communication is implemented.
-    // We need `data.task_id` because it needs a `task_id` for the `deleteTask` fxn.
-    data.task_id = Math.floor(Math.random() * (99999 - 10001) + 10001);
+  // Posts a new task on the backend and update the Store.
+  const postNewTask = async (data: Task) => {
+    dispatch(postTaskToAPI(data));
+  }
 
-    setTasks(currTasks => ([...currTasks, data]));
+  // Updates an existing task on the backend and update the Store.
+  const updateTask = async (data: Task, currentUserId: Number) => {
+    dispatch(updateTaskToAPI(data, currentUserId));
+  }
+
+  const fetchTasks = async () => {
+    dispatch(getFamilyTasksFromAPI());
+  }
+
+  // TODO: Migrate and update this filter to another component (maybe the FilterBar component)
+  // `filter` filters tasks on the `filterType` to display on UI.
+  const filter = (filterType: String) => {
+    let filteredTasks: Array<any>;
+    switch (filterType) {
+      case "unassigned":
+        // show unassigned tasks
+        filteredTasks = family_tasks.filter((t: any) => {
+          return !t.assignee
+        });
+        setTasks(filteredTasks);
+        break;
+      case "myTasks":
+        // show currentUser's tasks
+        filteredTasks = family_tasks.filter((t: any) => {
+          return t.assignee === userId && !t.completed;
+        });
+        setTasks(filteredTasks);
+        break;
+      case "completedTasks":
+        filteredTasks = family_tasks.filter((t: any) => {
+          return t.assignee === userId && t.completed;
+        });
+        setTasks(filteredTasks);
+        break;
+      case "all":
+        // show all active tasks
+        filteredTasks = family_tasks.filter((t: any) => {
+          return !t.completed;
+        });
+        setTasks(filteredTasks);
+        break;
+      default:
+        filteredTasks = family_tasks.filter((t: any) => {
+          return t.completed === false;
+        });
+        setTasks(family_tasks);
+        break;
+    }
   }
 
   return (
     <Container className="DashOverview">
-      {showNewTaskForm && <NewTaskForm postNewTask={postNewTask} show={showNewTaskForm} handleClose={handleClose} />}
-      <Row className="d-flex align-items-center">
-        <Col md={4}>
-          <h1 className="DashOverview-title">
-            Task
-            Overview
-          </h1>
-        </Col>
-        <Col md={8} className="d-flex justify-content-around align-items-center">
-          <Button className="DashOverview-new-task-btn" onClick={() => setShowNewTaskForm(!showNewTaskForm)}>Add Task</Button>
-          <SearchBar />
-        </Col>
-      </Row>
-      <Container fluid className="mt-3">
-        <Row>
-          {tasks ? tasks.map(task => {
-            return (<Col md={6}>
-              <TaskCard task={task} tradeTask={tradeTask} deleteTask={deleteTask} completeTask={completeTask}/>
-            </Col>)
-          }) : <Col md={6}>No tasks to display.</Col>}
-        </Row>
-      </Container>
+      {loading ? <div> loading... </div> :
+        <>
+          { showNewTaskForm && <NewTaskForm postNewTask={postNewTask} show={showNewTaskForm} handleClose={handleClose} isEdit={false} />}
+          <Row className="d-flex align-items-center justify-content-between">
+            <Col md={4}>
+              <h1 className="DashOverview-title">
+                {showHistory ? "Task History" :
+                  "Task Overview"}
+              </h1>
+            </Col>
+            {!showHistory &&
+              <Col md={7} className="d-flex justify-content-end ml-2 align-items-center">
+                {familyManager && <Button className="DashOverview-new-task-btn shadow-none" onClick={() => setShowNewTaskForm(!showNewTaskForm)}><FontAwesomeIcon icon={faPlus} /> Add Task</Button>}
+                <FilterBar filter={filter} />
+              </Col>
+            }
+          </Row>
+          <Row className="mt-3">
+            {tasks.length > 0 ? tasks.map((task: any) => {
+              return (<Col key={`${task.associated_points}-${task.task_id}`} md={6}>
+                <TaskCard key={`${task.task_id}-card`} task={task} updateTask={updateTask} tradeTask={tradeTask} deleteTask={deleteTask} completeTask={completeTask} />
+              </Col>)
+            }) : <Col md={6}>No tasks to display.</Col>}
+          </Row>
+        </>
+      }
+      <Button className="DashOverview-fetch-task-btn shadow-none mt-5" onClick={fetchTasks}>Reload tasks</Button>
     </Container>
   )
 }

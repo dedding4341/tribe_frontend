@@ -22,3 +22,26 @@
   width: 50%;
   margin: 1rem auto;
 }
+
+.DashboardNav-logout-btn {
+  background-color: transparent;
+  color: rgb(252, 103, 103);
+  font-weight: 600;
+  border: none;
+  font-size: 1.5rem;
+}
+
+.DashboardNav-logout-btn:hover {
+  background-color: rgb(248, 249, 250);
+  color: rgb(255, 101, 101);
+}
+
+.Family_code {
+  color: rgb(87, 87, 87)
+}
+
+.Family_code:hover {
+  color: rgb(20, 20, 20);
+  background-color: rgb(248, 249, 250);
+  text-decoration: underline;
+}

@@ -3,12 +3,38 @@
   font-size: 4rem;
 }
 
+.test {
+  border: 2px blue solid;
+}
+
 .DashOverview-new-task-btn,
-.DashOverview-new-task-btn:active, 
-.DashOverview-new-task-btn:hover {
-  font-size: 1.6rem;
-  border-radius: 15px;
-  padding: 0.5rem 0.7rem;
-  background-color: rgb(175, 180, 255);
-  border-color: rgb(175, 180, 255);
+.DashOverview-new-task-btn:active {
+  font-size: 1.3rem;
+  margin-right: 1rem;
+  border-radius: 5px;
+  padding: 0.3rem 0.9rem;
+  background-color: rgb(88, 176, 211);
+  border-color: rgb(88, 176, 211);
+}
+
+.DashOverview-new-task-btn:hover,
+.DashOverview-new-task-btn:focus {
+  background-color: rgb(71, 146, 175);
+  border-color: rgb(71, 146, 175);
+}
+
+.DashOverview-fetch-task-btn,
+.DashOverview-fetch-task-btn:active {
+  font-size: 1.3rem;
+  margin-right: 1rem;
+  border-radius: 5px;
+  padding: 0.3rem 0.9rem;
+  background-color: rgb(110, 197, 125);
+  border-color: rgb(110, 197, 125);
+}
+
+.DashOverview-fetch-task-btn:hover,
+.DashOverview-fetch-task-btn:focus {
+  background-color: rgb(64, 145, 125);
+  border-color: rgb(64, 145, 125);
 }

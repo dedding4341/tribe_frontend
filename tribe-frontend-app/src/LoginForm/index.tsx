@@ -3,12 +3,10 @@ import './LoginForm.css';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal'
-import { stringify } from 'querystring';
-import { formatDiagnosticsWithColorAndContext } from 'typescript';
-
-
-const EC2_LOGIN_URL = 'http://ec2-52-53-238-185.us-west-1.compute.amazonaws.com:5000/login';
-const LOCALHOST_LOGIN_URL = 'http://127.0.0.1:8000/login';
+import { BASE_URL } from '../config';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getFamilyFromAPI, getFamilyMembersFromAPI, getFamilyTasksFromAPI, loginUser } from '../actionCreators';
 
 function UserNameNotRecognized(props: any) {
     return (
@@ -73,7 +71,7 @@ function UserNameNotRecognized(props: any) {
         centered
       >
         <Modal.Body>
-          <h4>Your account is not verified, please is check your email for next steps</h4>
+          <h4>Your account is not verified, please check your email for next steps</h4>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={props.onHide}>Close</Button>
@@ -95,6 +93,8 @@ function LoginForm() {
     const [passwordIncorrectModalShow, setPasswordIncorrectModalShow] = React.useState(false);
     const [userNotVerifiedModalShow, setUserNotVerifiedModalShow] = React.useState(false);
     const [emailNotRecognizedModalShow, setEmailNotRecognizedModalShow] = React.useState(false);
+    const dispatch = useDispatch();
+    const history = useHistory();
 
     const handleChange = (evt: React.FormEvent<HTMLInputElement>) => {
         const { name, value } = evt.currentTarget;
@@ -103,12 +103,8 @@ function LoginForm() {
 
     const handleSubmit = (evt: React.FormEvent) => {
         evt.preventDefault();
-        console.log("submitting", formData);
         let retcode: number;
-
         let data;
-        
-
 
         if (!formData.userIdentification.includes('@')) {
             data = {username: formData.userIdentification, password: formData.password}
@@ -116,16 +112,17 @@ function LoginForm() {
         } else {
             data = {email: formData.userIdentification, password: formData.password}
         }
-        console.log(data)
-        fetch(EC2_LOGIN_URL, {
+
+        fetch(`${BASE_URL}/login`, {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
-                "Content-type": "application/json;"
-            }
+                "Content-type": "application/json"
+            }, 
+            credentials: "include"
         })
         .then(res => {
-            if (res.status == 401) {
+            if (res.status === 401) {
                 retcode = 401
             } else {
                 retcode = 200
@@ -145,10 +142,20 @@ function LoginForm() {
                 }
 
             } else if (retcode === 200) {
+              const famId = json.user.family_id;
+              console.log("logging in! fetching data now!")
+              dispatch(loginUser(json.user));
+              dispatch(getFamilyFromAPI())
+              dispatch(getFamilyMembersFromAPI());
+              dispatch(getFamilyTasksFromAPI());
 
+              if (famId) {
+                history.push(`/tribe/overview`);
+              } else {
+                history.push("/users/welcome");
+              }
             }
-            console.log(json.msg)
-        })
+        });
     }
 
     return (
