@@ -17,7 +17,7 @@ function DashboardNav() {
 	const family_code = useSelector((state: any) => state.familyCode)
 	const family = useSelector((state: any) => state.family)
 
-	const [codeDisplay, setCodeDisplay] = React.useState("generate Family Code");
+	const [codeDisplay, setCodeDisplay] = React.useState("Generate Family Code");
 
 
   const handleLogout = () => {
@@ -27,7 +27,7 @@ function DashboardNav() {
 	
 	const getFamilyCode = () => {
 		let retcode: number;
-		if(codeDisplay === "generate Family Code")
+		if(codeDisplay === "Generate Family Code")
 		fetch(`${BASE_URL}/generate-family-code`,{
 			method: "POST",
 			body: JSON.stringify({
@@ -63,10 +63,10 @@ function DashboardNav() {
 	useEffect(() => {
 		if(family_code !== ""){
 			setCodeDisplay(family_code)
-			// setCodeDisplay("generate Family Code!")
+			// setCodeDisplay("Generate Family Code!")
 		} else {
-			if(codeDisplay !== "generate Family Code") {
-				setCodeDisplay("generate Family Code")
+			if(codeDisplay !== "Generate Family Code") {
+				setCodeDisplay("Generate Family Code")
 			}
 		}
 	})
