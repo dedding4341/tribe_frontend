@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch} from 'react-redux';
+import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript";
 import { noFamilyCode } from '../actionCreators';
 
 
 function CodeTimer(){
     const x = useSelector((state: any) => state.eTime);
-    const currTime = Date.now();
+    const currTime = Math.floor(Date.now() /1000);
     const dispatch = useDispatch();
     const family_code = useSelector((state: any) => state.familyCode)
     // const timeDiff = targetTime - currTime;
@@ -17,20 +18,26 @@ function CodeTimer(){
 
     //Calculates the amount of time that is left
     const getDiff = () => {
+        
         let targetTime = x;
         const timeDiff = targetTime - currTime;
         
         let timeLeft: any = {};
-        if(timeDiff > 0) {
-            timeLeft = {
-                minutes: Math.floor((timeDiff % (1000 * 60 * 60 )) / (1000 * 60)),
-                seconds: Math.floor((timeDiff % (1000 * 60)) / 1000)
+        
+
+
+
+            if(timeDiff > 0) {
+                timeLeft = {
+                    minutes: Math.floor((timeDiff / 60)),
+                    seconds: Math.floor(timeDiff % 60)
+                }
+            } else if(timeDiff === 0){
+                if( family_code !== ""){
+                    dispatch(noFamilyCode())
+                }
             }
-        } else {
-            if( family_code !== ""){
-                dispatch(noFamilyCode())
-            }
-        }
+
 
         return timeLeft;
     }

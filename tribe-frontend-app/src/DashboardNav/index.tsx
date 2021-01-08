@@ -17,7 +17,7 @@ function DashboardNav() {
 	const family_code = useSelector((state: any) => state.familyCode)
 	const family = useSelector((state: any) => state.family)
 
-	const [codeDisplay, setCodeDisplay] = React.useState("Generate family code");
+	const [codeDisplay, setCodeDisplay] = React.useState("Generate Family Code");
 
 
   const handleLogout = () => {
@@ -27,7 +27,7 @@ function DashboardNav() {
 	
 	const getFamilyCode = () => {
 		let retcode: number;
-		if(codeDisplay === "Generate family code")
+		if(codeDisplay === "Generate Family Code")
 		fetch(`${BASE_URL}/generate-family-code`,{
 			method: "POST",
 			body: JSON.stringify({
@@ -52,10 +52,10 @@ function DashboardNav() {
 					setCodeDisplay("Try Again.")
 				}
 			} else if (retcode === 201){
-				dispatch(epochTime(new Date(json.family_code.expire).getTime()))
+				// dispatch(epochTime(new Date(json.family_code.expire).getTime()))
+				dispatch(epochTime(json.family_code.ttl))
 				dispatch(familyCode(json.family_code.family_code))
 				setCodeDisplay(json.family_code.family_code)
-				console.log(json.family_code)
 			}
 		})
 	}
@@ -63,10 +63,10 @@ function DashboardNav() {
 	useEffect(() => {
 		if(family_code !== ""){
 			setCodeDisplay(family_code)
-			// setCodeDisplay("Generate family code!")
+			// setCodeDisplay("Generate Family Code!")
 		} else {
-			if(codeDisplay !== "Generate family code") {
-				setCodeDisplay("Generate family code")
+			if(codeDisplay !== "Generate Family Code") {
+				setCodeDisplay("Generate Family Code")
 			}
 		}
 	})
@@ -75,10 +75,10 @@ function DashboardNav() {
     <div className="DashboardNav">
       <Nav defaultActiveKey="/tribe" className="flex-column" >
         <NavLink className="mt-2 mb-2"  to={`/tribe/overview`}>Home</NavLink>
-        <NavLink className="mt-2 mb-2" to={`/tribe/calender`}>Calender</NavLink>
+        {/* <NavLink className="mt-2 mb-2" to={`/tribe/calender`}>Calender</NavLink> */}
         <NavLink className="mt-2 mb-2" to={`/tribe/todo`}>To-do</NavLink>
 				<NavLink className="mt-2 mb-2" to={`/tribe/completed`}>Completed Tasks</NavLink>
-        <NavLink className="mt-2 mb-2" to={`/tribe/store`}>Store</NavLink>
+        {/* <NavLink className="mt-2 mb-2" to={`/tribe/store`}>Store</NavLink> */}
 				<Nav.Item className="Family_code" onClick={getFamilyCode}><span>{codeDisplay} <CodeTimer/></span></Nav.Item>
         <li className="DashboardNav-vertical-divider"></li>
         <Button className="DashboardNav-logout-btn mt-2 mb-2" onClick={handleLogout}>Logout</Button>

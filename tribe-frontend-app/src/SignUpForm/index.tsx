@@ -42,7 +42,7 @@ function validatePassword(password: String, confirmPassword: String) : Boolean {
 }
 
 function validateUsername(username: String) {
-    if (username.length >= 5 && username.length <= 10) {
+    if (username.length >= 5 && username.length <= 20) {
         return true;
     }
     return false;
@@ -70,7 +70,7 @@ function SignUpForm() {
         let rgTwo = /\d+/g;
         
         if (!validateUsername(formData.username)){
-            msgs.push("Username must be at least 5 characters long.")
+            msgs.push("Username must be between 5 and 20 characters long.")
         }
         
         if(!rg.test(formData.email)){

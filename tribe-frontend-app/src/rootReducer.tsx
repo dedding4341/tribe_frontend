@@ -77,7 +77,7 @@ export default function rootReducer(state = INITIAL_STATE, action: Action) {
     case FAMILY_CODE:
       return {...state, familyCode: action.payload.code}
     case NO_FAMILY_CODE:
-      return {...state, familyCode: ""}
+      return {...state, familyCode: "", eTime: "00"}
     default:
       return state;
   }
