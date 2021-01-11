@@ -1,4 +1,4 @@
-import { ADD_TASK, COMPLETE_TASK, DELETE_TASK, LOAD_FAMILY_TASKS, LOGIN, LOGIN_BY_TOKEN, LOGOUT, SAVE_FAMILY, SAVE_FAMILY_MEMBERS, SAVE_USER, START_LOADING, STOP_LOADING, UPDATE_TASK, EPIC_TIME, SHOWING_CODE, FAMILY_CODE, NO_FAMILY_CODE } from "./actionTypes";
+import { ADD_TASK, COMPLETE_TASK, DELETE_TASK, LOAD_FAMILY_TASKS, LOGIN, LOGIN_BY_TOKEN, LOGOUT, SAVE_FAMILY, SAVE_FAMILY_MEMBERS, SAVE_USER, START_LOADING, STOP_LOADING, UPDATE_TASK, EPIC_TIME, SHOWING_CODE, FAMILY_CODE, NO_FAMILY_CODE, COUNTER_PARTY } from "./actionTypes";
 import { BASE_URL } from "./config";
 import { getCookie } from "./helpers";
 
@@ -208,4 +208,8 @@ export function familyCode(code: string) {
 
 export function noFamilyCode() {
   return { type: NO_FAMILY_CODE }
+}
+
+export function counterParty(counterTask: any, counterId:number) {
+  return { type: COUNTER_PARTY, payload: { counterTask, counterId} }
 }
