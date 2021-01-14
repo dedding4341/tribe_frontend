@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Col, Container, Image, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
+import { Button, CardColumns, Col, Container, Image, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import moment from "moment";
@@ -67,7 +67,7 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask }: IPr
     let zIdx = assignees.length;
 
     return (
-        <div className="TaskCard">
+        <div className="TaskCard align-items-center d-flex">
             <TradeForm show={showTradeForm} handleTradeTask={handleTradeTask} handleClose={() => setShowTradeForm(false)} />
             <TaskCardDetailsModal show={showTaskDetails} handleUpdateTask={handleUpdateTask} handleClose={() => setShowTaskDetails(false)} task={task} taskOwner={taskOwner} isFamilyAdmin={user.family_manager} />
             {assignees.map((assignee: any) => {

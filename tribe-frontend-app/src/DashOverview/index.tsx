@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Col, Container, Row } from 'react-bootstrap';
+import { Button, CardColumns, Col, Container, Row } from 'react-bootstrap';
 import NewTaskForm from '../NewTaskForm';
 import TaskCard from '../TaskCard';
 import './DashOverview.css';
@@ -148,11 +148,12 @@ function DashOverview({ showHistory }: IProps) {
             }
           </Row>
           <Row className="mt-3">
-            {tasks.length > 0 ? tasks.map((task: any) => {
-              return (<Col key={`${task.associated_points}-${task.task_id}`} md={6}>
-                <TaskCard key={`${task.task_id}-card`} task={task} updateTask={updateTask} tradeTask={tradeTask} deleteTask={deleteTask} completeTask={completeTask} />
-              </Col>)
-            }) : <Col md={6}>No tasks to display.</Col>}
+              {tasks.length > 0 ? tasks.map((task: any) => {
+                return (<Col md={6} className="mt-3" key={`${task.associated_points}-${task.task_id}`}>
+                  <TaskCard key={`${task.task_id}-card`} task={task} updateTask={updateTask} tradeTask={tradeTask} deleteTask={deleteTask} completeTask={completeTask} />
+                </Col>)
+            })
+            : <Col md={12}>No tasks to display.</Col>}
           </Row>
         </>
       }
