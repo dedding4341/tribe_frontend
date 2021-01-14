@@ -1,4 +1,4 @@
-import { ADD_TASK, COMPLETE_TASK, DELETE_TASK, LOAD_FAMILY_TASKS, LOGIN, LOGIN_BY_TOKEN, LOGOUT, SAVE_FAMILY, SAVE_FAMILY_MEMBERS, SAVE_USER, START_LOADING, STOP_LOADING, UPDATE_TASK, EPIC_TIME, SHOWING_CODE, FAMILY_CODE, NO_FAMILY_CODE, COUNTER_PARTY } from "./actionTypes";
+import { ADD_TASK, COMPLETE_TASK, DELETE_TASK, LOAD_FAMILY_TASKS, LOGIN, LOGIN_BY_TOKEN, LOGOUT, SAVE_FAMILY, SAVE_FAMILY_MEMBERS, SAVE_USER, START_LOADING, STOP_LOADING, UPDATE_TASK, EPIC_TIME, SHOWING_CODE, FAMILY_CODE, NO_FAMILY_CODE, COUNTER_PARTY, PENDING_TASK, OUT_GOING_TRADE, INCOMING_TRADE_HASH } from "./actionTypes";
 
 const INITIAL_STATE: any = {
   user: {},
@@ -11,7 +11,10 @@ const INITIAL_STATE: any = {
   isShowing: false,
   familyCode: "",
   counterTask: {},
-  counterId: ""
+  counterId: "",
+  pendingTask: [],
+  outGoingTrades: [],
+  incomingTradesHash: {},
 };
 
 interface Action {
@@ -82,6 +85,12 @@ export default function rootReducer(state = INITIAL_STATE, action: Action) {
       return {...state, familyCode: "", eTime: "00"}
     case COUNTER_PARTY:
       return {...state, counterTask: action.payload.counterTask, counterId: action.payload.counterId}
+    case PENDING_TASK:
+      return { ...state, pendingTask: action.payload.Ptasks}
+    case OUT_GOING_TRADE:
+      return { ...state, outGoingTrades: action.payload.outgoingTrades}
+    case INCOMING_TRADE_HASH:
+      return { ...state, incomingTradesHash: action.payload.incoming}
     default:
       return state;
   }

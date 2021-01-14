@@ -48,7 +48,7 @@ function DashOverview({ showHistory }: IProps) {
       });
     } else {
       tasks = family_tasks.filter((t: any) => {
-        return !t.completed;
+        return !t.completed && t.task_status === "open";
       });
     }
     setTasks(tasks);
@@ -95,33 +95,33 @@ function DashOverview({ showHistory }: IProps) {
       case "unassigned":
         // show unassigned tasks
         filteredTasks = family_tasks.filter((t: any) => {
-          return !t.assignee
+          return !t.assignee && t.task_status === "open"
         });
         setTasks(filteredTasks);
         break;
       case "myTasks":
         // show currentUser's tasks
         filteredTasks = family_tasks.filter((t: any) => {
-          return t.assignee === userId && !t.completed;
+          return t.assignee === userId && !t.completed && t.task_status === "open";
         });
         setTasks(filteredTasks);
         break;
       case "completedTasks":
         filteredTasks = family_tasks.filter((t: any) => {
-          return t.assignee === userId && t.completed;
+          return t.assignee === userId;
         });
         setTasks(filteredTasks);
         break;
       case "all":
         // show all active tasks
         filteredTasks = family_tasks.filter((t: any) => {
-          return !t.completed;
+          return !t.completed && t.task_status === "open";
         });
         setTasks(filteredTasks);
         break;
       default:
         filteredTasks = family_tasks.filter((t: any) => {
-          return t.completed === false;
+          return t.completed === false && t.task_status === "open";
         });
         setTasks(family_tasks);
         break;

@@ -1,26 +1,21 @@
 import React, { useState } from 'react';
 import { Button, Col, Container, Image, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
-import moment from "moment";
-import './TradeModalTaskCard.css';
+import '../TradeModalTaskCard/TradeModalTaskCard.css';
 import { BASE_URL, DEFAULT_PFP } from '../config';
 import { useSelector } from 'react-redux';
-import { counterParty } from '../actionCreators';
 import { getCookie } from '../helpers';
 
 interface IProps {
     task: any,
+    hash: any
 }
 
 /**
  * TaskCard component displays each task.
  * Handler functions to delegate task-related CRUD operations.
  */
-function TaskModalTaskCard({ task } :IProps) {
-    const [showDelConf, setShowDelConf] = useState(false);
-    const [showTradeForm, setShowTradeForm] = useState(false);
-    const [showTaskDetails, setShowTaskDetails] = useState(false);
+function OutGoingTradeTaskCard({ task, hash } :IProps) {
+
     const user = useSelector((st: any) => st.user);
     const famMembers = useSelector((st: any) => st.famMembers)
     const isTaskOwner = (task.assignee === user.user_id);
@@ -41,42 +36,28 @@ function TaskModalTaskCard({ task } :IProps) {
         return task.assignee === memb.user_id;
     });
 
-    const startTrade = (ownerTask: any, ownerId: number, counterPartyTask: any, counterPartyId: number) => {
-        let retcode: number;
-        console.log("ot", ownerTask)
-        console.log("oi", ownerId)
-        console.log("ct", counterPartyTask)
-        console.log("ci", counterPartyId)
-
-        fetch(`${BASE_URL}/initiate-trade`, {
-            method: "POST",
-            headers: {
-                "Content-type": "application/json;",
-                "x-access-token": `${token}`
-            },
-            body: JSON.stringify({
-                task_counterparty: counterPartyId,
-                owner_task_id: ownerTask,
-                counterparty_task_id: counterPartyTask,
+    const handleCancel =(hash: any, taskId: any) => {
+        console.log("taskID", hash)
+        console.log("hashKey", taskId)
+        if(hash.has(taskId)) {
+            console.log(hash.get(taskId))
+            fetch(`${BASE_URL}/cancel-trade`, {
+                method: "PATCH",
+                body: JSON.stringify({
+                    trade_id: hash.get(taskId),
+                    source_task_id: taskId
+                }),
+                headers: {
+                    "Content-type": "application/json",
+                    "x-access-token": `${token}`
+                },
+                credentials: "include"
             })
-        })
-        .then(res => {
-            if(res.status == 500) {
-                retcode = 500
-            } else {
-                retcode = 201
-            }
-            return res.json();
-        })
-        .then(json => {
-            if( retcode === 500) {
-                if (json.msg === "Unable to create trade request") {
-                    console.log(json)
-                } 
-            } else if (retcode === 201) {
-                console.log(json.msg)
-            }
-        })
+            .then(res => res.json)
+            .then(json => console.log(json))
+        } else {
+            console.log("Task id don't match")
+        }
     }
 
 
@@ -107,7 +88,7 @@ function TaskModalTaskCard({ task } :IProps) {
                 {
                     // HTML for task details 
                     <Row className="d-flex align-items-center justify-content-between">
-                        <Col sm={6} md={7} onClick={() => setShowTaskDetails(true)}>
+                        <Col sm={6} md={7} >
                             <Row className="TradeModalTaskCard-header">
                                 <h3>{task.task_name}<span className="TradeModalTaskCard-pts">+{task.associated_points}pts</span></h3>
                             </Row>
@@ -118,7 +99,10 @@ function TaskModalTaskCard({ task } :IProps) {
                             </Row>
                         </Col>
                         {!task.completed && <Col sm={6} md={5}>
-                                <Button className="TradeModalTaskCard-btn TradeModalTaskCard-complete-btn"  onClick={() => startTrade(task.task_id, task.assignee, counterTask, counterId)}>Select</Button>
+                            {isTaskOwner ?
+                                <Button className="TradeModalTaskCard-btn TradeModalTaskCard-complete-btn"  onClick={() => handleCancel(hash, task.task_id)}>Cancel</Button>
+                                :<></>
+                            }
                         </Col> } 
                     </Row>
                 }
@@ -127,4 +111,4 @@ function TaskModalTaskCard({ task } :IProps) {
     )
 }
 
-export default TaskModalTaskCard;
+export default OutGoingTradeTaskCard;
