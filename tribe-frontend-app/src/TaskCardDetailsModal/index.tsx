@@ -46,7 +46,7 @@ function TaskCardDetailsModal({ show, handleUpdateTask, handleClose, task, taskO
          * If the current user is a `family_admin` and the task hasn't been completed yet,
          *  the Edit Task button will display to show `NewTaskForm` modal 
          * */}
-        {(isFamilyAdmin && task.complete ) && <Button onClick={() => handleShowEdit()}>Edit task</Button>}
+        {(isFamilyAdmin && !task.complete ) && <Button onClick={() => handleShowEdit()}>Edit task</Button>}
       </Modal.Footer>
     </Modal>
   )
