@@ -3,7 +3,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
 import PendingTradeTaskCard from '../PendingTradeTaskCard'
 import OutGoingTradeTaskCard from '../OutGoingTradeTaskCard'
-import { getPendingTask, incomingTradesHash } from '../actionCreators';
+import { gotOutGoingTrades, getPendingTask, gotPendingTask, incomingTradesHash, listOfPendingTask } from '../actionCreators';
 
 interface Task {
     task_id: Number,
@@ -20,11 +20,10 @@ interface IProps {
 
 function TradesTab({ showHistory }: IProps) {
     const pending_tasks = useSelector((st: any) => st.pendingTask)
+    const tradesList = useSelector((st: any) => st.listOfTradeTask)
     const outgoing_Trades = useSelector((st: any) => st.outGoingTrades)
     const userId = useSelector((st: any) => st.user.user_id);
 
-    const [tasks, setTasks] = useState(pending_tasks);
-    const [outTasks, setOutTasks] =  useState(outgoing_Trades);
     const [incomingTradeHash, setIncomingTradeHash] = useState({})
     const [outGoingTradeHash, setOutGoingTradeHash] = useState({})
     
@@ -36,14 +35,14 @@ function TradesTab({ showHistory }: IProps) {
     useEffect(() => {
         //38-48 Gets the list of task that are being traded to the current user and makes a hash for the trade ID
         let tasks: any = [];
-        
+
+        console.log("not arry of obj", pending_tasks)
         if(pending_tasks.length > 0) {
             pending_tasks.forEach((t: any) => {
                 tasks.push(t[0]);
                 tasks.push(t[1]);
                 icTradeHash.set(t[0].task_id, t[2])
             });
-            // console.log(tasks)
         } else {
             tasks = [];
         }
@@ -52,7 +51,7 @@ function TradesTab({ showHistory }: IProps) {
         //52-63 Gets the list of task that are being set out for trade by the current user and makes a hash for the trade ID
         let outTask: any = [];
 
-        // console.log(outgoing_Trades)
+        console.log(outgoing_Trades)
         if(outgoing_Trades.length > 0){
             outgoing_Trades.map((t: any) => {
                 outTask.push(t[0]);
@@ -64,22 +63,22 @@ function TradesTab({ showHistory }: IProps) {
         }
 
         setOutGoingTradeHash(ogTradeHash)
-        setTasks(tasks);  
-        setOutTasks(outTask);
+        dispatch(listOfPendingTask(tasks))
+        // dispatch(gotOutGoingTrades(outTask));
     }, [pending_tasks, outgoing_Trades]);
 
     const handleFeedbackIC = (task: any) =>{
-        let index = tasks.indexOf(task);
+        let index = pending_tasks.indexOf(task);
         let newList;
-        newList = tasks.filter((t: any) => t !== tasks[index] || t !== tasks[index + 1]);
+        newList = pending_tasks.filter((t: any) => t !== pending_tasks[index] || t !== pending_tasks[index + 1]);
         // console.log(tasks)
         // console.log(newList)
     }
 
     const handleFeedbackOG = (task: any) =>{
-        let index = outTasks.indexOf(task);
+        let index = outgoing_Trades.indexOf(task);
         let newList;
-        newList = outTasks.filter((t: any) => t !== outTasks[index] || t !== outTasks[index + 1]);
+        newList = outgoing_Trades.filter((t: any) => t !== outgoing_Trades[index] || t !== outgoing_Trades[index + 1]);
         // console.log(outTasks)
         // console.log(newList)
     }
@@ -90,7 +89,7 @@ function TradesTab({ showHistory }: IProps) {
                 <h1 className="DashOverview-title">Pending Trades</h1>
             </Col>
             <Row className="mt-3">
-                {tasks.length > 0 ? tasks.map((task: any) => {
+                {tradesList.length > 0 ? tradesList.map((task: any) => {
                     return (<Col key={`${task.associated_points}-${task.task_id}`} md={6}>
                     <PendingTradeTaskCard key={`${task.task_id}-card`} task={task} hash={incomingTradeHash} feedBack={handleFeedbackIC}/>
                     </Col>)
@@ -101,7 +100,7 @@ function TradesTab({ showHistory }: IProps) {
                 <h1 className="DashOverview-title">Outgoing Trades</h1>
             </Col>
             <Row className="mt-3">
-                {outTasks.length > 0 ? outTasks.map((task: any) => {
+                {outgoing_Trades.length > 0 ? outgoing_Trades.map((task: any) => {
                     return (<Col key={`${task.associated_points}-${task.task_id}`} md={6}>
                     <OutGoingTradeTaskCard key={`${task.task_id}-card`} task={task} hash = {outGoingTradeHash} feedBack={handleFeedbackOG}/>
                     </Col>)
