@@ -7,14 +7,15 @@ import { getCookie } from '../helpers';
 
 interface IProps {
     task: any,
-    hash: any
+    hash: any,
+    feedBack: Function,
 }
 
 /**
  * TaskCard component displays each task.
  * Handler functions to delegate task-related CRUD operations.
  */
-function OutGoingTradeTaskCard({ task, hash } :IProps) {
+function OutGoingTradeTaskCard({ task, hash, feedBack } :IProps) {
 
     const user = useSelector((st: any) => st.user);
     const famMembers = useSelector((st: any) => st.famMembers)
@@ -37,10 +38,11 @@ function OutGoingTradeTaskCard({ task, hash } :IProps) {
     });
 
     const handleCancel =(hash: any, taskId: any) => {
-        console.log("taskID", hash)
-        console.log("hashKey", taskId)
+        // console.log("taskID", hash)
+        // console.log("hashKey", taskId)
         if(hash.has(taskId)) {
-            console.log(hash.get(taskId))
+            feedBack()
+            // console.log(hash.get(taskId))
             fetch(`${BASE_URL}/cancel-trade`, {
                 method: "PATCH",
                 body: JSON.stringify({
@@ -56,7 +58,7 @@ function OutGoingTradeTaskCard({ task, hash } :IProps) {
             .then(res => res.json)
             .then(json => console.log(json))
         } else {
-            console.log("Task id don't match")
+            // console.log("Task id don't match")
         }
     }
 

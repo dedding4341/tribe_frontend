@@ -11,13 +11,15 @@ import { getCookie } from '../helpers';
 
 interface IProps {
     task: any,
+    onHide: Function,
+    remove: Function,
 }
 
 /**
  * TaskCard component displays each task.
  * Handler functions to delegate task-related CRUD operations.
  */
-function TaskModalTaskCard({ task } :IProps) {
+function TaskModalTaskCard({ task, onHide, remove} :IProps) {
     const [showDelConf, setShowDelConf] = useState(false);
     const [showTradeForm, setShowTradeForm] = useState(false);
     const [showTaskDetails, setShowTaskDetails] = useState(false);
@@ -43,11 +45,9 @@ function TaskModalTaskCard({ task } :IProps) {
 
     const startTrade = (ownerTask: any, ownerId: number, counterPartyTask: any, counterPartyId: number) => {
         let retcode: number;
-        console.log("ot", ownerTask)
-        console.log("oi", ownerId)
-        console.log("ct", counterPartyTask)
-        console.log("ci", counterPartyId)
-
+        
+        onHide()
+        remove(ownerTask)
         fetch(`${BASE_URL}/initiate-trade`, {
             method: "POST",
             headers: {
@@ -77,6 +77,7 @@ function TaskModalTaskCard({ task } :IProps) {
                 console.log(json.msg)
             }
         })
+        
     }
 
 

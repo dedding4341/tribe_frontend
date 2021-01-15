@@ -7,14 +7,15 @@ import { getCookie } from '../helpers';
 
 interface IProps {
     task: any,
-    hash: any
+    hash: any,
+    feedBack: Function
 }
 
 /**
  * TaskCard component displays each task.
  * Handler functions to delegate task-related CRUD operations.
  */
-function PendingTradeTaskCard({ task, hash } :IProps) {
+function PendingTradeTaskCard({ task, hash, feedBack } :IProps) {
 
     const user = useSelector((st: any) => st.user);
     const famMembers = useSelector((st: any) => st.famMembers)
@@ -37,51 +38,48 @@ function PendingTradeTaskCard({ task, hash } :IProps) {
     });
 
     const handleAccept =(hash: any, taskId: any) => {
-        console.log("taskID", hash)
-        console.log("hashKey", taskId)
-        if(hash.has(taskId)) {
-            console.log(hash.get(taskId))
-            fetch(`${BASE_URL}/accept-trade`, {
-                method: "PATCH",
-                body: JSON.stringify({
-                    trade_id: hash.get(taskId),
-                    source_task_id: taskId
-                }),
-                headers: {
-                    "Content-type": "application/json",
-                    "x-access-token": `${token}`
-                },
-                credentials: "include"
-            })
-            .then(res => res.json)
-            .then(json => console.log(json))
-        } else {
-            console.log("Task id don't match")
-        }
+        
+        feedBack()
+
+        // console.log("this should be the value", hash.values().next().value)
+        // console.log("this should be the key", hash.keys().next().value)
+
+        fetch(`${BASE_URL}/accept-trade`, {
+            method: "PATCH",
+            body: JSON.stringify({
+                trade_id: hash.values().next().value,
+                source_task_id: hash.keys().next().value
+            }),
+            headers: {
+                "Content-type": "application/json",
+                "x-access-token": `${token}`
+            },
+            credentials: "include"
+        })
+        .then(res => res.json)
+        .then(json => console.log(json))
     }
 
     const handleReject =(hash: any, taskId: any) => {
-        console.log("taskID", hash)
-        console.log("hashKey", taskId)
-        if(hash.has(taskId)) {
-            console.log(hash.get(taskId))
-            fetch(`${BASE_URL}/reject-trade`, {
-                method: "PATCH",
-                body: JSON.stringify({
-                    trade_id: hash.get(taskId),
-                    source_task_id: taskId
-                }),
-                headers: {
-                    "Content-type": "application/json",
-                    "x-access-token": `${token}`
-                },
-                credentials: "include"
-            })
-            .then(res => res.json)
-            .then(json => console.log(json))
-        } else {
-            console.log("Task id don't match")
-        }
+        feedBack()
+
+        // console.log("this should be the value", hash.values().next().value)
+        // console.log("this should be the key", hash.keys().next().value)
+
+        fetch(`${BASE_URL}/reject-trade`, {
+            method: "PATCH",
+            body: JSON.stringify({
+                trade_id: hash.values().next().value,
+                source_task_id: hash.keys().next().value
+            }),
+            headers: {
+                "Content-type": "application/json",
+                "x-access-token": `${token}`
+            },
+            credentials: "include"
+        })
+        .then(res => res.json)
+        .then(json => console.log(json))
     }
     
 

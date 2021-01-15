@@ -128,6 +128,16 @@ function DashOverview({ showHistory }: IProps) {
     }
   }
 
+  const removeTaskUpdate = (task: any) =>{
+    let newTaskList;
+
+    newTaskList = family_tasks.filter((t: any) => {
+      return !t.completed && t.task_status === "open" && t.task_id !== task ;
+    })
+
+    setTasks(newTaskList)
+  }
+
   return (
     <Container className="DashOverview">
       {loading ? <div> loading... </div> :
@@ -150,7 +160,7 @@ function DashOverview({ showHistory }: IProps) {
           <Row className="mt-3">
             {tasks.length > 0 ? tasks.map((task: any) => {
               return (<Col key={`${task.associated_points}-${task.task_id}`} md={6}>
-                <TaskCard key={`${task.task_id}-card`} task={task} updateTask={updateTask} tradeTask={tradeTask} deleteTask={deleteTask} completeTask={completeTask} />
+                <TaskCard key={`${task.task_id}-card`} task={task} updateTask={updateTask} tradeTask={tradeTask} deleteTask={deleteTask} completeTask={completeTask} removeTask={removeTaskUpdate}/>
               </Col>)
             }) : <Col md={6}>No tasks to display.</Col>}
           </Row>

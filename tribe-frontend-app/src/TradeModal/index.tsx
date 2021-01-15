@@ -16,10 +16,10 @@ interface IProps {
     showHistory: Boolean,
     show: Boolean,
     handleClose: Function,
-
+    remove: Function
 }
 
-function TradeModal({showHistory, show, handleClose}: IProps) {
+function TradeModal({showHistory, show, handleClose, remove}: IProps) {
     const family_tasks = useSelector((st: any) => st.family_tasks);
     const currUser = useSelector((st: any) => st.user);
     const [tasks, setTasks] = useState(family_tasks);
@@ -28,11 +28,11 @@ function TradeModal({showHistory, show, handleClose}: IProps) {
         let tasks;
         if (showHistory) {
             tasks = family_tasks.filter((t: any) => {
-                return t.completed;
+                return t.completed && t.task_status === "open";
             });
         } else {
             tasks = family_tasks.filter((t: any) => {
-                return !t.completed && t.assignee === currUser.user_id;
+                return !t.completed && t.assignee === currUser.user_id && t.task_status == "open";
             });
         }
         setTasks(tasks);
@@ -43,7 +43,7 @@ function TradeModal({showHistory, show, handleClose}: IProps) {
             <Modal.Body>
             {tasks.length > 0 ? tasks.map((task: any) => {
                 return (/*<Col key={`${task.associated_points}-${task.task_id}`} md={6}>*/
-                <TradeModalTaskCard key={`${task.task_id}-card`} task={task}/>
+                <TradeModalTaskCard key={`${task.task_id}-card`} task={task} onHide={handleClose} remove={remove}/>
                 /*</Col>*/)
             }) : <Col md={6}>No tasks to display.</Col>}
             </Modal.Body>

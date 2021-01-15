@@ -16,17 +16,19 @@ interface IProps {
     deleteTask: Function,
     tradeTask: Function,
     completeTask: Function,
-    updateTask: Function
+    updateTask: Function,
+    removeTask: any,
 }
 
 /**
  * TaskCard component displays each task.
  * Handler functions to delegate task-related CRUD operations.
  */
-function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask }: IProps) {
+function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask, removeTask }: IProps) {
     const [showDelConf, setShowDelConf] = useState(false);
     const [showTradeModal, setShowTradeModal] = useState(false);
     const [showTaskDetails, setShowTaskDetails] = useState(false);
+    const [removedTask, setRemovedTask] = useState()
     const user = useSelector((st: any) => st.user);
     const famMembers = useSelector((st: any) => st.famMembers)
     const isTaskOwner = (task.assignee === user.user_id);
@@ -54,7 +56,7 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask }: IPr
     const handleTradeTask = (data: any) => {
         setShowTradeModal(true)
         dispatch(counterParty(task.task_id, task.assignee))
-        console.log(task)
+        // console.log(task)
         // tradeTask(task.task_id, data.recipients);
 
     }
@@ -76,7 +78,7 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask }: IPr
 
     return (
         <div className="TaskCard">
-            <TradeModal showHistory={false} show={showTradeModal} handleClose={() => setShowTradeModal(false)}/>
+            <TradeModal showHistory={false} show={showTradeModal} handleClose={() => setShowTradeModal(false)} remove={removeTask}/>
             <TaskCardDetailsModal show={showTaskDetails} handleUpdateTask={handleUpdateTask} handleClose={() => setShowTaskDetails(false)} task={task} taskOwner={taskOwner} isFamilyAdmin={user.family_manager} />
             {assignees.map((assignee: any) => {
                 // increment and decrement avatar styling variables.
