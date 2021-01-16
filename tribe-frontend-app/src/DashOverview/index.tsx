@@ -33,7 +33,7 @@ function DashOverview({ showHistory }: IProps) {
   // `loading` is true until all required information is received from API.
   const loading = useSelector((st: any) => st.loading);
   const family_tasks = useSelector((st: any) => st.family_tasks);
-  const userId = useSelector((st: any) => st.user.user_id);
+  const user = useSelector((st: any) => st.user);
   const familyManager = useSelector((st: any) => st.user.family_manager);
 
   const [showNewTaskForm, setShowNewTaskForm] = useState(false);
