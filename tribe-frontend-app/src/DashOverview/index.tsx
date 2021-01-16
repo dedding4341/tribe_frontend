@@ -9,6 +9,7 @@ import FilterBar from '../FilterBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
+
 interface Task {
   task_id: Number,
   task_name: String,
@@ -42,17 +43,18 @@ function DashOverview({ showHistory }: IProps) {
 
   useEffect(() => {
     let tasks;
+    // dispatch(getFamilyTasksFromAPI)
     if (showHistory) {
       tasks = family_tasks.filter((t: any) => {
         return t.completed;
       });
     } else {
       tasks = family_tasks.filter((t: any) => {
-        return !t.completed;
+        return !t.completed && t.task_status === "open";
       });
     }
     setTasks(tasks);
-  }, [family_tasks]);
+  }, []);
 
   const handleClose = () => {
     setShowNewTaskForm(false);
@@ -95,37 +97,47 @@ function DashOverview({ showHistory }: IProps) {
       case "unassigned":
         // show unassigned tasks
         filteredTasks = family_tasks.filter((t: any) => {
-          return !t.assignee
+          return !t.assignee && t.task_status === "open"
         });
         setTasks(filteredTasks);
         break;
       case "myTasks":
         // show currentUser's tasks
         filteredTasks = family_tasks.filter((t: any) => {
-          return t.assignee === user.user_id && !t.completed;
+          return t.assignee === userId && t.task_status === "open";
         });
         setTasks(filteredTasks);
         break;
       case "completedTasks":
         filteredTasks = family_tasks.filter((t: any) => {
-          return t.assignee === user.user_id && t.completed;
+          return t.assignee === userId;
         });
         setTasks(filteredTasks);
         break;
       case "all":
         // show all active tasks
         filteredTasks = family_tasks.filter((t: any) => {
-          return !t.completed;
+          return t.task_status === "open";
         });
         setTasks(filteredTasks);
         break;
       default:
         filteredTasks = family_tasks.filter((t: any) => {
-          return t.completed === false;
+          return t.task_status === 'completed';
         });
         setTasks(family_tasks);
         break;
     }
+  }
+
+  const removeTaskUpdate = (task: any) =>{
+    let newTaskList;
+
+    newTaskList = family_tasks.filter((t: any) => {
+      return !t.completed && t.task_status === "open" && t.task_id !== task ;
+    })
+
+    setTasks(newTaskList)
   }
 
   return (
@@ -150,7 +162,7 @@ function DashOverview({ showHistory }: IProps) {
           <Row className="mt-3">
             {tasks.length > 0 ? tasks.map((task: any) => {
               return (<Col key={`${task.associated_points}-${task.task_id}`} md={6}>
-                <TaskCard key={`${task.task_id}-card`} task={task} updateTask={updateTask} tradeTask={tradeTask} deleteTask={deleteTask} completeTask={completeTask} />
+                <TaskCard key={`${task.task_id}-card`} task={task} updateTask={updateTask} tradeTask={tradeTask} deleteTask={deleteTask} completeTask={completeTask} removeTask={removeTaskUpdate}/>
               </Col>)
             }) : <Col md={6}>No tasks to display.</Col>}
           </Row>

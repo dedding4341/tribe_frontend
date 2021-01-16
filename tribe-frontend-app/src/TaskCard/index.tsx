@@ -6,28 +6,34 @@ import moment from "moment";
 import './TaskCard.css';
 import TradeForm from '../TradeForm';
 import { DEFAULT_PFP } from '../config';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import TaskCardDetailsModal from '../TaskCardDetailsModal';
+import TradeModal from '../TradeModal'
+import { counterParty } from '../actionCreators';
 
 interface IProps {
     task: any,
     deleteTask: Function,
     tradeTask: Function,
     completeTask: Function,
-    updateTask: Function
+    updateTask: Function,
+    removeTask: any,
 }
 
 /**
  * TaskCard component displays each task.
  * Handler functions to delegate task-related CRUD operations.
  */
-function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask }: IProps) {
+function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask, removeTask }: IProps) {
     const [showDelConf, setShowDelConf] = useState(false);
-    const [showTradeForm, setShowTradeForm] = useState(false);
+    const [showTradeModal, setShowTradeModal] = useState(false);
     const [showTaskDetails, setShowTaskDetails] = useState(false);
+    const [removedTask, setRemovedTask] = useState()
     const user = useSelector((st: any) => st.user);
     const famMembers = useSelector((st: any) => st.famMembers)
     const isTaskOwner = (task.assignee === user.user_id);
+    const dispatch = useDispatch();
+    
 
     // `taskOwner` is a user object of the task's `created_by` user.
     const taskOwner = famMembers.filter((memb: any) => {
@@ -48,7 +54,11 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask }: IPr
     }
 
     const handleTradeTask = (data: any) => {
-        tradeTask(task.task_id, data.recipients);
+        setShowTradeModal(true)
+        dispatch(counterParty(task.task_id, task.assignee))
+        // console.log(task)
+        // tradeTask(task.task_id, data.recipients);
+
     }
 
     const handleCompleteTask = () => {
@@ -68,7 +78,7 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask }: IPr
 
     return (
         <div className="TaskCard">
-            <TradeForm show={showTradeForm} handleTradeTask={handleTradeTask} handleClose={() => setShowTradeForm(false)} />
+            <TradeModal showHistory={false} show={showTradeModal} handleClose={() => setShowTradeModal(false)} remove={removeTask}/>
             <TaskCardDetailsModal show={showTaskDetails} handleUpdateTask={handleUpdateTask} handleClose={() => setShowTaskDetails(false)} task={task} taskOwner={taskOwner} isFamilyAdmin={user.family_manager} />
             {assignees.map((assignee: any) => {
                 // increment and decrement avatar styling variables.
@@ -123,7 +133,7 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask }: IPr
                         {!task.completed && <Col sm={6} md={5}>
                             {isTaskOwner ?
                                 <Button className="TaskCard-btn TaskCard-complete-btn"  onClick={handleCompleteTask}>Complete</Button>
-                                : <Button className="TaskCard-btn TaskCard-trade-btn" onClick={() => setShowTradeForm(true)}>Trade</Button>
+                                : <Button className="TaskCard-btn TaskCard-trade-btn" onClick={handleTradeTask}>Trade</Button>
                             }
                         </Col> } 
                     </Row>

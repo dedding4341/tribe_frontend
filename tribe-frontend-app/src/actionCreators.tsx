@@ -1,4 +1,4 @@
-import { ADD_TASK, COMPLETE_TASK, DELETE_TASK, LOAD_FAMILY_TASKS, LOGIN, LOGIN_BY_TOKEN, LOGOUT, SAVE_FAMILY, SAVE_FAMILY_MEMBERS, SAVE_USER, START_LOADING, STOP_LOADING, UPDATE_TASK, EPIC_TIME, SHOWING_CODE, FAMILY_CODE, NO_FAMILY_CODE } from "./actionTypes";
+import { ADD_TASK, COMPLETE_TASK, DELETE_TASK, LOAD_FAMILY_TASKS, LOGIN, LOGIN_BY_TOKEN, LOGOUT, SAVE_FAMILY, SAVE_FAMILY_MEMBERS, SAVE_USER, START_LOADING, STOP_LOADING, UPDATE_TASK, EPIC_TIME, SHOWING_CODE, FAMILY_CODE, NO_FAMILY_CODE, COUNTER_PARTY, PENDING_TASK, OUT_GOING_TRADE, INCOMING_TRADE_HASH, LIST_OF_PENDING_TASK } from "./actionTypes";
 import { BASE_URL } from "./config";
 import { getCookie } from "./helpers";
 
@@ -139,6 +139,37 @@ export function completeTaskFromAPI(task_id: Number) {
   }
 }
 
+export function getPendingTask(){
+  return async function (dispatch: any) {
+    const token = getCookie("x-access-token");
+    const res = await fetch(`${BASE_URL}/incoming-trades`,{
+      method: "GET",
+      headers:{
+        "x-access-token": token
+      },
+      credentials: "include"
+    });
+    const resData = await res.json()
+    // console.log("in_trades", resData.incoming_trades)
+    dispatch(gotPendingTask(resData.incoming_trades));
+  }
+}
+
+export function getOutGoingTrades(){
+  return async function (dispatch: any) {
+    const token = getCookie("x-access-token");
+    const res = await fetch(`${BASE_URL}/outgoing-trades`,{
+      method: "GET",
+      headers:{
+        "x-access-token": token
+      },
+      credentials: "include"
+    });
+    const resData = await res.json()
+    dispatch(gotOutGoingTrades(resData.outgoing_trades));
+  }
+}
+
 function completeTask(task_id: Number) {
   return { type: COMPLETE_TASK, payload: { task_id }}
 }
@@ -208,4 +239,24 @@ export function familyCode(code: string) {
 
 export function noFamilyCode() {
   return { type: NO_FAMILY_CODE }
+}
+
+export function counterParty(counterTask: any, counterId:number) {
+  return { type: COUNTER_PARTY, payload: { counterTask, counterId} }
+}
+
+export function gotPendingTask(Ptasks: any) {
+  // console.log(" ptask",Ptasks)
+  return {type: PENDING_TASK, payload: { Ptasks } }
+}
+export function gotOutGoingTrades(outgoingTrades: any) {
+  return { type: OUT_GOING_TRADE, payload: { outgoingTrades }}
+}
+
+export function incomingTradesHash(incoming: any) {
+  return { type: INCOMING_TRADE_HASH, payload: { incoming} } 
+}
+
+export function listOfPendingTask(task: any) {
+  return { type: LIST_OF_PENDING_TASK, payload: { task}}
 }
