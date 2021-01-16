@@ -1,41 +1,39 @@
 import React, { useState } from 'react';
-import { Button, Col, Container, Image, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
+import { Button, Col, Container, Image, OverlayTrigger, Row, Tooltip, Modal, Alert } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import moment from "moment";
 import './TradeModalTaskCard.css';
 import { BASE_URL, DEFAULT_PFP } from '../config';
 import { useSelector, useDispatch } from 'react-redux';
-import { counterParty, getFamilyTasksFromAPI } from '../actionCreators';
+import { getFamilyTasksFromAPI } from '../actionCreators';
 import { getCookie } from '../helpers';
 
 interface IProps {
     task: any,
     onHide: Function,
-    remove: Function,
 }
 
 /**
- * TaskCard component displays each task.
+ * TradeModalTaskCard component displays each task the current user can trade.
  * Handler functions to delegate task-related CRUD operations.
  */
-function TaskModalTaskCard({ task, onHide, remove} :IProps) {
-    const [showDelConf, setShowDelConf] = useState(false);
-    const [showTradeForm, setShowTradeForm] = useState(false);
-    const [showTaskDetails, setShowTaskDetails] = useState(false);
+function TaskModalTaskCard({ task, onHide} :IProps) {
+
     const user = useSelector((st: any) => st.user);
     const famMembers = useSelector((st: any) => st.famMembers)
-    const isTaskOwner = (task.assignee === user.user_id);
     const counterTask = useSelector((st: any) => st.counterTask)
     const counterId = useSelector((st: any) => st.counterId)
+    const isTaskOwner = (task.assignee === user.user_id);
+
     const token = getCookie("x-access-token");
     const dispatch = useDispatch()
     
 
-    // // `taskOwner` is a user object of the task's `created_by` user.
-    // const taskOwner = famMembers.filter((memb: any) => {
-    //     return task.created_by === memb.user_id;
-    // })[0];
+    // `taskOwner` is a user object of the task's `created_by` user.
+    const taskOwner = famMembers.filter((memb: any) => {
+        return task.created_by === memb.user_id;
+    })[0];
 
     /*filter for the assignees' informations to display
         - This is kept incase future updates involve multiple assignees to a task.
@@ -63,6 +61,8 @@ function TaskModalTaskCard({ task, onHide, remove} :IProps) {
         .then(res => {
             if(res.status == 500) {
                 retcode = 500
+            } else if(res.status == 409){
+                retcode = 409
             } else {
                 retcode = 201
             }
@@ -73,11 +73,16 @@ function TaskModalTaskCard({ task, onHide, remove} :IProps) {
                 if (json.msg === "Unable to create trade request") {
                     console.log(json)
                 } 
+            } else if(retcode === 409){
+                if(json.msg === "Unable to create trade request - duplicate exists"){
+                    console.log(json.msg)
+                }
+
             } else if (retcode === 201) {
                 console.log(json.msg)
+                dispatch(getFamilyTasksFromAPI())
             }
         })
-        dispatch(getFamilyTasksFromAPI())
         
     }
 
@@ -88,7 +93,6 @@ function TaskModalTaskCard({ task, onHide, remove} :IProps) {
 
     return (
         <div className="TaskCard">
-            {/* <TradeForm show={showTradeForm} handleTradeTask={handleTradeTask} handleClose={() => setShowTradeForm(false)} /> */}
             {assignees.map((assignee: any) => {
                 // increment and decrement avatar styling variables.
                 rightPosition += 30;
@@ -109,7 +113,7 @@ function TaskModalTaskCard({ task, onHide, remove} :IProps) {
                 {
                     // HTML for task details 
                     <Row className="d-flex align-items-center justify-content-between">
-                        <Col sm={6} md={7} onClick={() => setShowTaskDetails(true)}>
+                        <Col sm={6} md={7}>
                             <Row className="TradeModalTaskCard-header">
                                 <h3>{task.task_name}<span className="TradeModalTaskCard-pts">+{task.associated_points}pts</span></h3>
                             </Row>
@@ -117,6 +121,11 @@ function TaskModalTaskCard({ task, onHide, remove} :IProps) {
                                 <p className="TradeModalTaskCard-description">
                                     {task.task_description}
                                 </p>
+                            </Row>
+                            <Row>
+                                <div className="TaskCard-deadline text-left">
+                                    {task.completed ? `completed ${moment(new Date(task.completion_time).toString()).calendar()}` : `posted ${moment(new Date(task.created_at).toString()).calendar()} by ${taskOwner.first_name}`}
+                                </div>
                             </Row>
                         </Col>
                         {!task.completed && <Col sm={6} md={5}>

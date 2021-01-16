@@ -56,7 +56,7 @@ function PrivateRoutes() {
                 <DashStore />
               </Route>
               <Route exact path="/tribe/trades">
-                <TradesTab showHistory={false}/>
+                <TradesTab/>
               </Route>
               <Route exact path="/tribe/completed">
                 <DashOverview showHistory={true} />

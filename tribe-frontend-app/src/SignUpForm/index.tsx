@@ -241,7 +241,7 @@ function SignUpForm() {
             <Form noValidate validated={validated} className="SignUpForm" onSubmit={handleSubmit}>
                 <Form.Group  controlId="formGroupUsername" >
                     <Form.Label>Username</Form.Label>
-                    <Form.Control required size="lg" pattern=".{5,10}" autoComplete="username" placeholder="Username" type="username" name="username" value={formData.username} onChange={(evt) => handleChange(evt as any)} />
+                    <Form.Control required size="lg" pattern=".{5,20}" autoComplete="username" placeholder="Username" type="username" name="username" value={formData.username} onChange={(evt) => handleChange(evt as any)} />
                 </Form.Group>
                 <Form.Text id="userNameHelpBlock" muted>
                     Your username must be 5-10 characters long.
