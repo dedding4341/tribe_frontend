@@ -47,7 +47,7 @@ function TradesTab({ showHistory }: IProps) {
             </Col>
             <Row className="mt-3">
                 {pending_tasks.length > 0 ? pending_tasks.map((trade: any) => {
-                    console.log(trade)
+                    // console.log(trade)
                     return (<Col key={`${trade[2]}-${trade[2]}`} md={6}>
                     <Trade key={`${trade[2]}-card`} trade={trade} isIncoming={true} feedBack={handleFeedbackIC}/>
                     </Col>)

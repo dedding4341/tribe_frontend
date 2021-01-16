@@ -115,11 +115,11 @@ function PendingTradeTaskCard({ task, tradeId, feedBack } :IProps) {
                         </Col>
                         {!task.completed && <Col sm={6} md={5}>
                             {isTaskOwner ?
+                                <></>:
                                 <>
                                     <Button className="TradeModalTaskCard-btn TradeModalTaskCard-complete-btn"  onClick={() => handleAccept(task.task_id, tradeId)}>Accept</Button>
                                     <Button className="TradeModalTaskCard-btn TradeModalTaskCard-complete-btn"  onClick={() => handleReject(task.task_Id, tradeId)}>Reject</Button>
                                 </>
-                                : <></>
                             }
                                 </Col> } 
                     </Row>
