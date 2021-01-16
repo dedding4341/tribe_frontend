@@ -15,7 +15,7 @@ import { persistReducer, persistStore } from 'redux-persist';
 
 const persistConfig = {
   key: "root",
-  storage
+  storage,
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

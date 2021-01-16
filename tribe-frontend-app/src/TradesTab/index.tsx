@@ -90,6 +90,7 @@ function TradesTab({ showHistory }: IProps) {
             </Col>
             <Row className="mt-3">
                 {tradesList.length > 0 ? tradesList.map((task: any) => {
+                    console.log(task)
                     return (<Col key={`${task.associated_points}-${task.task_id}`} md={6}>
                     <PendingTradeTaskCard key={`${task.task_id}-card`} task={task} hash={incomingTradeHash} feedBack={handleFeedbackIC}/>
                     </Col>)

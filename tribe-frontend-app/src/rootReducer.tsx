@@ -35,12 +35,12 @@ export default function rootReducer(state = INITIAL_STATE, action: Action) {
         }
         return task;
       });
-      let filteredPendingTask = state.pendingTask;
+      // let filteredPendingTask = state.pendingTask;
 
-      filteredPendingTask.filter((t: any) => {
-        return t.task_id !== action.payload.task_id;
-      })
-      return { ...state, family_tasks: tasks, listOfTradeTask: filteredPendingTask };
+      // filteredPendingTask.filter((t: any) => {
+      //   return t.task_id !== action.payload.task_id;
+      // })
+      return { ...state, family_tasks: tasks/*, listOfTradeTask: filteredPendingTask */};
     case ADD_TASK:
       tasks = [{ ...action.payload.task, created_by: state.user.user_id, created_at: new Date().getUTCDate() }, ...state.family_tasks]
       return { ...state, family_tasks: tasks }
