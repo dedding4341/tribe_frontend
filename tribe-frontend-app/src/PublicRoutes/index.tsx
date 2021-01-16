@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Alert } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
+import { getFamilyFromAPI, getFamilyMembersFromAPI, getFamilyTasksFromAPI, getUserFromAPI } from '../actionCreators';
 import Landing from '../Landing';
 import Login from '../Login';
 import NavBar from '../NavBar';
@@ -13,29 +14,10 @@ import "./PublicRoutes.css";
  * Routing logic for components
  */
 function PublicRoutes() {
-  const [show, setShow ] = useState(false);
-  const isLoggedIn = useSelector((st: any) => st.isLoggedIn);
-  const loading = useSelector((st: any) => st.loading);
-  const history = useHistory();
-
-  useEffect(function () {
-    if (isLoggedIn) {
-      setShow(true);
-    }
-  }, [loading]);
-
-  function handleGoToOverview() {
-    history.push('/tribe/overview')
-  }
 
   return (
     <>
       <NavBar />
-      {show && 
-      <Alert variant="primary" className="PublicRoutes-notice" onClose={() => setShow(false)} dismissible>
-        It seems like you're already signed in! Go to <span onClick={handleGoToOverview} className="PublicRoute-notice-link">Tribe</span>.
-      </Alert>
-      }
       <Switch>
         <Route exact path="/users/welcome">
           <UserSetup />

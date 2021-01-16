@@ -143,13 +143,12 @@ function LoginForm() {
 
             } else if (retcode === 200) {
               const famId = json.user.family_id;
-              // console.log("logging in! fetching data now!")
               dispatch(loginUser(json.user));
-              dispatch(getFamilyFromAPI())
-              dispatch(getFamilyMembersFromAPI());
-              dispatch(getFamilyTasksFromAPI());
-
+              
               if (famId) {
+                dispatch(getFamilyFromAPI())
+                dispatch(getFamilyMembersFromAPI());
+                dispatch(getFamilyTasksFromAPI());
                 history.push(`/tribe/overview`);
               } else {
                 history.push("/users/welcome");

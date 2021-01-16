@@ -1,8 +1,9 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faArrowDown, faPlay } from '@fortawesome/free-solid-svg-icons'
+import { faArrowDown, faPlay } from '@fortawesome/free-solid-svg-icons'
 import { faFacebook, faTwitter, faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons';
 import './LandingContent.css';
+import { Button } from 'react-bootstrap';
 
 function LandingContent() {
   return (
@@ -14,15 +15,15 @@ function LandingContent() {
               <div className="home-welcome text-left">
                 <h3>Welcome to Tribe</h3>
                 <h1>
-                  Creative Landing <br />
-                  Page to Showcase <br />
-                  the Tribe App.
+                  A Task Trading App<br />
+                  for the Family.<br />
+                  Ready to join your Tribe?
                 </h1>
               </div>
               <div className="buttons row">
-                <a href="/users/auth" className="smoothscroll button stroke">
+                <a href="/users/auth"><Button className="LandingContent-login-btn">
                   Login
-                </a>
+                </Button></a>
                 {/* <a href="#demo" className="button stroke">
                   <FontAwesomeIcon icon={faPlay}/>
                   Watch Video
@@ -53,7 +54,7 @@ function LandingContent() {
             <div className="home-scrolldown">
               <a href="#about" className="scroll-icon smoothscroll">
                 <span>SCROLL DOWN</span>
-                <FontAwesomeIcon icon={faArrowDown} size="2x"/>
+                <FontAwesomeIcon icon={faArrowDown} size="2x" />
               </a>
             </div>
           </div>
