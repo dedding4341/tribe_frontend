@@ -1,0 +1,131 @@
+.TradeModalTaskCard{
+    width: 100%;
+    padding: 2rem 3.5rem;
+    margin-top: 7px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    color: black;
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.068), 0 6px 10px 0 rgba(0, 0, 0, 0.068);
+    overflow-wrap: break-word;
+}
+
+.TradeModalTaskCard-delete-btn {
+    position: absolute;
+    top: 5%;
+    left: 2.5%;
+    color: rgb(255, 179, 179);
+}
+
+.TradeModalTaskCard-description {
+    text-align: left;
+}
+
+.TradeModalTaskCard-header {
+    text-align: left;
+    margin-bottom: 0.5rem;
+    overflow-wrap: anywhere;
+}
+
+/*https://stackoverflow.com/questions/35336298/responsive-circular-images/35336815#35336815?newreg=700b54890c0544b68c0812ac8ce1d1cb*/
+.TradeModalTaskCard-img-wrapper {
+    width: 5rem;
+    height: 5rem;
+    border-radius:50%;
+    overflow:hidden;
+    position: absolute;
+    top: -30px;
+}
+
+.TradeModalTaskCard-img {
+    object-fit: cover;
+    width:100%;
+    height:100%;
+}
+
+.TradeModalTaskCard-img,
+.TradeModalTaskCard-img-wrapper {
+    transition: all .2s ease;
+    vertical-align: middle;
+    background-clip: padding-box;
+    border:rgb(236, 236, 236) 1px solid;
+}
+
+.TradeModalTaskCard-complete-btn {
+    border-color: rgb(255, 179, 179);
+    color:rgb(255, 179, 179);
+}
+
+.TradeModalTaskCard-pts {
+    position: absolute;
+    width: fit-content;
+    color: #00BA88;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.TradeModalTaskCard-btn {
+    padding: 0.5rem 1.5rem;
+    margin: 0.5rem 0 0.5rem 0;
+    font-size: 1.5rem;
+    border-radius: 40px;
+    background-color: white;
+    font-weight: 600;
+}
+
+
+.TradeModalTaskCard-trade-btn {
+    border-color: #7186c0;
+    color:  #7186c0;
+}
+
+.TradeModalTaskCard-description {
+    width: 300px;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.TradeModalTaskCard-btn-yes {
+    border-color: #49d38e;
+    color:  #49d38e;
+}
+
+.TradeModalTaskCard-btn-no {
+    border-color: #ff8f87;
+    color: #ff8f87;
+}
+
+.TradeModalTaskCard-trade-btn:hover,
+.TradeModalTaskCard-trade-btn:focus {
+    background-color: #7186c0;
+    border-color:  #7186c0;
+    color: white;
+}
+
+.TradeModalTaskCard-complete-btn:hover,
+.TradeModalTaskCard-complete-btn:focus {
+    background-color:  rgb(255, 179, 179);
+    border-color: rgb(255, 179, 179);
+    color: white;
+}
+
+.TradeModalTaskCard-btn-no:hover,
+.TradeModalTaskCard-btn-no:focus {
+    background-color: #ff8f87;
+    border-color: #ff8f87;
+}
+
+.TradeModalTaskCard-btn-yes:hover,
+.TradeModalTaskCard-btn-no:focus  {
+    background-color: #49d38e;
+    border-color: #49d38e
+}
+
+
+.TradeModalTaskCard-tooltip {
+    font-size: 1.2rem;
+}

@@ -24,21 +24,16 @@ function CodeTimer(){
         
         let timeLeft: any = {};
         
-
-
-
-            if(timeDiff > 0) {
-                timeLeft = {
-                    minutes: Math.floor((timeDiff / 60)),
-                    seconds: Math.floor(timeDiff % 60)
-                }
-            } else if(timeDiff === 0){
-                if( family_code !== ""){
-                    dispatch(noFamilyCode())
-                }
+        if(timeDiff > 0) {
+            timeLeft = {
+                minutes: Math.floor((timeDiff / 60)),
+                seconds: Math.floor(timeDiff % 60)
             }
-
-
+        } else if(timeDiff === 0){
+            if( family_code !== ""){
+                dispatch(noFamilyCode())
+            }
+        }
         return timeLeft;
     }
     const [timeLeft, setTimeLeft] = React.useState(getDiff())

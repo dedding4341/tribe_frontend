@@ -6,6 +6,7 @@ import DashCalender from '../DashCalender';
 import DashOverview from '../DashOverview';
 import DashStore from '../DashStore';
 import DashTodo from '../DashTodo';
+import TradesTab from '../TradesTab';
 import { useSelector } from 'react-redux';
 import './PrivateRoutes.css';
 import { getCookie } from '../helpers';
@@ -53,6 +54,9 @@ function PrivateRoutes() {
               </Route>
               <Route exact path="/tribe/store">
                 <DashStore />
+              </Route>
+              <Route exact path="/tribe/trades">
+                <TradesTab showHistory={false}/>
               </Route>
               <Route exact path="/tribe/completed">
                 <DashOverview showHistory={true} />

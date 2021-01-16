@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, CardColumns, Col, Container, Row } from 'react-bootstrap';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 import NewTaskForm from '../NewTaskForm';
 import TaskCard from '../TaskCard';
 import './DashOverview.css';
@@ -8,6 +8,7 @@ import { completeTaskFromAPI, deleteTaskFromAPI, getFamilyTasksFromAPI, postTask
 import FilterBar from '../FilterBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
 
 interface Task {
   task_id: Number,
@@ -32,7 +33,7 @@ function DashOverview({ showHistory }: IProps) {
   // `loading` is true until all required information is received from API.
   const loading = useSelector((st: any) => st.loading);
   const family_tasks = useSelector((st: any) => st.family_tasks);
-  const user = useSelector((st: any) => st.user);
+  const userId = useSelector((st: any) => st.user.user_id);
   const familyManager = useSelector((st: any) => st.user.family_manager);
 
   const [showNewTaskForm, setShowNewTaskForm] = useState(false);
@@ -42,17 +43,18 @@ function DashOverview({ showHistory }: IProps) {
 
   useEffect(() => {
     let tasks;
+    // dispatch(getFamilyTasksFromAPI)
     if (showHistory) {
       tasks = family_tasks.filter((t: any) => {
         return t.completed;
       });
     } else {
       tasks = family_tasks.filter((t: any) => {
-        return !t.completed;
+        return !t.completed && t.task_status === "open";
       });
     }
     setTasks(tasks);
-  }, [family_tasks]);
+  }, []);
 
   const handleClose = () => {
     setShowNewTaskForm(false);
@@ -95,37 +97,47 @@ function DashOverview({ showHistory }: IProps) {
       case "unassigned":
         // show unassigned tasks
         filteredTasks = family_tasks.filter((t: any) => {
-          return !t.assignee
+          return !t.assignee && t.task_status === "open"
         });
         setTasks(filteredTasks);
         break;
       case "myTasks":
         // show currentUser's tasks
         filteredTasks = family_tasks.filter((t: any) => {
-          return t.assignee === user.user_id && !t.completed;
+          return t.assignee === userId && t.task_status === "open";
         });
         setTasks(filteredTasks);
         break;
       case "completedTasks":
         filteredTasks = family_tasks.filter((t: any) => {
-          return t.assignee === user.user_id && t.completed;
+          return t.assignee === userId;
         });
         setTasks(filteredTasks);
         break;
       case "all":
         // show all active tasks
         filteredTasks = family_tasks.filter((t: any) => {
-          return !t.completed;
+          return t.task_status === "open";
         });
         setTasks(filteredTasks);
         break;
       default:
         filteredTasks = family_tasks.filter((t: any) => {
-          return t.completed === false;
+          return t.task_status === 'completed';
         });
         setTasks(family_tasks);
         break;
     }
+  }
+
+  const removeTaskUpdate = (task: any) =>{
+    let newTaskList;
+
+    newTaskList = family_tasks.filter((t: any) => {
+      return !t.completed && t.task_status === "open" && t.task_id !== task ;
+    })
+
+    setTasks(newTaskList)
   }
 
   return (
@@ -148,12 +160,11 @@ function DashOverview({ showHistory }: IProps) {
             }
           </Row>
           <Row className="mt-3">
-              {tasks.length > 0 ? tasks.map((task: any) => {
-                return (<Col md={6} className="mt-3" key={`${task.associated_points}-${task.task_id}`}>
-                  <TaskCard key={`${task.task_id}-card`} task={task} updateTask={updateTask} tradeTask={tradeTask} deleteTask={deleteTask} completeTask={completeTask} />
-                </Col>)
-            })
-            : <Col md={12}>No tasks to display.</Col>}
+            {tasks.length > 0 ? tasks.map((task: any) => {
+              return (<Col key={`${task.associated_points}-${task.task_id}`} md={6}>
+                <TaskCard key={`${task.task_id}-card`} task={task} updateTask={updateTask} tradeTask={tradeTask} deleteTask={deleteTask} completeTask={completeTask} removeTask={removeTaskUpdate}/>
+              </Col>)
+            }) : <Col md={6}>No tasks to display.</Col>}
           </Row>
         </>
       }
