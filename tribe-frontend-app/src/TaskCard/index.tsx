@@ -56,7 +56,6 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask, remov
         dispatch(counterParty(task.task_id, task.assignee))
         // console.log(task)
         // tradeTask(task.task_id, data.recipients);
-
     }
 
     const handleCompleteTask = () => {
@@ -94,7 +93,7 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask, remov
                     </div>
                 );
             })}
-            <Container>
+            <Container className="TaskCard-details">
                 {/**DELETE button if current user is a `family_manager`*/}
                 {user.family_manager && <div className="TaskCard-delete-btn">
                     <FontAwesomeIcon style={{ cursor: "pointer" }} icon={faTimes} size="2x" onClick={() => setShowDelConf(!showDelConf)} />

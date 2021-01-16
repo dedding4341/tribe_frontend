@@ -35,11 +35,22 @@ export default function rootReducer(state = INITIAL_STATE, action: Action) {
         }
         return task;
       });
-      
+
 
       return { ...state, family_tasks: tasks };
     case ADD_TASK:
-      tasks = [{ ...action.payload.task, created_by: state.user.user_id, created_at: new Date().getUTCDate() }, ...state.family_tasks]
+      tasks = [
+        {
+          ...action.payload.task,
+          created_by: state.user.user_id,
+          created_at: new Date().getUTCDate(),
+          completed: false,
+          last_updated_at: new Date().getUTCDate(),
+          task_status: "open"
+        }
+        , ...state.family_tasks]
+
+      console.log("tasks in add_task case", tasks);
       return { ...state, family_tasks: tasks }
     case DELETE_TASK:
       let filteredTasks = state.family_tasks.filter((task: any) => {
@@ -79,23 +90,23 @@ export default function rootReducer(state = INITIAL_STATE, action: Action) {
       return INITIAL_STATE;
     case EPIC_TIME:
       // let targetTime = Date.now() + (30 * 60000);
-      return {...state, eTime: action.payload.epochTime}
+      return { ...state, eTime: action.payload.epochTime }
     case SHOWING_CODE:
-      return {...state, isShowing: true}
+      return { ...state, isShowing: true }
     case FAMILY_CODE:
-      return {...state, familyCode: action.payload.code}
+      return { ...state, familyCode: action.payload.code }
     case NO_FAMILY_CODE:
-      return {...state, familyCode: "", eTime: "00"}
+      return { ...state, familyCode: "", eTime: "00" }
     case COUNTER_PARTY:
-      return {...state, counterTask: action.payload.counterTask, counterId: action.payload.counterId}
+      return { ...state, counterTask: action.payload.counterTask, counterId: action.payload.counterId }
     case PENDING_TASK:
-      return { ...state, pendingTask: action.payload.Ptasks}
+      return { ...state, pendingTask: action.payload.Ptasks }
     case OUT_GOING_TRADE:
-      return { ...state, outGoingTrades: action.payload.outgoingTrades}
+      return { ...state, outGoingTrades: action.payload.outgoingTrades }
     case INCOMING_TRADE_HASH:
-      return { ...state, incomingTradesHash: action.payload.incoming}
+      return { ...state, incomingTradesHash: action.payload.incoming }
     case LIST_OF_PENDING_TASK:
-      return { ...state, listOfTradeTask: action.payload.task}
+      return { ...state, listOfTradeTask: action.payload.task }
     default:
       return state;
   }
