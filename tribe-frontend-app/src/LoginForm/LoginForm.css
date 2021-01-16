@@ -1,6 +1,8 @@
 .LoginForm {
   text-align: left;
   padding: 0 5rem;
+  min-width: 30rem;
+  margin: auto;
 }
 
 

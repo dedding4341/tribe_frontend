@@ -43,7 +43,7 @@ function DashOverview({ showHistory }: IProps) {
 
   useEffect(() => {
     let tasks;
-    // dispatch(getFamilyTasksFromAPI)
+    
     if (showHistory) {
       tasks = family_tasks.filter((t: any) => {
         return t.completed;
@@ -54,7 +54,7 @@ function DashOverview({ showHistory }: IProps) {
       });
     }
     setTasks(tasks);
-  }, []);
+  }, [family_tasks]);
 
   const handleClose = () => {
     setShowNewTaskForm(false);

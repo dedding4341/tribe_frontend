@@ -56,7 +56,6 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask, remov
         dispatch(counterParty(task.task_id, task.assignee))
         // console.log(task)
         // tradeTask(task.task_id, data.recipients);
-
     }
 
     const handleCompleteTask = () => {

@@ -5,6 +5,7 @@
 .Login-bg {
   margin: 12rem 0;
   width: 95%;
+  min-width: 50rem;
 }
 
 /* .Login-img-container {
