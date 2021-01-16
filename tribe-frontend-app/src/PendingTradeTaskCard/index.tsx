@@ -7,21 +7,20 @@ import { getCookie } from '../helpers';
 
 interface IProps {
     task: any,
-    hash: any,
+    tradeId: Number,
     feedBack: Function
+
 }
 
 /**
  * TaskCard component displays each task.
  * Handler functions to delegate task-related CRUD operations.
  */
-function PendingTradeTaskCard({ task, hash, feedBack } :IProps) {
+function PendingTradeTaskCard({ task, tradeId, feedBack } :IProps) {
 
     const user = useSelector((st: any) => st.user);
     const famMembers = useSelector((st: any) => st.famMembers)
     const isTaskOwner = (task.assignee === user.user_id);
-    const counterTask = useSelector((st: any) => st.counterTask)
-    const counterId = useSelector((st: any) => st.counterId)
     const token = getCookie("x-access-token");
     
 
@@ -37,18 +36,14 @@ function PendingTradeTaskCard({ task, hash, feedBack } :IProps) {
         return task.assignee === memb.user_id;
     });
 
-    const handleAccept =(hash: any, taskId: any) => {
-        
+    const handleAccept =(sourceId: any, tradeId: any) => {
         feedBack()
-
-        // console.log("this should be the value", hash.values().next().value)
-        // console.log("this should be the key", hash.keys().next().value)
 
         fetch(`${BASE_URL}/accept-trade`, {
             method: "PATCH",
             body: JSON.stringify({
-                trade_id: hash.values().next().value,
-                source_task_id: hash.keys().next().value
+                trade_id: tradeId,
+                source_task_id: sourceId
             }),
             headers: {
                 "Content-type": "application/json",
@@ -60,17 +55,14 @@ function PendingTradeTaskCard({ task, hash, feedBack } :IProps) {
         .then(json => console.log(json))
     }
 
-    const handleReject =(hash: any, taskId: any) => {
-        feedBack()
-
-        // console.log("this should be the value", hash.values().next().value)
-        // console.log("this should be the key", hash.keys().next().value)
+    const handleReject =(sourceId: any, tradeId: any) => {
+        // feedBack()
 
         fetch(`${BASE_URL}/reject-trade`, {
             method: "PATCH",
             body: JSON.stringify({
-                trade_id: hash.values().next().value,
-                source_task_id: hash.keys().next().value
+                trade_id: tradeId,
+                source_task_id: sourceId
             }),
             headers: {
                 "Content-type": "application/json",
@@ -124,8 +116,8 @@ function PendingTradeTaskCard({ task, hash, feedBack } :IProps) {
                         {!task.completed && <Col sm={6} md={5}>
                             {isTaskOwner ?
                                 <>
-                                    <Button className="TradeModalTaskCard-btn TradeModalTaskCard-complete-btn"  onClick={() => handleAccept(hash, task.task_id)}>Accept</Button>
-                                    <Button className="TradeModalTaskCard-btn TradeModalTaskCard-complete-btn"  onClick={() => handleReject(hash, task.task_id)}>Reject</Button>
+                                    <Button className="TradeModalTaskCard-btn TradeModalTaskCard-complete-btn"  onClick={() => handleAccept(task.task_id, tradeId)}>Accept</Button>
+                                    <Button className="TradeModalTaskCard-btn TradeModalTaskCard-complete-btn"  onClick={() => handleReject(task.task_Id, tradeId)}>Reject</Button>
                                 </>
                                 : <></>
                             }

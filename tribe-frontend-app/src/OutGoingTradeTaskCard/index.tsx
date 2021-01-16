@@ -7,21 +7,19 @@ import { getCookie } from '../helpers';
 
 interface IProps {
     task: any,
-    hash: any,
-    feedBack: Function,
+    tradeId: Number,
+    feedBack: Function
 }
 
 /**
  * TaskCard component displays each task.
  * Handler functions to delegate task-related CRUD operations.
  */
-function OutGoingTradeTaskCard({ task, hash, feedBack } :IProps) {
+function OutGoingTradeTaskCard({ task, tradeId, feedBack } :IProps) {
 
     const user = useSelector((st: any) => st.user);
     const famMembers = useSelector((st: any) => st.famMembers)
     const isTaskOwner = (task.assignee === user.user_id);
-    const counterTask = useSelector((st: any) => st.counterTask)
-    const counterId = useSelector((st: any) => st.counterId)
     const token = getCookie("x-access-token");
     
 
@@ -37,29 +35,23 @@ function OutGoingTradeTaskCard({ task, hash, feedBack } :IProps) {
         return task.assignee === memb.user_id;
     });
 
-    const handleCancel =(hash: any, taskId: any) => {
-        // console.log("taskID", hash)
-        // console.log("hashKey", taskId)
-        if(hash.has(taskId)) {
-            feedBack()
-            // console.log(hash.get(taskId))
-            fetch(`${BASE_URL}/cancel-trade`, {
-                method: "PATCH",
-                body: JSON.stringify({
-                    trade_id: hash.get(taskId),
-                    source_task_id: taskId
-                }),
-                headers: {
-                    "Content-type": "application/json",
-                    "x-access-token": `${token}`
-                },
-                credentials: "include"
-            })
-            .then(res => res.json)
-            .then(json => console.log(json))
-        } else {
-            // console.log("Task id don't match")
-        }
+    const handleCancel =(sourceId: any, tradeId: any) => {
+        feedBack()
+
+        fetch(`${BASE_URL}/cancel-trade`, {
+            method: "PATCH",
+            body: JSON.stringify({
+                trade_id: tradeId,
+                source_task_id: sourceId
+            }),
+            headers: {
+                "Content-type": "application/json",
+                "x-access-token": `${token}`
+            },
+            credentials: "include"
+        })
+        .then(res => res.json)
+        .then(json => console.log(json))
     }
 
 
@@ -102,7 +94,7 @@ function OutGoingTradeTaskCard({ task, hash, feedBack } :IProps) {
                         </Col>
                         {!task.completed && <Col sm={6} md={5}>
                             {isTaskOwner ?
-                                <Button className="TradeModalTaskCard-btn TradeModalTaskCard-complete-btn"  onClick={() => handleCancel(hash, task.task_id)}>Cancel</Button>
+                                <Button className="TradeModalTaskCard-btn TradeModalTaskCard-complete-btn"  onClick={() => handleCancel(task.task_id, tradeId)}>Cancel</Button>
                                 :<></>
                             }
                         </Col> } 

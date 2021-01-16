@@ -5,8 +5,8 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import moment from "moment";
 import './TradeModalTaskCard.css';
 import { BASE_URL, DEFAULT_PFP } from '../config';
-import { useSelector } from 'react-redux';
-import { counterParty } from '../actionCreators';
+import { useSelector, useDispatch } from 'react-redux';
+import { counterParty, getFamilyTasksFromAPI } from '../actionCreators';
 import { getCookie } from '../helpers';
 
 interface IProps {
@@ -29,6 +29,7 @@ function TaskModalTaskCard({ task, onHide, remove} :IProps) {
     const counterTask = useSelector((st: any) => st.counterTask)
     const counterId = useSelector((st: any) => st.counterId)
     const token = getCookie("x-access-token");
+    const dispatch = useDispatch()
     
 
     // // `taskOwner` is a user object of the task's `created_by` user.
@@ -45,9 +46,8 @@ function TaskModalTaskCard({ task, onHide, remove} :IProps) {
 
     const startTrade = (ownerTask: any, ownerId: number, counterPartyTask: any, counterPartyId: number) => {
         let retcode: number;
-        
+
         onHide()
-        remove(ownerTask)
         fetch(`${BASE_URL}/initiate-trade`, {
             method: "POST",
             headers: {
@@ -77,6 +77,7 @@ function TaskModalTaskCard({ task, onHide, remove} :IProps) {
                 console.log(json.msg)
             }
         })
+        dispatch(getFamilyTasksFromAPI())
         
     }
 

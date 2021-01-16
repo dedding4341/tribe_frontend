@@ -9,6 +9,7 @@ import FilterBar from '../FilterBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
+
 interface Task {
   task_id: Number,
   task_name: String,
@@ -42,6 +43,7 @@ function DashOverview({ showHistory }: IProps) {
 
   useEffect(() => {
     let tasks;
+    // dispatch(getFamilyTasksFromAPI)
     if (showHistory) {
       tasks = family_tasks.filter((t: any) => {
         return t.completed;
@@ -52,7 +54,7 @@ function DashOverview({ showHistory }: IProps) {
       });
     }
     setTasks(tasks);
-  }, [family_tasks]);
+  }, []);
 
   const handleClose = () => {
     setShowNewTaskForm(false);
@@ -102,7 +104,7 @@ function DashOverview({ showHistory }: IProps) {
       case "myTasks":
         // show currentUser's tasks
         filteredTasks = family_tasks.filter((t: any) => {
-          return t.assignee === userId && !t.completed && t.task_status === "open";
+          return t.assignee === userId && t.task_status === "open";
         });
         setTasks(filteredTasks);
         break;
@@ -115,13 +117,13 @@ function DashOverview({ showHistory }: IProps) {
       case "all":
         // show all active tasks
         filteredTasks = family_tasks.filter((t: any) => {
-          return !t.completed && t.task_status === "open";
+          return t.task_status === "open";
         });
         setTasks(filteredTasks);
         break;
       default:
         filteredTasks = family_tasks.filter((t: any) => {
-          return t.completed === false && t.task_status === "open";
+          return t.task_status === 'completed';
         });
         setTasks(family_tasks);
         break;
