@@ -93,7 +93,7 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask, remov
                     </div>
                 );
             })}
-            <Container>
+            <Container className="TaskCard-details">
                 {/**DELETE button if current user is a `family_manager`*/}
                 {user.family_manager && <div className="TaskCard-delete-btn">
                     <FontAwesomeIcon style={{ cursor: "pointer" }} icon={faTimes} size="2x" onClick={() => setShowDelConf(!showDelConf)} />
