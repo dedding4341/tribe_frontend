@@ -18,6 +18,10 @@
   padding-top: 20vh;
 }
 
+.LandingContent-login-btn {
+  font-size: 2rem;
+  padding: 0.5rem 1rem;
+}
 
 .home-content {
   margin-left: 15px;

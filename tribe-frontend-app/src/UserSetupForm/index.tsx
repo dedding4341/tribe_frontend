@@ -9,6 +9,8 @@ import './UserSetupForm.css';
 import { BASE_URL } from '../config';
 import { useHistory } from 'react-router-dom';
 import { getCookie } from '../helpers';
+import { useDispatch } from 'react-redux';
+import { getFamilyFromAPI, getFamilyMembersFromAPI, getFamilyTasksFromAPI, startLoading } from '../actionCreators';
 
 function UserSetupForm() {
   const INITIAL_USER_VALUES = { first_name: "", last_name: "", isParent: true, family_code: "", family_name: "" };
@@ -16,6 +18,7 @@ function UserSetupForm() {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState(INITIAL_USER_VALUES);
 
+  const dispatch = useDispatch();
   const history = useHistory();
 
   const handleChange = (evt: React.FormEvent<HTMLInputElement>) => {
@@ -71,6 +74,10 @@ function UserSetupForm() {
   }
 
   const handleRedirect = () => {
+    dispatch(startLoading());
+    dispatch(getFamilyFromAPI());
+    dispatch(getFamilyMembersFromAPI());
+    dispatch(getFamilyTasksFromAPI());
     history.push("/tribe/overview");
   }
 

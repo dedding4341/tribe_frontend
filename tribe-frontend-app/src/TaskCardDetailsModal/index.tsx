@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import moment from "moment";
 import NewTaskForm from "../NewTaskForm";
+import "./TaskCardDetailsModal.css"
 
 interface IProps {
   show: Boolean,
@@ -32,7 +33,7 @@ function TaskCardDetailsModal({ show, handleUpdateTask, handleClose, task, taskO
     <Modal show={show} onHide={handleClose}>
       <NewTaskForm postNewTask={handleUpdateTask} show={showTaskEdit} handleClose={handleCloseEdit} isEdit={true}/>
       <Modal.Header closeButton>
-        <Modal.Title>{task.task_name}<span className="TaskCard-pts">+{task.associated_points}pts</span></Modal.Title>
+        <Modal.Title className="TaskCardDetailsModal-title">{task.task_name}<span className="TaskCard-pts">+{task.associated_points}pts</span></Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <p>
@@ -46,7 +47,7 @@ function TaskCardDetailsModal({ show, handleUpdateTask, handleClose, task, taskO
          * If the current user is a `family_admin` and the task hasn't been completed yet,
          *  the Edit Task button will display to show `NewTaskForm` modal 
          * */}
-        {(isFamilyAdmin && task.complete ) && <Button onClick={() => handleShowEdit()}>Edit task</Button>}
+        {(isFamilyAdmin && !task.complete ) && <Button onClick={() => handleShowEdit()}>Edit task</Button>}
       </Modal.Footer>
     </Modal>
   )

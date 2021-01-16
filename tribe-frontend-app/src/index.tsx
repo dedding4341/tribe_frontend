@@ -16,7 +16,7 @@ import { persistReducer, persistStore } from 'redux-persist';
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: []
+  whitelist: ['user']
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

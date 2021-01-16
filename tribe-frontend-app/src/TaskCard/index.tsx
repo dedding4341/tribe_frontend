@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import moment from "moment";
 import './TaskCard.css';
-import TradeForm from '../TradeForm';
 import { DEFAULT_PFP } from '../config';
 import { useSelector, useDispatch } from 'react-redux';
 import TaskCardDetailsModal from '../TaskCardDetailsModal';
@@ -28,7 +27,6 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask, remov
     const [showDelConf, setShowDelConf] = useState(false);
     const [showTradeModal, setShowTradeModal] = useState(false);
     const [showTaskDetails, setShowTaskDetails] = useState(false);
-    const [removedTask, setRemovedTask] = useState()
     const user = useSelector((st: any) => st.user);
     const famMembers = useSelector((st: any) => st.famMembers)
     const isTaskOwner = (task.assignee === user.user_id);
@@ -58,7 +56,6 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask, remov
         dispatch(counterParty(task.task_id, task.assignee))
         // console.log(task)
         // tradeTask(task.task_id, data.recipients);
-
     }
 
     const handleCompleteTask = () => {
@@ -96,7 +93,7 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask, remov
                     </div>
                 );
             })}
-            <Container>
+            <Container className="TaskCard-details">
                 {/**DELETE button if current user is a `family_manager`*/}
                 {user.family_manager && <div className="TaskCard-delete-btn">
                     <FontAwesomeIcon style={{ cursor: "pointer" }} icon={faTimes} size="2x" onClick={() => setShowDelConf(!showDelConf)} />
