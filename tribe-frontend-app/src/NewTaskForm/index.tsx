@@ -21,7 +21,7 @@ function NewTaskForm({ show, handleClose, postNewTask, isEdit }: IProps) {
 
   const handleSubmit = (evt: React.FormEvent) => {
     evt.preventDefault();
-    formData.assignee = formData.assignee !== "N/A" ? parseInt(formData.assignee) : "N/A";
+    formData.assignee = formData.assignee !== -1 ? parseInt(formData.assignee) : -1;
     formData.associated_points = parseInt(formData.associated_points);
     postNewTask(formData);
     handleClose();
