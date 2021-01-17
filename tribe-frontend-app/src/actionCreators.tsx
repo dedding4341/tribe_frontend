@@ -140,6 +140,7 @@ export function completeTaskFromAPI(task_id: Number) {
 
 export function getPendingTask(){
   return async function (dispatch: any) {
+    dispatch(startLoading());
     const token = getCookie("x-access-token");
     const res = await fetch(`${BASE_URL}/incoming-trades`,{
       method: "GET",
@@ -165,6 +166,7 @@ export function getOutGoingTrades(){
     });
     const resData = await res.json()
     dispatch(gotOutGoingTrades(resData.outgoing_trades));
+    dispatch(stopLoading());
   }
 }
 
