@@ -46,6 +46,9 @@ function TaskModalTaskCard({ task, onHide, showTradeDuplicate} :IProps) {
     const startTrade = (ownerTask: any, ownerId: number, counterPartyTask: any, counterPartyId: number) => {
         let retcode: number;
 
+        console.log("Task", task)
+        console.log("ownerTask", ownerTask, "ownerId", ownerId, "counterPartyTask", counterPartyId)
+
         onHide()
         fetch(`${BASE_URL}/initiate-trade`, {
             method: "POST",

@@ -8,14 +8,15 @@ import { getCookie } from '../helpers';
 interface IProps {
     task: any,
     tradeId: Number,
-    feedBack: Function
+    feedBack: Function,
+    showRejectedModal:Function,
 }
 
 /**
  * TaskCard component displays each task.
  * Handler functions to delegate task-related CRUD operations.
  */
-function OutGoingTradeTaskCard({ task, tradeId, feedBack } :IProps) {
+function OutGoingTradeTaskCard({ task, tradeId, feedBack, showRejectedModal } :IProps) {
 
     const user = useSelector((st: any) => st.user);
     const famMembers = useSelector((st: any) => st.famMembers)
@@ -37,6 +38,7 @@ function OutGoingTradeTaskCard({ task, tradeId, feedBack } :IProps) {
 
     const handleCancel =(sourceId: any, tradeId: any) => {
         feedBack()
+        showRejectedModal("canceled")
 
         fetch(`${BASE_URL}/cancel-trade`, {
             method: "PATCH",

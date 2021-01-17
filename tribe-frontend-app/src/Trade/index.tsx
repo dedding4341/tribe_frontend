@@ -7,10 +7,11 @@ import PendingTradeTaskCard from '../PendingTradeTaskCard'
 interface IProps{
     trade: [task: {}, task: {}, tradeId: Number ],
     isIncoming: boolean,
-    feedBack: Function
+    feedBack: Function,
+    showRejectedModal: Function
 }
 
-function Trade ({ trade, isIncoming, feedBack } :IProps){
+function Trade ({ trade, isIncoming, feedBack, showRejectedModal } :IProps){
     let sourceTask = trade[0]
     let counterPartyTask = trade[1]
     let tradeId = trade[2]
@@ -19,12 +20,12 @@ function Trade ({ trade, isIncoming, feedBack } :IProps){
         <div className="trade">
             {isIncoming ? 
                 <Fragment>
-                    <PendingTradeTaskCard task={counterPartyTask} tradeId={tradeId} feedBack={feedBack}/>
-                    <PendingTradeTaskCard task={sourceTask} tradeId={tradeId} feedBack={feedBack}/>
+                    <PendingTradeTaskCard task={sourceTask} tradeId={tradeId} feedBack={feedBack} showRejectedModal={showRejectedModal}/>
+                    <PendingTradeTaskCard task={counterPartyTask} tradeId={tradeId} feedBack={feedBack} showRejectedModal={showRejectedModal}/>
                 </Fragment>:
                 <Fragment>
-                    <OutGoingTradeTaskCard task={sourceTask} tradeId={tradeId} feedBack={feedBack}/>
-                    <OutGoingTradeTaskCard task={counterPartyTask} tradeId={tradeId} feedBack={feedBack}/>
+                    <OutGoingTradeTaskCard task={sourceTask} tradeId={tradeId} feedBack={feedBack} showRejectedModal={showRejectedModal}/>
+                    <OutGoingTradeTaskCard task={counterPartyTask} tradeId={tradeId} feedBack={feedBack} showRejectedModal={showRejectedModal}/>
                 </Fragment>
             }
         </div>
