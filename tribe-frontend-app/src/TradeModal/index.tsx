@@ -15,10 +15,11 @@ interface Task {
 interface IProps {
     show: Boolean,
     handleClose: Function,
-    remove: Function
+    remove: Function,
+    showTradeDuplicate: Function,
 }
 
-function TradeModal({show, handleClose, remove}: IProps) {
+function TradeModal({show, handleClose, remove, showTradeDuplicate}: IProps) {
     const family_tasks = useSelector((st: any) => st.family_tasks);
     const currUser = useSelector((st: any) => st.user);
     const [tasks, setTasks] = useState(family_tasks);
@@ -38,7 +39,7 @@ function TradeModal({show, handleClose, remove}: IProps) {
             <Modal.Body>
             {tasks.length > 0 ? tasks.map((task: any) => {
                 return (/*<Col key={`${task.associated_points}-${task.task_id}`} md={6}>*/
-                <TradeModalTaskCard key={`${task.task_id}-card`} task={task} onHide={handleClose}/>
+                <TradeModalTaskCard key={`${task.task_id}-card`} task={task} onHide={handleClose} showTradeDuplicate={showTradeDuplicate}/>
                 /*</Col>*/)
             }) : <Col md={6}>No tasks to display.</Col>}
             </Modal.Body>

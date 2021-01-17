@@ -8,6 +8,7 @@ import { completeTaskFromAPI, deleteTaskFromAPI, getFamilyTasksFromAPI, postTask
 import FilterBar from '../FilterBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import DuplicateTradeModal from '../DuplicateTradeModal';
 
 
 interface Task {
@@ -37,6 +38,7 @@ function DashOverview({ showHistory }: IProps) {
   const familyManager = useSelector((st: any) => st.user.family_manager);
 
   const [showNewTaskForm, setShowNewTaskForm] = useState(false);
+  const [showDuplicateTrade, setShowDuplicateTrade] = useState(false);
   const [tasks, setTasks] = useState(family_tasks);
 
   const dispatch = useDispatch();
@@ -89,6 +91,8 @@ function DashOverview({ showHistory }: IProps) {
     dispatch(getFamilyTasksFromAPI());
   }
 
+  
+
   // TODO: Migrate and update this filter to another component (maybe the FilterBar component)
   // `filter` filters tasks on the `filterType` to display on UI.
   const filter = (filterType: String) => {
@@ -130,6 +134,10 @@ function DashOverview({ showHistory }: IProps) {
     }
   }
 
+  const displayDuplicateTradeModal = () => {
+    setShowDuplicateTrade(true)
+  }
+
   const removeTaskUpdate = (task: any) =>{
     let newTaskList;
 
@@ -162,12 +170,16 @@ function DashOverview({ showHistory }: IProps) {
           <Row className="mt-3">
             {tasks.length > 0 ? tasks.map((task: any) => {
               return (<Col key={`${task.associated_points}-${task.task_id}`} md={6}>
-                <TaskCard key={`${task.task_id}-card`} task={task} updateTask={updateTask} tradeTask={tradeTask} deleteTask={deleteTask} completeTask={completeTask} removeTask={removeTaskUpdate}/>
+                <TaskCard key={`${task.task_id}-card`} task={task} updateTask={updateTask} tradeTask={tradeTask} deleteTask={deleteTask} completeTask={completeTask} removeTask={removeTaskUpdate} showTradeDuplicate={displayDuplicateTradeModal}/>
               </Col>)
             }) : <Col md={6}>No tasks to display.</Col>}
           </Row>
         </>
       }
+        <DuplicateTradeModal
+          show={showDuplicateTrade}
+          onHide={() => setShowDuplicateTrade(false)}
+        />
       <Button className="DashOverview-fetch-task-btn shadow-none mt-5" onClick={fetchTasks}>Reload tasks</Button>
     </Container>
   )
