@@ -89,7 +89,7 @@ export function deleteTaskFromAPI(task_id: Number) {
 export function postTaskToAPI(task: any) {
   return async function (dispatch: any) {
     const token = getCookie("x-access-token");
-    await fetch(`${BASE_URL}/create-task`, {
+    const resp = await fetch(`${BASE_URL}/create-task`, {
       method: "POST",
       body: JSON.stringify(task),
       headers: {
@@ -98,7 +98,8 @@ export function postTaskToAPI(task: any) {
       },
       credentials: "include"
     });
-    dispatch(addTask(task));
+    const respData = await resp.json();
+    dispatch(addTask(respData.task));
   }
 }
 

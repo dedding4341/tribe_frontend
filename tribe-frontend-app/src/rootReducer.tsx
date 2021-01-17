@@ -41,16 +41,7 @@ export default function rootReducer(state = INITIAL_STATE, action: Action) {
 
       return { ...state, family_tasks: tasks };
     case ADD_TASK:
-      tasks = [
-        {
-          ...action.payload.task,
-          created_by: state.user.user_id,
-          created_at: new Date().getUTCDate(),
-          completed: false,
-          last_updated_at: new Date().getUTCDate(),
-          task_status: "open"
-        }
-        , ...state.family_tasks]
+      tasks = [action.payload.task, ...state.family_tasks]
 
       return { ...state, family_tasks: tasks }
     case DELETE_TASK:

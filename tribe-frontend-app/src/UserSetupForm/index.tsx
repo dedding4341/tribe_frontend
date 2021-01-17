@@ -10,7 +10,7 @@ import { BASE_URL } from '../config';
 import { Redirect } from 'react-router-dom';
 import { getCookie } from '../helpers';
 import { useDispatch } from 'react-redux';
-import { getFamilyFromAPI, getFamilyMembersFromAPI, getFamilyTasksFromAPI, gotUserFirstLastName, startLoading } from '../actionCreators';
+import { getFamilyFromAPI, getFamilyMembersFromAPI, getFamilyTasksFromAPI, getUserFromAPI, gotUserFirstLastName, startLoading } from '../actionCreators';
 import { Alert } from 'react-bootstrap';
 
 function UserSetupForm() {
@@ -50,7 +50,7 @@ function UserSetupForm() {
           body: JSON.stringify({ family_name: formData.family_name }),
           credentials: "include"
         });
-
+        
         if (newFamResp.status !== 201) {
           const newFamRespData = await newFamResp.json();
           setServerErr(newFamRespData.msg);
@@ -71,7 +71,7 @@ function UserSetupForm() {
       if (resp.status === 200) {
         dispatch(gotUserFirstLastName(formData.first_name, formData.last_name));
         next();
-      } else if (resp.status === 404 && respData.msg === "Family code has expired - please get a new code") {
+      } else if (resp.status === 404 && respData.msg === "Family code has expired or code is incorrect - please get a new code") {
         setServerErr("Family code does not exist or has expired! Please get a new code and try again.");
       }
     } catch (err) {
@@ -81,6 +81,7 @@ function UserSetupForm() {
 
   const handleRedirect = () => {
     dispatch(startLoading());
+    dispatch(getUserFromAPI());
     dispatch(getFamilyFromAPI());
     dispatch(getFamilyMembersFromAPI());
     dispatch(getFamilyTasksFromAPI());
