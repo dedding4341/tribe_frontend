@@ -72,7 +72,7 @@ function TaskModalTaskCard({ task, onHide, showTradeDuplicate} :IProps) {
         .then(json => {
             if( retcode === 500) {
                 if (json.msg === "Unable to create trade request") {
-                    console.log(json)
+                    return
                 } 
             } else if(retcode === 409){
                 if(json.msg === "Unable to create trade request - duplicate exists"){

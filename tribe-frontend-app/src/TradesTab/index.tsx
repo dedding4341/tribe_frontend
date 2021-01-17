@@ -3,6 +3,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
 import Trade from '../Trade'
 import { getOutGoingTrades, getPendingTask, gotPendingTask, incomingTradesHash, listOfPendingTask } from '../actionCreators';
+import RejectModal from '../RejectModal';
 
 interface Task {
     task_id: Number,
@@ -18,7 +19,9 @@ interface Task {
 function TradesTab(props: any) {
     const pending_tasks = useSelector((st: any) => st.pendingTask)
     const tradesList = useSelector((st: any) => st.listOfTradeTask)
-    const outgoing_Trades = useSelector((st: any) => st.outGoingTrades)    
+    const outgoing_Trades = useSelector((st: any) => st.outGoingTrades)   
+    const [rejectFeedBack, setRejectFeedBack] = useState(false) 
+    const [actionToTrade, setActionToTrade] = useState('')
     
     const dispatch = useDispatch();
 
@@ -36,6 +39,11 @@ function TradesTab(props: any) {
 		dispatch(getOutGoingTrades())
     }
 
+    const tradeAction = (action: any) => {
+        setActionToTrade(action)
+        setRejectFeedBack(true)
+    }
+
     return(
         <Container>
             <Col md={4}>
@@ -44,7 +52,7 @@ function TradesTab(props: any) {
             <Row className="mt-3">
                 {pending_tasks.length > 0 ? pending_tasks.map((trade: any) => {
                     return (<Col key={`${trade[2]}-${trade[2]}`} md={6}>
-                    <Trade key={`${trade[2]}-card`} trade={trade} isIncoming={true} feedBack={handleFeedbackIC}/>
+                    <Trade key={`${trade[2]}-card`} trade={trade} isIncoming={true} feedBack={handleFeedbackIC} showRejectedModal={tradeAction}/>
                     </Col>)
                 }) : <Col md={6}>No tasks to display.</Col>}
             </Row>
@@ -55,10 +63,15 @@ function TradesTab(props: any) {
             <Row className="mt-3">
                 {outgoing_Trades.length > 0 ? outgoing_Trades.map((trade: any) => {
                     return (<Col key={`${trade[2]}-${trade[2]}`} md={6}>
-                    <Trade key={`${trade.task_id}-card`} trade={trade} isIncoming={false} feedBack={handleFeedbackOG}/>
+                    <Trade key={`${trade.task_id}-card`} trade={trade} isIncoming={false} feedBack={handleFeedbackOG} showRejectedModal={tradeAction}/>
                     </Col>)
                 }) : <Col md={6}>No tasks to display.</Col>}
             </Row>
+            <RejectModal
+                show={rejectFeedBack}
+                onHide={() => setRejectFeedBack(false)}
+                action={actionToTrade}
+            />
         </Container>
     )
 }
