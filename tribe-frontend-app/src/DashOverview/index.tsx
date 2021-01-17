@@ -48,11 +48,14 @@ function DashOverview({ showHistory }: IProps) {
 
     if (showHistory) {
       tasks = family_tasks.filter((t: any) => {
-        return t.completed;
+        return t.task_status === "complete";
       });
     } else {
       tasks = family_tasks.filter((t: any) => {
-        return !t.completed && t.task_status === "open";
+        if (t.task_status === "trading" && t.assignee !== userId) {
+          return t;
+        }
+        return t.task_status === "open";
       });
     }
     setTasks(tasks);
