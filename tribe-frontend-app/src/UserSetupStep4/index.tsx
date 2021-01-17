@@ -4,10 +4,11 @@ import { Card, Form } from 'react-bootstrap';
 interface IProps {
   setHasFamilyId: any;
   next: Function;
-  currentStep: Number;
+  currentStep: number;
+  prev: Function;
 }
 
-function UserSetupStep4({setHasFamilyId, next, currentStep }: IProps) {
+function UserSetupStep4({setHasFamilyId, next, currentStep, prev }: IProps) {
   const handleClick = (value: boolean) => {
     setHasFamilyId(value);
     next();
