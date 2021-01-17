@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
-import PendingTradeTaskCard from '../PendingTradeTaskCard'
-import OutGoingTradeTaskCard from '../OutGoingTradeTaskCard'
 import Trade from '../Trade'
 import { getOutGoingTrades, getPendingTask, gotPendingTask, incomingTradesHash, listOfPendingTask } from '../actionCreators';
 
@@ -15,11 +13,9 @@ interface Task {
     completion_time: String,
 }
 
-interface IProps {
-    showHistory: Boolean,
-}
 
-function TradesTab({ showHistory }: IProps) {
+
+function TradesTab(props: any) {
     const pending_tasks = useSelector((st: any) => st.pendingTask)
     const tradesList = useSelector((st: any) => st.listOfTradeTask)
     const outgoing_Trades = useSelector((st: any) => st.outGoingTrades)    
