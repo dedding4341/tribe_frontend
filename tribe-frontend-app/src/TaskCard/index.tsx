@@ -17,13 +17,14 @@ interface IProps {
     completeTask: Function,
     updateTask: Function,
     removeTask: any,
+    showTradeDuplicate: Function,
 }
 
 /**
  * TaskCard component displays each task.
  * Handler functions to delegate task-related CRUD operations.
  */
-function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask, removeTask }: IProps) {
+function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask, removeTask, showTradeDuplicate }: IProps) {
     const [showDelConf, setShowDelConf] = useState(false);
     const [showTradeModal, setShowTradeModal] = useState(false);
     const [showTaskDetails, setShowTaskDetails] = useState(false);
@@ -75,7 +76,7 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask, remov
 
     return (
         <div className="TaskCard">
-            <TradeModal showHistory={false} show={showTradeModal} handleClose={() => setShowTradeModal(false)} remove={removeTask}/>
+            <TradeModal show={showTradeModal} handleClose={() => setShowTradeModal(false)} remove={removeTask} showTradeDuplicate={showTradeDuplicate}/>
             <TaskCardDetailsModal show={showTaskDetails} handleUpdateTask={handleUpdateTask} handleClose={() => setShowTaskDetails(false)} task={task} taskOwner={taskOwner} isFamilyAdmin={user.family_manager} />
             {assignees.map((assignee: any) => {
                 // increment and decrement avatar styling variables.

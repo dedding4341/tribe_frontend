@@ -12,13 +12,14 @@ import { getCookie } from '../helpers';
 interface IProps {
     task: any,
     onHide: Function,
+    showTradeDuplicate: Function,
 }
 
 /**
  * TradeModalTaskCard component displays each task the current user can trade.
  * Handler functions to delegate task-related CRUD operations.
  */
-function TaskModalTaskCard({ task, onHide} :IProps) {
+function TaskModalTaskCard({ task, onHide, showTradeDuplicate} :IProps) {
 
     const user = useSelector((st: any) => st.user);
     const famMembers = useSelector((st: any) => st.famMembers)
@@ -75,7 +76,7 @@ function TaskModalTaskCard({ task, onHide} :IProps) {
                 } 
             } else if(retcode === 409){
                 if(json.msg === "Unable to create trade request - duplicate exists"){
-                    console.log(json.msg)
+                    showTradeDuplicate()
                 }
 
             } else if (retcode === 201) {
