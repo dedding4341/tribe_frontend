@@ -83,7 +83,6 @@ function TaskModalTaskCard({ task, onHide, showTradeDuplicate} :IProps) {
                 }
 
             } else if (retcode === 201) {
-                console.log(json.msg)
                 dispatch(getFamilyTasksFromAPI())
             }
         })

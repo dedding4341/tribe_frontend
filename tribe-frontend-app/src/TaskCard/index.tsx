@@ -55,7 +55,6 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask, remov
     const handleTradeTask = (data: any) => {
         setShowTradeModal(true)
         dispatch(counterParty(task.task_id, task.assignee))
-        // console.log(task)
         // tradeTask(task.task_id, data.recipients);
     }
 

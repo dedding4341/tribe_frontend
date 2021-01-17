@@ -24,10 +24,6 @@ function LandingContent() {
                 <a href="/users/auth"><Button className="LandingContent-login-btn">
                   Login
                 </Button></a>
-                {/* <a href="#demo" className="button stroke">
-                  <FontAwesomeIcon icon={faPlay}/>
-                  Watch Video
-                </a> */}
               </div>
             </div> {/**end contents */}
 
@@ -37,20 +33,6 @@ function LandingContent() {
           </div> {/**end image */}
 
           <div className="col-1">
-            <ul className="home-social-list"> {/**start socials */}
-              {/* <li>
-                <a href="#"><FontAwesomeIcon icon={faFacebook} size="2x"/></a>
-              </li>
-              <li>
-                <a href="#"><FontAwesomeIcon icon={faTwitter} size="2x"/></a>
-              </li>
-              <li>
-                <a href="#"><FontAwesomeIcon icon={faInstagram} size="2x"/></a>
-              </li>
-              <li>
-                <a href="#"><FontAwesomeIcon icon={faYoutube} size="2x"/></a>
-              </li> */}
-            </ul> {/**end socials */}
             <div className="home-scrolldown">
               <a href="#about" className="scroll-icon smoothscroll">
                 <span>SCROLL DOWN</span>

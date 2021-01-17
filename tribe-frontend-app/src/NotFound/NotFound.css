@@ -1,0 +1,61 @@
+.NotFound {
+  height: 100vh;
+  width: 100vw;
+  min-width: 50rem;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  justify-content: center;
+  align-items: center;
+}
+
+.NotFound-title {
+  font-size: 4.5rem;
+}
+
+.NotFound-description{
+  font-size: 1.8rem;
+}
+
+.NotFound-contact {
+  font-weight: 600;
+  color: rgb(45, 184, 27);
+}
+
+.swing-in-bottom-bck {
+	-webkit-animation: swing-in-bottom-bck 1.5s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
+	        animation: swing-in-bottom-bck 1.5s cubic-bezier(0.175, 0.885, 0.320, 1.275) both;
+}
+
+@-webkit-keyframes swing-in-bottom-bck {
+  0% {
+    -webkit-transform: rotateX(-70deg);
+            transform: rotateX(-70deg);
+    -webkit-transform-origin: bottom;
+            transform-origin: bottom;
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: rotateX(0);
+            transform: rotateX(0);
+    -webkit-transform-origin: bottom;
+            transform-origin: bottom;
+    opacity: 1;
+  }
+}
+@keyframes swing-in-bottom-bck {
+  0% {
+    -webkit-transform: rotateX(-70deg);
+            transform: rotateX(-70deg);
+    -webkit-transform-origin: bottom;
+            transform-origin: bottom;
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: rotateX(0);
+            transform: rotateX(0);
+    -webkit-transform-origin: bottom;
+            transform-origin: bottom;
+    opacity: 1;
+  }
+}

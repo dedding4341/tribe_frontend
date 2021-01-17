@@ -7,7 +7,7 @@
 }
 
 .home-welcome > h1{
-  font-size: 4rem;
+  font-size: 3.5rem;
 }
 
 .home-welcome .button {
@@ -19,8 +19,10 @@
 }
 
 .LandingContent-login-btn {
-  font-size: 2rem;
+  font-size: 1.5rem;
   padding: 0.5rem 1rem;
+  background-color: rgb(18, 158, 18);
+  border-color: rgb(18, 158, 18);
 }
 
 .home-content {

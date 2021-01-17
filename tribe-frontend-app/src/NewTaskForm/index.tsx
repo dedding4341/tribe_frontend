@@ -48,7 +48,6 @@ function NewTaskForm({ show, handleClose, postNewTask, isEdit }: IProps) {
     // }
 
     // setFormData(currData => ({ ...currData, assignee: selectedOption }));
-    // console.log(formData);
   }
 
   return (
