@@ -53,7 +53,7 @@ function OutGoingTradeTaskCard({ task, tradeId, feedBack, showRejectedModal } :I
             credentials: "include"
         })
         .then(res => res.json)
-        .then(json => console.log(json))
+        .then(json => console.log()
     }
 
 

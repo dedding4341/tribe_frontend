@@ -46,9 +46,6 @@ function TaskModalTaskCard({ task, onHide, showTradeDuplicate} :IProps) {
     const startTrade = (ownerTask: any, ownerId: number, counterPartyTask: any, counterPartyId: number) => {
         let retcode: number;
 
-        console.log("Task", task)
-        console.log("ownerTask", ownerTask, "ownerId", ownerId, "counterPartyTask", counterPartyId)
-
         onHide()
         fetch(`${BASE_URL}/initiate-trade`, {
             method: "POST",
@@ -75,7 +72,7 @@ function TaskModalTaskCard({ task, onHide, showTradeDuplicate} :IProps) {
         .then(json => {
             if( retcode === 500) {
                 if (json.msg === "Unable to create trade request") {
-                    console.log(json)
+                    return
                 } 
             } else if(retcode === 409){
                 if(json.msg === "Unable to create trade request - duplicate exists"){
