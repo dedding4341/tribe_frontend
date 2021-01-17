@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Alert } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { Switch, Route, Redirect, useHistory } from 'react-router-dom';
-import { getFamilyFromAPI, getFamilyMembersFromAPI, getFamilyTasksFromAPI, getUserFromAPI } from '../actionCreators';
+import React from 'react';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import Landing from '../Landing';
 import Login from '../Login';
 import NavBar from '../NavBar';
+import NotFound from '../NotFound';
 import UserSetup from '../UserSetup';
 import VerifyPage from '../VerifyPage';
 import "./PublicRoutes.css";
@@ -32,7 +30,7 @@ function PublicRoutes() {
           <Landing />
         </Route>
         <Route path='/not-found'>
-          <div>Not found page</div>
+          <NotFound/>
         </Route>
         <Redirect from='*' to='/not-found' />
       </Switch>
