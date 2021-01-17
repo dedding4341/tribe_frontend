@@ -4,7 +4,7 @@ import NewTaskForm from '../NewTaskForm';
 import TaskCard from '../TaskCard';
 import './DashOverview.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { completeTaskFromAPI, deleteTaskFromAPI, getFamilyTasksFromAPI, postTaskToAPI, updateTaskToAPI } from '../actionCreators';
+import { completeTaskFromAPI, deleteTaskFromAPI, getFamilyTasksFromAPI, getUserFromAPI, postTaskToAPI, updateTaskToAPI } from '../actionCreators';
 import FilterBar from '../FilterBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -45,7 +45,7 @@ function DashOverview({ showHistory }: IProps) {
 
   useEffect(() => {
     let tasks;
-    
+
     if (showHistory) {
       tasks = family_tasks.filter((t: any) => {
         return t.completed;
