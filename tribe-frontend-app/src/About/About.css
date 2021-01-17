@@ -1,0 +1,37 @@
+#about {
+  margin-bottom: 10rem;
+}
+
+.intro-header {
+  font-size: 2.5rem;
+}
+
+.about-how-steps h3{
+  font-size: 3rem;
+}
+
+.about-how-steps p {
+  font-size: 1.5rem;
+  width: 35rem;
+  margin: auto;
+}
+
+.about-step {
+  margin-top: 5rem;
+}
+
+.about-step-1 > h3 {
+  color: rgb(90, 90, 184);
+}
+
+.about-step-2 > h3 {
+  color:rgb(68, 129, 170);
+}
+
+.about-step-3 > h3 {
+  color:rgb(47, 143, 60)
+}
+
+.about-step-4 > h3 {
+  color:rgb(173, 33, 80)
+}
