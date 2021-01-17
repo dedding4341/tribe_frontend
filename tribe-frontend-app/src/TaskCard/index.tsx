@@ -75,7 +75,7 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask, remov
 
     return (
         <div className="TaskCard">
-            <TradeModal showHistory={false} show={showTradeModal} handleClose={() => setShowTradeModal(false)} remove={removeTask}/>
+            <TradeModal show={showTradeModal} handleClose={() => setShowTradeModal(false)} remove={removeTask}/>
             <TaskCardDetailsModal show={showTaskDetails} handleUpdateTask={handleUpdateTask} handleClose={() => setShowTaskDetails(false)} task={task} taskOwner={taskOwner} isFamilyAdmin={user.family_manager} />
             {assignees.map((assignee: any) => {
                 // increment and decrement avatar styling variables.
