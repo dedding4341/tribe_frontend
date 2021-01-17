@@ -37,7 +37,7 @@ function PrivateRoutes() {
         </Col>
       </Row>
       { loading ? <Preloader /> :
-        <Row className="">
+        <Row>
           <Col sm={3} md={3} lg={4}>
             <DashboardLeft />
           </Col>

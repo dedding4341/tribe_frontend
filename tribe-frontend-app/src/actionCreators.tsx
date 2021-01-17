@@ -81,7 +81,6 @@ export function deleteTaskFromAPI(task_id: Number) {
       credentials: "include"
     });
     if (res.status === 200) {
-      // console.log("deletion completed");
       dispatch(deleteTask(task_id));
     }
   }
@@ -150,7 +149,6 @@ export function getPendingTask(){
       credentials: "include"
     });
     const resData = await res.json()
-    // console.log("in_trades", resData.incoming_trades)
     dispatch(gotPendingTask(resData.incoming_trades));
   }
 }
@@ -250,7 +248,6 @@ export function counterParty(counterTask: any, counterId:number) {
 }
 
 export function gotPendingTask(Ptasks: any) {
-  // console.log(" ptask",Ptasks)
   return {type: PENDING_TASK, payload: { Ptasks } }
 }
 export function gotOutGoingTrades(outgoingTrades: any) {

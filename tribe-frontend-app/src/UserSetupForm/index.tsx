@@ -52,7 +52,8 @@ function UserSetupForm() {
         });
 
         if (newFamResp.status !== 201) {
-          // console.log("failed to create family");
+          const newFamRespData = await newFamResp.json();
+          setServerErr(newFamRespData.msg);
         }
       }
 

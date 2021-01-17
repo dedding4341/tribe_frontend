@@ -52,7 +52,6 @@ export default function rootReducer(state = INITIAL_STATE, action: Action) {
         }
         , ...state.family_tasks]
 
-      console.log("tasks in add_task case", tasks);
       return { ...state, family_tasks: tasks }
     case DELETE_TASK:
       let filteredTasks = state.family_tasks.filter((task: any) => {
@@ -68,16 +67,12 @@ export default function rootReducer(state = INITIAL_STATE, action: Action) {
       });
       return { ...state, family_tasks: updatedTasks };
     case LOAD_FAMILY_TASKS:
-      // console.log("saving the tasks...,", action.payload.family_tasks)
       return { ...state, family_tasks: action.payload.family_tasks }
     case SAVE_FAMILY:
-      // console.log("saving the family...,", action.payload.family)
       return { ...state, family: action.payload.family }
     case SAVE_USER:
-      // console.log("saving the user...,", action.payload.user)
       return { ...state, user: action.payload.user }
     case SAVE_FAMILY_MEMBERS:
-      // console.log("saving the family membs...,", action.payload.familyMembers)
       return { ...state, famMembers: action.payload.familyMembers }
     case STOP_LOADING:
       return { ...state, loading: false }
@@ -88,7 +83,6 @@ export default function rootReducer(state = INITIAL_STATE, action: Action) {
     case LOGIN:
       return { ...INITIAL_STATE, user: action.payload.user, isLoggedIn: true }
     case LOGOUT:
-      // console.log("logging out in the rootReducer...")
       return INITIAL_STATE;
     case EPIC_TIME:
       // let targetTime = Date.now() + (30 * 60000);
