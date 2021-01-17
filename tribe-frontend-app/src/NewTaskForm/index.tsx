@@ -70,7 +70,7 @@ function NewTaskForm({ show, handleClose, postNewTask, isEdit }: IProps) {
           </Form.Group>
           <Form.Group>
             <Form.Label>Points</Form.Label>
-            <Form.Control value={formData.associated_points} name="associated_points" type="number" placeholder="Enter points" onChange={(evt) => handleChange(evt as any)}></Form.Control>
+            <Form.Control value={formData.associated_points} name="associated_points" type="number" placeholder="Enter points" min="0" max="100" onChange={(evt) => handleChange(evt as any)} required></Form.Control>
           </Form.Group>
           <Form.Group>
             <Form.Label>Due by</Form.Label>
