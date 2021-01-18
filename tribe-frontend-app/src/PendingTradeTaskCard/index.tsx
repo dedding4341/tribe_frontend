@@ -23,6 +23,8 @@ function PendingTradeTaskCard({ task, tradeId, feedBack, showRejectedModal} :IPr
     const famMembers = useSelector((st: any) => st.famMembers)
     const isTaskOwner = (task.assignee === user.user_id);
     const token = getCookie("x-access-token");
+    let sourceId = task.task_id;
+
     
 
     // // `taskOwner` is a user object of the task's `created_by` user.
@@ -69,7 +71,7 @@ function PendingTradeTaskCard({ task, tradeId, feedBack, showRejectedModal} :IPr
             credentials: "include"
         })
         .then(res => res.json)
-        .then(json => showRejectedModal("rejected"))
+        .then(json => showRejectedModal("Rejected"))
     }
     
 
@@ -111,12 +113,12 @@ function PendingTradeTaskCard({ task, tradeId, feedBack, showRejectedModal} :IPr
                                 </p>
                             </Row>
                         </Col>
-                        {!task.completed && <Col sm={6} md={5}>
+                        {task.task_status !== "completed" && <Col sm={6} md={5}>
                             {isTaskOwner ?
                                 <></>:
                                 <>
-                                    <Button className="TradeModalTaskCard-btn TradeModalTaskCard-complete-btn"  onClick={() => handleAccept(task.task_id, tradeId)}>Accept</Button>
-                                    <Button className="TradeModalTaskCard-btn TradeModalTaskCard-complete-btn"  onClick={() => handleReject(task.task_Id, tradeId)}>Reject</Button>
+                                    <Button className="TradeModalTaskCard-btn TradeModalTaskCard-complete-btn"  onClick={() => handleAccept(sourceId, tradeId)}>Accept</Button>
+                                    <Button className="TradeModalTaskCard-btn TradeModalTaskCard-complete-btn"  onClick={() => handleReject(sourceId, tradeId)}>Reject</Button>
                                 </>
                             }
                                 </Col> } 

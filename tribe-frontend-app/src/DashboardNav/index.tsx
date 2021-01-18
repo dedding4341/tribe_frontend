@@ -84,7 +84,7 @@ function DashboardNav() {
 				{/* <NavLink className="mt-2 mb-2" to={`/tribe/calender`}>Calender</NavLink> */}
 				<NavLink className="mt-2 mb-2" to={`/tribe/todo`}>To-do</NavLink>
 				<NavLink className="mt-2 mb-2" to={`/tribe/completed`}>Completed Tasks</NavLink>
-				<NavLink className="mt-2 mb-2" to={`/tribe/trades`} onClick={getPendingTrades}>Trades</NavLink>
+				<NavLink className="mt-2 mb-2" to={`/tribe/trades`}>Trades</NavLink>
 				{/* <NavLink className="mt-2 mb-2" to={`/tribe/store`}>Store</NavLink> */}
 				<Nav.Item className="Family_code" onClick={getFamilyCode}><span>{codeDisplay} <CodeTimer /></span></Nav.Item>
 				<li className="DashboardNav-vertical-divider"></li>
