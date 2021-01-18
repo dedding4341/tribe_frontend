@@ -147,7 +147,7 @@ function DashOverview({ showHistory }: IProps) {
     let newTaskList;
 
     newTaskList = family_tasks.filter((t: any) => {
-      return !t.completed && t.task_status === "open" && t.task_id !== task;
+      return t.task_status === "open" && t.task_id !== task;
     })
 
     setTasks(newTaskList)
