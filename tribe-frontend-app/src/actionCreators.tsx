@@ -1,4 +1,4 @@
-import { ADD_TASK, COMPLETE_TASK, DELETE_TASK, LOAD_FAMILY_TASKS, LOGIN, LOGIN_BY_TOKEN, LOGOUT, SAVE_FAMILY, SAVE_FAMILY_MEMBERS, SAVE_USER, START_LOADING, STOP_LOADING, UPDATE_TASK, EPIC_TIME, SHOWING_CODE, FAMILY_CODE, NO_FAMILY_CODE, COUNTER_PARTY, PENDING_TASK, OUT_GOING_TRADE, INCOMING_TRADE_HASH, LIST_OF_PENDING_TASK, SET_USER_NAME } from "./actionTypes";
+import { ADD_TASK, COMPLETE_TASK, DELETE_TASK, LOAD_FAMILY_TASKS, LOGIN, LOGIN_BY_TOKEN, LOGOUT, SAVE_FAMILY, SAVE_FAMILY_MEMBERS, SAVE_USER, START_LOADING, STOP_LOADING, UPDATE_TASK, EPIC_TIME, SHOWING_CODE, FAMILY_CODE, NO_FAMILY_CODE, COUNTER_PARTY, PENDING_TASK, OUT_GOING_TRADE, INCOMING_TRADE_HASH, LIST_OF_PENDING_TASK, SET_USER_NAME, SET_IS_FETCHED } from "./actionTypes";
 import { BASE_URL } from "./config";
 import { getCookie } from "./helpers";
 
@@ -151,7 +151,9 @@ export function getPendingTask(){
       credentials: "include"
     });
     const resData = await res.json()
-    dispatch(gotPendingTask(resData.incoming_trades));
+    if(resData.incoming_trades.length > 0){
+      dispatch(gotPendingTask(resData.incoming_trades));
+    }
   }
 }
 
@@ -166,7 +168,9 @@ export function getOutGoingTrades(){
       credentials: "include"
     });
     const resData = await res.json()
-    dispatch(gotOutGoingTrades(resData.outgoing_trades));
+    if(resData.outgoing_trades.length > 0){
+      dispatch(gotOutGoingTrades(resData.outgoing_trades));
+    }
     dispatch(stopLoading());
   }
 }
@@ -262,5 +266,9 @@ export function incomingTradesHash(incoming: any) {
 }
 
 export function listOfPendingTask(task: any) {
-  return { type: LIST_OF_PENDING_TASK, payload: { task}}
+  return { type: LIST_OF_PENDING_TASK, payload: { task} }
+}
+
+export function setIsFetched(isFetched: any) {
+  return { type: SET_IS_FETCHED, payload: { isFetched } }
 }

@@ -38,9 +38,7 @@ function PendingTradeTaskCard({ task, tradeId, feedBack, showRejectedModal} :IPr
     });
 
     const handleAccept =(sourceId: any, tradeId: any) => {
-        feedBack()
-        showRejectedModal("Accepted")
-
+        // showRejectedModal("Accepted")
         fetch(`${BASE_URL}/accept-trade`, {
             method: "PATCH",
             body: JSON.stringify({
@@ -54,13 +52,10 @@ function PendingTradeTaskCard({ task, tradeId, feedBack, showRejectedModal} :IPr
             credentials: "include"
         })
         .then(res => res.json)
-        .then(json => console.log(json))
+        .then(json => showRejectedModal("Accepted"))
     }
 
     const handleReject =(sourceId: any, tradeId: any) => {
-        feedBack()
-        showRejectedModal("rejected")
-
         fetch(`${BASE_URL}/reject-trade`, {
             method: "PATCH",
             body: JSON.stringify({
@@ -74,7 +69,7 @@ function PendingTradeTaskCard({ task, tradeId, feedBack, showRejectedModal} :IPr
             credentials: "include"
         })
         .then(res => res.json)
-        .then(json => console.log(json))
+        .then(json => showRejectedModal("rejected"))
     }
     
 
