@@ -155,9 +155,7 @@ export function getPendingTask() {
       credentials: "include"
     });
     const resData = await res.json()
-    if (resData.incoming_trades.length > 0) {
-      dispatch(gotPendingTask(resData.incoming_trades));
-    }
+    dispatch(gotPendingTask(resData.incoming_trades));
   }
 }
 
@@ -172,9 +170,7 @@ export function getOutGoingTrades() {
       credentials: "include"
     });
     const resData = await res.json()
-    if (resData.outgoing_trades.length > 0) {
-      dispatch(gotOutGoingTrades(resData.outgoing_trades));
-    }
+    dispatch(gotOutGoingTrades(resData.outgoing_trades));
     dispatch(stopLoading());
   }
 }

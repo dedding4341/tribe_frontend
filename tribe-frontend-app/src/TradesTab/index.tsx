@@ -35,12 +35,7 @@ function TradesTab(props: any) {
         }
     }, []);
 
-    const handleFeedbackIC = () =>{
-        dispatch(getPendingTask())
-		dispatch(getOutGoingTrades())
-    }
-
-    const handleFeedbackOG = () =>{
+    const handleTaskLoading = () =>{
         dispatch(getPendingTask())
 		dispatch(getOutGoingTrades())
     }
@@ -58,7 +53,7 @@ function TradesTab(props: any) {
             <Row className="mt-3">
                 {pending_tasks.length > 0 ? pending_tasks.map((trade: any) => {
                     return (<Col key={`${trade[2]}-${trade[2]}`} md={6}>
-                    <Trade key={`${trade[2]}-card`} trade={trade} isIncoming={true} feedBack={handleFeedbackIC} showRejectedModal={tradeAction}/>
+                    <Trade key={`${trade[2]}-card`} trade={trade} isIncoming={true} feedBack={handleTaskLoading} showRejectedModal={tradeAction}/>
                     </Col>)
                 }) : <Col md={6}>No tasks to display.</Col>}
             </Row>
@@ -69,7 +64,7 @@ function TradesTab(props: any) {
             <Row className="mt-3">
                 {outgoing_Trades.length > 0 ? outgoing_Trades.map((trade: any) => {
                     return (<Col key={`${trade[2]}-${trade[2]}`} md={6}>
-                    <Trade key={`${trade.task_id}-card`} trade={trade} isIncoming={false} feedBack={handleFeedbackOG} showRejectedModal={tradeAction}/>
+                    <Trade key={`${trade.task_id}-card`} trade={trade} isIncoming={false} feedBack={handleTaskLoading} showRejectedModal={tradeAction}/>
                     </Col>)
                 }) : <Col md={6}>No tasks to display.</Col>}
             </Row>
@@ -77,7 +72,7 @@ function TradesTab(props: any) {
                 show={rejectFeedBack}
                 onHide={() => {
                     setRejectFeedBack(false)
-                    handleFeedbackOG()
+                    handleTaskLoading()
                 }}
                 action={actionToTrade}
             />
