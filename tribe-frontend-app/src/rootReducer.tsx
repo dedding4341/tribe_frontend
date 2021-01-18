@@ -1,4 +1,4 @@
-import { ADD_TASK, COMPLETE_TASK, DELETE_TASK, LOAD_FAMILY_TASKS, LOGIN, LOGIN_BY_TOKEN, LOGOUT, SAVE_FAMILY, SAVE_FAMILY_MEMBERS, SAVE_USER, START_LOADING, STOP_LOADING, UPDATE_TASK, EPIC_TIME, SHOWING_CODE, FAMILY_CODE, NO_FAMILY_CODE, COUNTER_PARTY, PENDING_TASK, OUT_GOING_TRADE, INCOMING_TRADE_HASH, LIST_OF_PENDING_TASK, SET_USER_NAME, SET_IS_FETCHED } from "./actionTypes";
+import { ADD_TASK, COMPLETE_TASK, DELETE_TASK, LOAD_FAMILY_TASKS, LOGIN, LOGIN_BY_TOKEN, LOGOUT, SAVE_FAMILY, SAVE_FAMILY_MEMBERS, SAVE_USER, START_LOADING, STOP_LOADING, UPDATE_TASK, EPIC_TIME, SHOWING_CODE, FAMILY_CODE, NO_FAMILY_CODE, COUNTER_PARTY, PENDING_TASK, OUT_GOING_TRADE, INCOMING_TRADE_HASH, LIST_OF_PENDING_TASK, SET_USER_NAME, SET_IS_FETCHED, SET_TOAST, DELETE_TOAST } from "./actionTypes";
 
 const INITIAL_STATE: any = {
   user: {},
@@ -17,6 +17,7 @@ const INITIAL_STATE: any = {
   incomingTradesHash: {},
   listOfTradeTask: [],
   isFetched: false,
+  toasts: []
 };
 
 interface Action {
@@ -33,12 +34,10 @@ export default function rootReducer(state = INITIAL_STATE, action: Action) {
       // find the task and update the completed and completed time key.
       tasks = state.family_tasks.map((task: any) => {
         if (task.task_id === action.payload.task_id) {
-          task.completed = true;
-          task.completed_time = new Date().getUTCDate();
+          task.task_status = "complete";
         }
         return task;
       });
-
 
       return { ...state, family_tasks: tasks };
     case ADD_TASK:
@@ -58,6 +57,13 @@ export default function rootReducer(state = INITIAL_STATE, action: Action) {
         return task;
       });
       return { ...state, family_tasks: updatedTasks };
+    case SET_TOAST:
+      return { ...state, toasts: [action.payload.toast, ...state.toasts] };
+    case DELETE_TOAST:
+      let filteredToasts = state.toasts.filter((t: any) => {
+        return t.toast_id !== action.payload.toast_id;
+      });
+      return { ...state, toasts: filteredToasts };
     case LOAD_FAMILY_TASKS:
       return { ...state, family_tasks: action.payload.family_tasks }
     case SAVE_FAMILY:

@@ -38,3 +38,10 @@
   background-color: rgb(64, 145, 125);
   border-color: rgb(64, 145, 125);
 }
+
+.DashOverview-toast-cont {
+  position: fixed;
+  top: 20px;
+  right: 35px;
+  width: fit-content;
+}

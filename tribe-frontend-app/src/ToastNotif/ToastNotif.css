@@ -1,0 +1,6 @@
+.ToastNotif-toast {
+  width: 20rem;
+  position: 'absolute';
+  font-size: 1.2rem;
+  text-align: center;
+}
