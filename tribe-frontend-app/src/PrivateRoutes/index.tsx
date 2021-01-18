@@ -5,15 +5,11 @@ import DashboardLeft from '../DashboardLeft';
 import DashCalender from '../DashCalender';
 import DashOverview from '../DashOverview';
 import DashStore from '../DashStore';
-import DashTodo from '../DashTodo';
 import TradesTab from '../TradesTab';
 import { useDispatch, useSelector } from 'react-redux';
 import './PrivateRoutes.css';
 import { getCookie } from '../helpers';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDrumstickBite } from '@fortawesome/free-solid-svg-icons';
 import Preloader from '../Preloader';
-import NotFound from '../NotFound';
 import { getFamilyFromAPI, getFamilyMembersFromAPI, getFamilyTasksFromAPI, getUserFromAPI, loginByToken } from '../actionCreators';
 
 
@@ -78,9 +74,6 @@ function PrivateRoutes() {
               </Route>
               <Route exact path="/tribe/calender">
                 <DashCalender />
-              </Route>
-              <Route exact path="/tribe/todo">
-                <DashTodo />
               </Route>
               <Route exact path="/tribe/store">
                 <DashStore />

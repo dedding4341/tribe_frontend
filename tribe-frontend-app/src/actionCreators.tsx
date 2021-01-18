@@ -224,6 +224,7 @@ export function loginUser(user: any) {
 export function logoutUser() {
   return function (dispatch: any) {
     document.cookie = "x-access-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "x-access-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/tasks;";
     dispatch({ type: LOGOUT })
   }
 }
