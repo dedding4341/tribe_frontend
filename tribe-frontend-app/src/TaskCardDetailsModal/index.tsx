@@ -31,7 +31,7 @@ function TaskCardDetailsModal({ show, handleUpdateTask, handleClose, task, taskO
 
   return (
     <Modal show={show} onHide={handleClose}>
-      <NewTaskForm postNewTask={handleUpdateTask} show={showTaskEdit} handleClose={handleCloseEdit} isEdit={true}/>
+      <NewTaskForm postNewTask={handleUpdateTask} show={showTaskEdit} handleClose={handleCloseEdit} isEdit={true} task={task}/>
       <Modal.Header closeButton>
         <Modal.Title className="TaskCardDetailsModal-title">{task.task_name}<span className="TaskCard-pts">+{task.associated_points}pts</span></Modal.Title>
       </Modal.Header>
