@@ -48,7 +48,7 @@ function DashOverview({ showHistory }: IProps) {
 
     if (showHistory) {
       tasks = family_tasks.filter((t: any) => {
-        return t.task_status === "complete";
+        return t.task_status === "completed";
       });
     } else {
       tasks = family_tasks.filter((t: any) => {
@@ -59,7 +59,7 @@ function DashOverview({ showHistory }: IProps) {
       });
     }
     setTasks(tasks);
-  }, [family_tasks]);
+  }, [family_tasks, showHistory]);
 
   const handleClose = () => {
     setShowNewTaskForm(false);
@@ -117,7 +117,7 @@ function DashOverview({ showHistory }: IProps) {
         break;
       case "completedTasks":
         filteredTasks = family_tasks.filter((t: any) => {
-          return t.assignee === userId;
+          return t.assignee === userId && t.task_status === "completed";
         });
         setTasks(filteredTasks);
         break;
@@ -130,7 +130,7 @@ function DashOverview({ showHistory }: IProps) {
         break;
       default:
         filteredTasks = family_tasks.filter((t: any) => {
-          return t.task_status === 'completed';
+          return t.task_status === "open";
         });
         setTasks(family_tasks);
         break;

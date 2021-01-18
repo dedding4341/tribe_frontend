@@ -3,6 +3,11 @@ import { Modal, Button} from 'react-bootstrap';
 
 function RejectModal(props: any) {
 
+    const feedBack = () => {
+        props.onHide()
+        props.feedBack()
+    }
+
     return(
         <Modal
         {...props}
@@ -14,7 +19,7 @@ function RejectModal(props: any) {
                 <h4>Trade was {`${props.action}`}.</h4>
             </Modal.Body>
             <Modal.Footer>
-            <Button onClick={props.onHide}>Close</Button>
+            <Button onClick={feedBack}>Close</Button>
             </Modal.Footer>
         </Modal>
     )

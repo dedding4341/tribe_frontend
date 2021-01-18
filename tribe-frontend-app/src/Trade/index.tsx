@@ -24,8 +24,8 @@ function Trade ({ trade, isIncoming, feedBack, showRejectedModal } :IProps){
                     <PendingTradeTaskCard task={counterPartyTask} tradeId={tradeId} feedBack={feedBack} showRejectedModal={showRejectedModal}/>
                 </Fragment>:
                 <Fragment>
-                    <OutGoingTradeTaskCard task={sourceTask} tradeId={tradeId} feedBack={feedBack} showRejectedModal={showRejectedModal}/>
-                    <OutGoingTradeTaskCard task={counterPartyTask} tradeId={tradeId} feedBack={feedBack} showRejectedModal={showRejectedModal}/>
+                    <OutGoingTradeTaskCard task={sourceTask} feedBack={feedBack} tradeId={tradeId} showRejectedModal={showRejectedModal}/>
+                    <OutGoingTradeTaskCard task={counterPartyTask} feedBack={feedBack} tradeId={tradeId} showRejectedModal={showRejectedModal}/>
                 </Fragment>
             }
         </div>

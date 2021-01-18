@@ -127,7 +127,7 @@ function TaskCard({ task, deleteTask, tradeTask, completeTask, updateTask, remov
                                 </div>
                             </Row>
                         </Col>
-                        {!task.completed && <Col sm={6} md={5}>
+                        {task.task_status !== "completed" && <Col sm={6} md={5}>
                             {isTaskOwner ?
                                 <Button className="TaskCard-btn TaskCard-complete-btn"  onClick={handleCompleteTask}>Complete</Button>
                                 : <Button className="TaskCard-btn TaskCard-trade-btn" onClick={handleTradeTask}>Trade</Button>

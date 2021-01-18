@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import { Container, Row, Col } from 'react-bootstrap';
 import Trade from '../Trade'
-import { getOutGoingTrades, getPendingTask, gotPendingTask, incomingTradesHash, listOfPendingTask } from '../actionCreators';
+import { getOutGoingTrades, getPendingTask, gotPendingTask, incomingTradesHash, setIsFetched } from '../actionCreators';
 import RejectModal from '../RejectModal';
 
 interface Task {
@@ -19,22 +19,28 @@ interface Task {
 function TradesTab(props: any) {
     const pending_tasks = useSelector((st: any) => st.pendingTask)
     const tradesList = useSelector((st: any) => st.listOfTradeTask)
-    const outgoing_Trades = useSelector((st: any) => st.outGoingTrades)   
+    const outgoing_Trades = useSelector((st: any) => st.outGoingTrades) 
+    const isFetched = useSelector((st: any) =>  st.isFetched)  
     const [rejectFeedBack, setRejectFeedBack] = useState(false) 
     const [actionToTrade, setActionToTrade] = useState('')
     
     const dispatch = useDispatch();
 
     useEffect(() => {
-        
-    }, [pending_tasks, outgoing_Trades]);
+        if(!isFetched){
+            dispatch(getPendingTask())
+	        dispatch(getOutGoingTrades())
+            dispatch(setIsFetched(true))
+            console.log("yo ")
+        }
+    }, []);
 
-    const handleFeedbackIC = (task: any) =>{
+    const handleFeedbackIC = () =>{
         dispatch(getPendingTask())
 		dispatch(getOutGoingTrades())
     }
 
-    const handleFeedbackOG = (task: any) =>{
+    const handleFeedbackOG = () =>{
         dispatch(getPendingTask())
 		dispatch(getOutGoingTrades())
     }
@@ -69,7 +75,10 @@ function TradesTab(props: any) {
             </Row>
             <RejectModal
                 show={rejectFeedBack}
-                onHide={() => setRejectFeedBack(false)}
+                onHide={() => {
+                    setRejectFeedBack(false)
+                    handleFeedbackOG()
+                }}
                 action={actionToTrade}
             />
         </Container>
