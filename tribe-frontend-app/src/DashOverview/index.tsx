@@ -9,6 +9,7 @@ import FilterBar from '../FilterBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import DuplicateTradeModal from '../DuplicateTradeModal';
+import ToastNotif from '../ToastNotif';
 
 
 interface Task {
@@ -36,16 +37,17 @@ function DashOverview({ showHistory }: IProps) {
   const family_tasks = useSelector((st: any) => st.family_tasks);
   const userId = useSelector((st: any) => st.user.user_id);
   const familyManager = useSelector((st: any) => st.user.family_manager);
+  const toasts = useSelector((st: any) => st.toasts);
 
   const [showNewTaskForm, setShowNewTaskForm] = useState(false);
   const [showDuplicateTrade, setShowDuplicateTrade] = useState(false);
   const [tasks, setTasks] = useState(family_tasks);
+  const [showToast, setShowToast] = useState(false);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     let tasks;
-
     if (showHistory) {
       tasks = family_tasks.filter((t: any) => {
         return t.task_status === "completed";
@@ -73,6 +75,7 @@ function DashOverview({ showHistory }: IProps) {
   // TODO: Implement server logic
   const completeTask = async (task_id: Number) => {
     dispatch(completeTaskFromAPI(task_id));
+    setShowToast(true);
   }
 
   // Deletes an existing task on the backend and update the Store.
@@ -94,7 +97,6 @@ function DashOverview({ showHistory }: IProps) {
     dispatch(getFamilyTasksFromAPI());
   }
 
-  
 
   // TODO: Migrate and update this filter to another component (maybe the FilterBar component)
   // `filter` filters tasks on the `filterType` to display on UI.
@@ -141,11 +143,11 @@ function DashOverview({ showHistory }: IProps) {
     setShowDuplicateTrade(true)
   }
 
-  const removeTaskUpdate = (task: any) =>{
+  const removeTaskUpdate = (task: any) => {
     let newTaskList;
 
     newTaskList = family_tasks.filter((t: any) => {
-      return !t.completed && t.task_status === "open" && t.task_id !== task ;
+      return t.task_status === "open" && t.task_id !== task;
     })
 
     setTasks(newTaskList)
@@ -155,7 +157,7 @@ function DashOverview({ showHistory }: IProps) {
     <Container className="DashOverview">
       {loading ? <div> loading... </div> :
         <>
-          { showNewTaskForm && <NewTaskForm postNewTask={postNewTask} show={showNewTaskForm} handleClose={handleClose} isEdit={false} task={undefined}/>}
+          { showNewTaskForm && <NewTaskForm postNewTask={postNewTask} show={showNewTaskForm} handleClose={handleClose} isEdit={false} task={{}} />}
           <Row className="d-flex align-items-center justify-content-between">
             <Col md={4}>
               <h1 className="DashOverview-title">
@@ -173,17 +175,22 @@ function DashOverview({ showHistory }: IProps) {
           <Row className="mt-3">
             {tasks.length > 0 ? tasks.map((task: any) => {
               return (<Col key={`${task.associated_points}-${task.task_id}`} md={6}>
-                <TaskCard key={`${task.task_id}-card`} task={task} updateTask={updateTask} tradeTask={tradeTask} deleteTask={deleteTask} completeTask={completeTask} removeTask={removeTaskUpdate} showTradeDuplicate={displayDuplicateTradeModal}/>
+                <TaskCard key={`${task.task_id}-card`} task={task} updateTask={updateTask} tradeTask={tradeTask} deleteTask={deleteTask} completeTask={completeTask} removeTask={removeTaskUpdate} showTradeDuplicate={displayDuplicateTradeModal} />
               </Col>)
             }) : <Col md={6}>No tasks to display.</Col>}
           </Row>
         </>
       }
-        <DuplicateTradeModal
-          show={showDuplicateTrade}
-          onHide={() => setShowDuplicateTrade(false)}
-        />
+      <DuplicateTradeModal
+        show={showDuplicateTrade}
+        onHide={() => setShowDuplicateTrade(false)}
+      />
       <Button className="DashOverview-fetch-task-btn shadow-none mt-5" onClick={fetchTasks}>Reload tasks</Button>
+      <div className="DashOverview-toast-cont">
+        {toasts.length ? toasts.map((t: any) => {
+          return <ToastNotif key={t.toast_id} msg={t.msg} title={t.title} time={t.time} handleClose={() => setShowToast(false)} show={showToast} toastId={t.toast_id}/>
+        }) : ""}
+      </div>
     </Container>
   )
 }

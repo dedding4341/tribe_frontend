@@ -1,6 +1,7 @@
-import { ADD_TASK, COMPLETE_TASK, DELETE_TASK, LOAD_FAMILY_TASKS, LOGIN, LOGIN_BY_TOKEN, LOGOUT, SAVE_FAMILY, SAVE_FAMILY_MEMBERS, SAVE_USER, START_LOADING, STOP_LOADING, UPDATE_TASK, EPIC_TIME, SHOWING_CODE, FAMILY_CODE, NO_FAMILY_CODE, COUNTER_PARTY, PENDING_TASK, OUT_GOING_TRADE, INCOMING_TRADE_HASH, LIST_OF_PENDING_TASK, SET_USER_NAME, SET_IS_FETCHED } from "./actionTypes";
+import { ADD_TASK, COMPLETE_TASK, DELETE_TASK, LOAD_FAMILY_TASKS, LOGIN, LOGIN_BY_TOKEN, LOGOUT, SAVE_FAMILY, SAVE_FAMILY_MEMBERS, SAVE_USER, START_LOADING, STOP_LOADING, UPDATE_TASK, EPIC_TIME, SHOWING_CODE, FAMILY_CODE, NO_FAMILY_CODE, COUNTER_PARTY, PENDING_TASK, OUT_GOING_TRADE, INCOMING_TRADE_HASH, LIST_OF_PENDING_TASK, SET_USER_NAME, SET_IS_FETCHED, SET_TOAST, DELETE_TOAST} from "./actionTypes";
 import { BASE_URL } from "./config";
 import { getCookie } from "./helpers";
+import moment from "moment";
 
 export function getUserFromAPI() {
   return async function (dispatch: any) {
@@ -122,7 +123,7 @@ export function updateTaskToAPI(task: any) {
 export function completeTaskFromAPI(task_id: Number) {
   return async function (dispatch: any) {
     const token = getCookie("x-access-token");
-    await fetch(`${BASE_URL}/complete-task`, {
+    const res = await fetch(`${BASE_URL}/complete-task`, {
       method: "PATCH",
       body: JSON.stringify({ task_id }),
       headers: {
@@ -131,48 +132,61 @@ export function completeTaskFromAPI(task_id: Number) {
       },
       credentials: "include"
     });
-    dispatch(completeTask(task_id));
+    if (res.status === 200) {
+      dispatch(completeTask(task_id));
+
+      const randomId = Math.floor(Math.random() * (9999 - 1) + 1);
+      dispatch(setToast("Successfully finished a task!", "Tribe Task", moment().fromNow(), randomId));
+    }
   }
 }
 
-export function getPendingTask(){
+export function getPendingTask() {
   return async function (dispatch: any) {
     dispatch(startLoading());
     const token = getCookie("x-access-token");
-    const res = await fetch(`${BASE_URL}/incoming-trades`,{
+    const res = await fetch(`${BASE_URL}/incoming-trades`, {
       method: "GET",
-      headers:{
+      headers: {
         "x-access-token": token
       },
       credentials: "include"
     });
     const resData = await res.json()
-    if(resData.incoming_trades.length > 0){
+    if (resData.incoming_trades.length > 0) {
       dispatch(gotPendingTask(resData.incoming_trades));
     }
   }
 }
 
-export function getOutGoingTrades(){
+export function getOutGoingTrades() {
   return async function (dispatch: any) {
     const token = getCookie("x-access-token");
-    const res = await fetch(`${BASE_URL}/outgoing-trades`,{
+    const res = await fetch(`${BASE_URL}/outgoing-trades`, {
       method: "GET",
-      headers:{
+      headers: {
         "x-access-token": token
       },
       credentials: "include"
     });
     const resData = await res.json()
-    if(resData.outgoing_trades.length > 0){
+    if (resData.outgoing_trades.length > 0) {
       dispatch(gotOutGoingTrades(resData.outgoing_trades));
     }
     dispatch(stopLoading());
   }
 }
 
+function setToast(msg: string, title: string, time: string, toast_id: number) {
+  return { type: SET_TOAST, payload: { toast: { msg, title, time, toast_id } } };
+}
+
+export function deleteToast(toast_id: number) {
+  return { type: DELETE_TOAST, payload: { toast_id }}
+}
+
 function completeTask(task_id: Number) {
-  return { type: COMPLETE_TASK, payload: { task_id }}
+  return { type: COMPLETE_TASK, payload: { task_id } }
 }
 
 function updateTask(task: any) {
@@ -231,38 +245,38 @@ export function epochTime(epochTime: number) {
 }
 
 export function isShowing() {
-  return { type: SHOWING_CODE}
+  return { type: SHOWING_CODE }
 }
 
 export function gotUserFirstLastName(first_name: string, last_name: string) {
-  return { type: SET_USER_NAME, payload: { first_name, last_name} }
+  return { type: SET_USER_NAME, payload: { first_name, last_name } }
 }
 
 export function familyCode(code: string) {
-  return { type: FAMILY_CODE, payload: { code }}
+  return { type: FAMILY_CODE, payload: { code } }
 }
 
 export function noFamilyCode() {
   return { type: NO_FAMILY_CODE }
 }
 
-export function counterParty(counterTask: any, counterId:number) {
-  return { type: COUNTER_PARTY, payload: { counterTask, counterId} }
+export function counterParty(counterTask: any, counterId: number) {
+  return { type: COUNTER_PARTY, payload: { counterTask, counterId } }
 }
 
 export function gotPendingTask(Ptasks: any) {
-  return {type: PENDING_TASK, payload: { Ptasks } }
+  return { type: PENDING_TASK, payload: { Ptasks } }
 }
 export function gotOutGoingTrades(outgoingTrades: any) {
-  return { type: OUT_GOING_TRADE, payload: { outgoingTrades }}
+  return { type: OUT_GOING_TRADE, payload: { outgoingTrades } }
 }
 
 export function incomingTradesHash(incoming: any) {
-  return { type: INCOMING_TRADE_HASH, payload: { incoming} } 
+  return { type: INCOMING_TRADE_HASH, payload: { incoming } }
 }
 
 export function listOfPendingTask(task: any) {
-  return { type: LIST_OF_PENDING_TASK, payload: { task} }
+  return { type: LIST_OF_PENDING_TASK, payload: { task } }
 }
 
 export function setIsFetched(isFetched: any) {
