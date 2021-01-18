@@ -16,13 +16,13 @@ interface IProps {
  * - patching an existing task
  */
 function NewTaskForm({ show, handleClose, postNewTask, isEdit, task }: IProps) {
-  const INITIAL_STATE = { task_name: task.task_name || "", task_description:  task.task_description || "", associated_points: task.associated_points || "" as any, assignee: task.assignee || "" as any };
+  const INITIAL_STATE = { task_name: task.task_name || "", task_description: task.task_description || "", associated_points: task.associated_points || "" as any, assignee: task.assignee || "" as any };
   const [formData, setFormData] = useState(INITIAL_STATE);
   const famMembers = useSelector((st: any) => st.famMembers);
 
   const handleSubmit = (evt: React.FormEvent) => {
     evt.preventDefault();
-    formData.assignee = formData.assignee !== -1 ? parseInt(formData.assignee) : -1;
+    formData.assignee = parseInt(formData.assignee);
     formData.associated_points = parseInt(formData.associated_points);
     postNewTask(formData);
     handleClose();
@@ -74,8 +74,7 @@ function NewTaskForm({ show, handleClose, postNewTask, isEdit, task }: IProps) {
           </Form.Group>
           <Form.Group>
             <Form.Label>Assign to:</Form.Label>
-            <Form.Control name="assignee" as="select" multiple={true} onChange={(evt: any) => handleChange(evt)}>
-              <option value="N/A">Assign task later</option>
+            <Form.Control name="assignee" as="select" multiple={true} onChange={(evt: any) => handleChange(evt)} required>
               {famMembers.map((memb: any) => {
                 return <option key={memb.user_id} value={memb.user_id}>{memb.first_name ? memb.first_name : "Unknown"}</option>
               })}

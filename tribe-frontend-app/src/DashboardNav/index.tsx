@@ -82,11 +82,10 @@ function DashboardNav() {
 			<Nav defaultActiveKey="/tribe" className="flex-column" >
 				<Nav.Link className="mt-2 mb-2" href={`/tribe/overview`}>Home</Nav.Link>
 				{/* <NavLink className="mt-2 mb-2" to={`/tribe/calender`}>Calender</NavLink> */}
-				<NavLink className="mt-2 mb-2" to={`/tribe/todo`}>To-do</NavLink>
 				<NavLink className="mt-2 mb-2" to={`/tribe/completed`}>Completed Tasks</NavLink>
 				<NavLink className="mt-2 mb-2" to={`/tribe/trades`} onClick={getPendingTrades}>Trades</NavLink>
 				{/* <NavLink className="mt-2 mb-2" to={`/tribe/store`}>Store</NavLink> */}
-				<Nav.Item className="Family_code" onClick={getFamilyCode}><span>{codeDisplay} <CodeTimer /></span></Nav.Item>
+				<Nav.Item className="Family_code mt-2 mb-2" onClick={getFamilyCode}><span>{codeDisplay} <CodeTimer /></span></Nav.Item>
 				<li className="DashboardNav-vertical-divider"></li>
 				<Button className="DashboardNav-logout-btn mt-2 mb-2" onClick={handleLogout}>Logout</Button>
 			</Nav>

@@ -34,7 +34,7 @@ export default function rootReducer(state = INITIAL_STATE, action: Action) {
       // find the task and update the completed and completed time key.
       tasks = state.family_tasks.map((task: any) => {
         if (task.task_id === action.payload.task_id) {
-          task.task_status = "complete";
+          task.task_status = "completed";
         }
         return task;
       });

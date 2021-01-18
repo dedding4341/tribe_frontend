@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import DuplicateTradeModal from '../DuplicateTradeModal';
 import ToastNotif from '../ToastNotif';
+import userEvent from '@testing-library/user-event';
 
 
 interface Task {
@@ -126,6 +127,9 @@ function DashOverview({ showHistory }: IProps) {
       case "all":
         // show all active tasks
         filteredTasks = family_tasks.filter((t: any) => {
+          if (t.task_status === "trading" && t.assignee !== userId) {
+            return t;
+          }
           return t.task_status === "open";
         });
         setTasks(filteredTasks);

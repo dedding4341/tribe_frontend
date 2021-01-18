@@ -1,4 +1,4 @@
-import { ADD_TASK, COMPLETE_TASK, DELETE_TASK, LOAD_FAMILY_TASKS, LOGIN, LOGIN_BY_TOKEN, LOGOUT, SAVE_FAMILY, SAVE_FAMILY_MEMBERS, SAVE_USER, START_LOADING, STOP_LOADING, UPDATE_TASK, EPIC_TIME, SHOWING_CODE, FAMILY_CODE, NO_FAMILY_CODE, COUNTER_PARTY, PENDING_TASK, OUT_GOING_TRADE, INCOMING_TRADE_HASH, LIST_OF_PENDING_TASK, SET_USER_NAME, SET_IS_FETCHED, SET_TOAST, DELETE_TOAST} from "./actionTypes";
+import { ADD_TASK, COMPLETE_TASK, DELETE_TASK, LOAD_FAMILY_TASKS, LOGIN, LOGIN_BY_TOKEN, LOGOUT, SAVE_FAMILY, SAVE_FAMILY_MEMBERS, SAVE_USER, START_LOADING, STOP_LOADING, UPDATE_TASK, EPIC_TIME, SHOWING_CODE, FAMILY_CODE, NO_FAMILY_CODE, COUNTER_PARTY, PENDING_TASK, OUT_GOING_TRADE, INCOMING_TRADE_HASH, LIST_OF_PENDING_TASK, SET_USER_NAME, SET_IS_FETCHED, SET_TOAST, DELETE_TOAST } from "./actionTypes";
 import { BASE_URL } from "./config";
 import { getCookie } from "./helpers";
 import moment from "moment";
@@ -100,7 +100,9 @@ export function postTaskToAPI(task: any) {
       credentials: "include"
     });
     const respData = await resp.json();
-    dispatch(addTask(respData.task));
+    if (resp.status === 201) {
+      dispatch(addTask(respData.task));
+    }
   }
 }
 
@@ -182,7 +184,7 @@ function setToast(msg: string, title: string, time: string, toast_id: number) {
 }
 
 export function deleteToast(toast_id: number) {
-  return { type: DELETE_TOAST, payload: { toast_id }}
+  return { type: DELETE_TOAST, payload: { toast_id } }
 }
 
 function completeTask(task_id: Number) {
@@ -224,6 +226,7 @@ export function loginUser(user: any) {
 export function logoutUser() {
   return function (dispatch: any) {
     document.cookie = "x-access-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    document.cookie = "x-access-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/tasks;";
     dispatch({ type: LOGOUT })
   }
 }

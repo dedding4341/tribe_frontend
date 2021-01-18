@@ -101,6 +101,7 @@ function SignUpForm() {
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
+                key={1}
             >
                 <Modal.Body>
                     <ListGroup>
