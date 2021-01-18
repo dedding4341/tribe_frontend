@@ -86,8 +86,8 @@ function DashOverview({ showHistory }: IProps) {
   }
 
   // Updates an existing task on the backend and update the Store.
-  const updateTask = async (data: Task, currentUserId: Number) => {
-    dispatch(updateTaskToAPI(data, currentUserId));
+  const updateTask = async (data: Task) => {
+    dispatch(updateTaskToAPI(data));
   }
 
   const fetchTasks = async () => {
@@ -155,7 +155,7 @@ function DashOverview({ showHistory }: IProps) {
     <Container className="DashOverview">
       {loading ? <div> loading... </div> :
         <>
-          { showNewTaskForm && <NewTaskForm postNewTask={postNewTask} show={showNewTaskForm} handleClose={handleClose} isEdit={false} />}
+          { showNewTaskForm && <NewTaskForm postNewTask={postNewTask} show={showNewTaskForm} handleClose={handleClose} isEdit={false} task={undefined}/>}
           <Row className="d-flex align-items-center justify-content-between">
             <Col md={4}>
               <h1 className="DashOverview-title">

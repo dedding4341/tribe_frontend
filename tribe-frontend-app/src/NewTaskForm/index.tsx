@@ -6,7 +6,8 @@ interface IProps {
   show: Boolean,
   handleClose: Function,
   postNewTask: Function,
-  isEdit: Boolean
+  isEdit: Boolean,
+  task: any
 }
 
 /**
@@ -14,8 +15,8 @@ interface IProps {
  * - making a new task AND 
  * - patching an existing task
  */
-function NewTaskForm({ show, handleClose, postNewTask, isEdit }: IProps) {
-  const INITIAL_STATE = { task_name: "", task_description: "", associated_points: "" as any, assignee: "" as any, completion_time: undefined }
+function NewTaskForm({ show, handleClose, postNewTask, isEdit, task }: IProps) {
+  const INITIAL_STATE = { task_name: task.task_name || "", task_description:  task.task_description || "", associated_points: task.associated_points || "" as any, assignee: task.assignee || "" as any };
   const [formData, setFormData] = useState(INITIAL_STATE);
   const famMembers = useSelector((st: any) => st.famMembers);
 
@@ -70,10 +71,6 @@ function NewTaskForm({ show, handleClose, postNewTask, isEdit }: IProps) {
           <Form.Group>
             <Form.Label>Points</Form.Label>
             <Form.Control value={formData.associated_points} name="associated_points" type="number" placeholder="Enter points" min="0" max="100" onChange={(evt) => handleChange(evt as any)} required></Form.Control>
-          </Form.Group>
-          <Form.Group>
-            <Form.Label>Due by</Form.Label>
-            <Form.Control value={formData.completion_time} name="completion_time" type="date" onChange={(evt) => handleChange(evt as any)}></Form.Control>
           </Form.Group>
           <Form.Group>
             <Form.Label>Assign to:</Form.Label>

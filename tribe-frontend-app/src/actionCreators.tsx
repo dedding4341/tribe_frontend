@@ -103,7 +103,7 @@ export function postTaskToAPI(task: any) {
   }
 }
 
-export function updateTaskToAPI(task: any, currentUserId: Number) {
+export function updateTaskToAPI(task: any) {
   return async function (dispatch: any) {
     const token = getCookie("x-access-token");
     await fetch(`${BASE_URL}/edit-task`, {
@@ -115,10 +115,6 @@ export function updateTaskToAPI(task: any, currentUserId: Number) {
       },
       credentials: "include"
     });
-    // Assign `created_at` and `created_by` to updated task object
-    // to display the task's TaskCard.
-    task.created_at = new Date().getUTCDate();
-    task.created_by = currentUserId;
     dispatch(updateTask(task));
   }
 }

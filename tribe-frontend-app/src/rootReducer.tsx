@@ -53,7 +53,7 @@ export default function rootReducer(state = INITIAL_STATE, action: Action) {
     case UPDATE_TASK:
       let updatedTasks = state.family_tasks.map((task: any) => {
         if (task.task_id === action.payload.task.task_id) {
-          return action.payload.task
+          return { ...task, ...action.payload.task };
         }
         return task;
       });
@@ -96,7 +96,7 @@ export default function rootReducer(state = INITIAL_STATE, action: Action) {
     case LIST_OF_PENDING_TASK:
       return { ...state, listOfTradeTask: action.payload.task }
     case SET_IS_FETCHED:
-      return { ...state, isFetched: action.payload.isFetched}
+      return { ...state, isFetched: action.payload.isFetched }
     default:
       return state;
   }
